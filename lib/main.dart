@@ -115,7 +115,7 @@ class HalamanBlue extends State<NameOfYourWidget> {
       setState(() {});
     }
   }
-  void setData() async{  //本地存储
+  void setData() async{  //本地存储数据
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString("name", 'Huang');
     print(prefs.get('name'));
