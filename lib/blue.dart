@@ -148,7 +148,6 @@ void discoverServicesBle() async {
         String cid =
             characteristic.uuid.toString().toUpperCase().substring(4, 8);
         if (cid == "FFE1") {
-          //温度计
           print("匹配到正确的特征值");
           model.mCharacteristic = characteristic;
 
@@ -166,22 +165,72 @@ void discoverServicesBle() async {
 dataCallsendBle(List<int> value) {
   model.mCharacteristic.write(value);
 }
+List longData = [];
+dataCallbackBle() async{ //E0蓝牙数据处理
+  await model.mCharacteristic.setNotifyValue(true);
+  model.mCharacteristic.value.listen((value) {
+    List data = value;
 
-dataCallbackBle() async{
-  /*    for (var i = 0; i < value.length; i++) {
-      String dataStr = value[i].toRadixString(16);
-      if (dataStr.length < 2) {
-        dataStr = "0" + dataStr;
-      }
-      String dataEndStr = dataStr;
-      data.add(dataEndStr);
-    }*/
-  //double db;
-/*    if (data[2] == '11') { //体温数据
+    if (data.length == 0) {
+      print("我是蓝牙返回数据 - 空！！");
+      return;
+    }
+    if(longData.length > 0){ //叠加够字节数
+        longData.addAll(data);
+        int a = longData.length+2;
+        int b = longData[1];
+        if(a >= b){ //数据整合完毕
+          data = longData;
+          longData = [];
+        }else{
+          return;
+        }
+    }
+    if(value[0] == 170 && value[1] > 18 && longData.length == 0){//数组超过20需要整合
+      longData.addAll(data);
+      return;
+    }
+    Fluttertoast.showToast(
+        msg: "收到蓝牙数据",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 1);
+    print(data);
+    data  = _hexTostring(data); //转16
+    if (data[2] == '11') { //体温数据
       int a = _hexToInt(data[4]);
       int b = _hexToInt(data[5]);
-      db = ((b * 256) + a) * 0.01;
-    }*/
+      double db = ((b * 256) + a) * 0.01;
+      print("体温 $db");
+    }
+    if (data[2] == '12') { //体温状态
+      data = _hexToBinary(value);
+      int power = int.parse(data[3].substring(data[3].length - 4), radix: 2);
+      int connect = int.parse(data[3].substring(data[3][3]), radix: 2);
+      print("体温电池电量$power");
+      print("体温是否连接人体$connect");
+    }
+    if(data[2] == '43'){ //血氧状态
+      data = _hexToBinary(value);
+      int power = int.parse(data[3].substring(data[3].length - 4), radix: 2);
+      print("血氧电池电量$power");
+    }
+    if(data[2] == '41'){
+      int a = _hexToInt(data[4]);
+
+      int pour = _hexToInt(data[32+3]);
+      int blood = _hexToInt(data[33+3]);
+      int pulse = _hexToInt(data[34+3]);
+      int breathe = _hexToInt(data[35+3]);
+      print("血氧数据编号 $a");
+      print("灌注值 $pour");
+      print("血氧值 $blood");
+      print("脉率值 $pulse");
+      print("呼吸值 $breathe");
+    }
+  });
+
+
 
   //model.mCharacteristic.write([0x33]);
 }
@@ -214,16 +263,7 @@ void endBle() {
 List _dbdeal(value) {
   List data = [];
   if (value[2] == 42) {//血压状态
-    for (var i = 0; i < value.length; i++) {
-      String dataStr = value[i].toRadixString(2);
-      if (dataStr.length < 8) {
-        for (var j = dataStr.length; j < 8; j++) {
-          dataStr = "0" + dataStr;
-        }
-      }
-      String dataEndStr = dataStr;
-      data.add(dataEndStr);
-    }
+    data = _hexToBinary(value);
     //给对应属性赋值
     String power = data[3].substring(data[3].length - 4);
     String state = data[3][4];
@@ -260,4 +300,32 @@ int _hexToInt(String hex) {
     }
   }
   return val;
+}
+
+List _hexTostring(value){ //10转16
+  List data = [];
+  for (var i = 0; i < value.length; i++) {
+    String dataStr = value[i].toRadixString(16);
+    if (dataStr.length < 2) {
+      dataStr = "0" + dataStr;
+    }
+    String dataEndStr = dataStr;
+    data.add(dataEndStr);
+  }
+  return data;
+}
+
+List _hexToBinary(value){ //10转2进制
+  List data = [];
+  for (var i = 0; i < value.length; i++) {
+    String dataStr = value[i].toRadixString(2);
+    if (dataStr.length < 8) {
+      for (var j = dataStr.length; j < 8; j++) {
+        dataStr = "0" + dataStr;
+      }
+    }
+    String dataEndStr = dataStr;
+    data.add(dataEndStr);
+  }
+  return data;
 }
