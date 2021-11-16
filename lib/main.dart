@@ -105,7 +105,7 @@ class HalamanBlue extends State<NameOfYourWidget> {
   List _bledb = ['12222'];
 
   void state() {
-    List db = [];
+  /*  List db = [];
     model.allBleNameAry.map((item) {
       db.add(item);
     }).toList();
@@ -113,7 +113,7 @@ class HalamanBlue extends State<NameOfYourWidget> {
       print(_bledb);
       this._bledb = db;
       setState(() {});
-    }
+    }*/
   }
   void setData() async{  //本地存储数据
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -158,6 +158,30 @@ class HalamanBlue extends State<NameOfYourWidget> {
                       // _bledb = model.allBleNameAry.join('\n');
                       });
                     });
+                  }),
+            ),
+            new Container(
+              margin: const EdgeInsets.only(top: 8.0),
+              child: RaisedButton(
+                // if button pressed then anonym metod to the halaman pertama
+                  child: Text('断开链接'),
+                  onPressed: () async {
+                    endBle();
+                  }),
+            ),
+            new Container(
+              margin: const EdgeInsets.only(top: 8.0),
+              child: RaisedButton(
+                // if button pressed then anonym metod to the halaman pertama
+                  child: Text('开始测量心电'),
+                  onPressed: () async {
+                    await blueCpxsend.write([0x23,0x01]);
+                    await blueCpx.write([0x23,0x01]);
+           /*         model.mCharacteristic = blueCpx;
+                    const timeout = const Duration(seconds: 30);
+                    Timer(timeout, () {
+                      dataCallbackBle();
+                    });*/
                   }),
             ),
           ],

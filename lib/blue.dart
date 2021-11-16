@@ -109,7 +109,8 @@ void connectionBle(String chooseBle) {
     }
   }
 }
-
+var blueCpx;
+var blueCpxsend;
 void discoverServicesBle() async {
   print("连接上蓝牙设备...延迟连接");
   await model.device
@@ -158,6 +159,58 @@ void discoverServicesBle() async {
         }
       });
     }
+    else if (bleid == "6769") {
+      //心电服务值
+      List<BluetoothCharacteristic> characteristics = service.characteristics;
+      characteristics.forEach((characteristic) {
+        var valuex = characteristic.uuid.toString();
+        print("所有特征值 --- $valuex");
+        //String cid =
+        //characteristic.uuid.toString().toUpperCase().substring(14, 18);
+        if (characteristic.uuid.toString() == "4d616769-634d-6564-0310-000000000000") {
+          print("匹配到正确的特征值");
+          //model.mCharacteristic = characteristic;
+          blueCpxsend = characteristic;
+          const timeout = const Duration(seconds: 60);
+          Timer(timeout, () {
+            //dataCallbackBle();
+            model.mCharacteristic.write([0x23,0x01]);
+          });
+        }
+       if (characteristic.uuid.toString() == "4d616769-634d-6564-0320-000000000000") {
+          print("匹配到正确的特征值");
+          blueCpx = characteristic;
+          model.mCharacteristic = characteristic;
+          const timeout = const Duration(seconds: 30);
+          Timer(timeout, () {
+            dataCallbackBle();
+          });
+        }
+      });
+    }
+   /* else if (bleid == "180F") { //心电电量
+      //体温服务值
+      List<BluetoothCharacteristic> characteristics = service.characteristics;
+      characteristics.forEach((characteristic) {
+        var valuex = characteristic.uuid.toString();
+        print("所有特征值 --- $valuex");
+        String cid =
+        characteristic.uuid.toString().toUpperCase().substring(4, 8);
+        if (cid == "2A19") {
+          print("匹配到正确的特征值");
+          model.mCharacteristic = characteristic;
+
+          const timeout = const Duration(seconds: 30);
+          Timer(timeout, () {
+            model.mCharacteristic.setNotifyValue(true);
+            model.mCharacteristic.value.listen((value) {
+              int port = value[0];
+              print("心电电量 --- $port");
+            });
+          });
+        }
+      });
+    }*/
     // do something with service
   });
 }
@@ -165,7 +218,7 @@ void discoverServicesBle() async {
 dataCallsendBle(List<int> value) {
   model.mCharacteristic.write(value);
 }
-List longData = [];
+List longData = [];//数据超出20
 dataCallbackBle() async{ //E0蓝牙数据处理
   await model.mCharacteristic.setNotifyValue(true);
   model.mCharacteristic.value.listen((value) {
@@ -230,9 +283,6 @@ dataCallbackBle() async{ //E0蓝牙数据处理
     }
   });
 
-
-
-  //model.mCharacteristic.write([0x33]);
 }
 
 //血压数据
