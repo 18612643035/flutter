@@ -1,11 +1,9 @@
-# WeChatUploadImageAndVideo
-微信小程序上传多张图片以及视频
-  
-## 在需要上传页面的js中
-upFiles.js ------  ./utils/upFiles.js
-
-```
+// pages/index/index.js
+var qcloud = require('../../vendor/wafer2-client-sdk/index')
+var config = require('../../config')
+var util = require('../../utils/util.js')
 var upFiles = require('../../utils/upFiles.js')
+
 Page({
 
   /**
@@ -14,10 +12,9 @@ Page({
   data: {
       upFilesBtn:true,
       upFilesProgress:false,
-      maxUploadLen:6,
-      
+      maxUploadLen:19,
+      context:'',
   },
-
   /**
    * 用户点击右上角分享
    */
@@ -96,6 +93,12 @@ Page({
           }
       })
   },
+  bzInput:function(e){
+    let _this = this;
+    _this.setData({
+        context:e.detail.value,
+    })
+  },
   // 上传文件
   subFormData:function(){
       let _this = this;
@@ -105,26 +108,47 @@ Page({
       _this.setData({
           upFilesProgress:true,
       })
-      upData['url'] = config.service.upFiles;
-      upFiles.upFilesFun(_this, upData,function(res){
-          if (res.index < upImgArr.length){
-              upImgArr[res.index]['progress'] = res.progress
-              _this.setData({
-                  upImgArr: upImgArr,
-              })
-          }else{
-              let i = res.index - upImgArr.length;
-              upVideoArr[i]['progress'] = res.progress
-              _this.setData({
-                  upVideoArr: upVideoArr,
-              })
-          }
-        //   console.log(res)
-      }, function (arr) {
-          // success
-          // 上传完成之后图片的路径数组 
-          console.log(arr)
+      console.log("开始上传");
+
+      wx.setStorageSync('time', new Date()); //测试本地存储
+      console.log(wx.getStorageInfoSync("time"));
+      upData['url'] = config.service;
+      
+      wx.request({
+        url: upData.url.conText+"?name=admin&content="+_this.data.context,  
+        data:{'name':'admin','content':_this.data.context},   
+        method:"POST",    
+        header:{
+            "Content-Type":"application/x-www-from-urlencoded",
+            "Accpet": "application/json"
+        },   
+        success:function(res){ 
+            console.log(res) 
+            console.log(res.data)
+            if(res.data && res.data.data){
+                upData['formData'] = {"id":res.data.data};
+                upFiles.upFilesFun(_this, upData,function(res){
+                    if (res.index < upImgArr.length){
+                        upImgArr[res.index]['progress'] = res.progress
+                        
+                        _this.setData({
+                            upImgArr: upImgArr,
+                        })
+                    }else{
+                        let i = res.index - upImgArr.length;
+                        upVideoArr[i]['progress'] = res.progress
+                        _this.setData({
+                            upVideoArr: upVideoArr,
+                        })
+                    }
+                  //   console.log(res)
+                }, function (arr) {
+                    // success
+                    console.log(arr)
+                })
+            }
+        }
       })
+ 
   }
 })
-```
