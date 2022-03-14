@@ -1,0 +1,62 @@
+<!--修改合同计划-->
+<text wx-if="{{allData.length<1}}">暂无信息</text>
+<scroll-view scroll-y class="content">
+      <view wx:for="{{allData}}" wx:key = 'index' wx:for-index = "bindex" class="items">
+        <view class="pactCont">
+          <View>
+            <text data-index="{{bindex}}">合同计划完成详情:</text><text class="tapNav food-name">{{item.finishContent}}</text>
+          </View>
+          <view>
+            <text data-index="{{bindex}}">合同计划完成时间:</text><text wx:if="{{item.finishTime != null}}" class="tapNav food-name">{{item.finishTime}}</text>
+          </view>
+          <view>
+            <text data-index="{{bindex}}">合同计划id:</text><text class="tapNav food-name">{{item.id}}</text>
+          </view>
+          <view>
+            <text data-index="{{bindex}}">合同内容:</text><text class="tapNav food-name">{{item.content}}</text>
+          </view>
+          <view>
+            <text data-index="{{bindex}}">合同计划状态:</text>
+            <text wx:if="{{item.status}}" class="tapNav food-name">已完成</text>
+            <text wx:if="{{!item.status}}" class="tapNav food-name">未完成</text>
+          </view>
+          <view class="button-box">
+            <van-button round type="info" data-index="{{bindex}}" bindtap="showPopup" form-type='submit'>修改状态</van-button>
+          </view>
+        </view>
+      </view>
+</scroll-view>
+<van-dialog
+  use-slot
+  title="修改合同状态"
+  show="{{ show }}"
+  show-cancel-button
+  confirm-button-open-type="getUserInfo"
+  bind:close="onClose"
+  bind:getuserinfo="getUserInfo"
+>
+<view class="details">
+          <view class="pop-beg">
+            <view>
+              <text>合同计划完成情况:</text>
+              <input name="finishContent" type="text" model:value="{{finishContent}}"/>
+            </view>
+            <view>
+              <text>合同计划完成时间:</text>
+              <input name="finishTime" type="text" model:value="{{finishTime}}"/>
+            </view>
+            <view>
+              <text>合同计划状态:</text>
+              <label class="radio">
+              <radio value="r1" checked="true"/>选中
+              </label>
+              <label  name="status" class="radio">
+                <radio name="status" value="r2" />未选中
+              </label>
+            </view>
+            <!-- <view>
+              <text>合同计划id:</text><text class="tapNav food-name">{{details.id}}</text>
+            </view> -->
+          </view>
+  </view>
+</van-dialog>

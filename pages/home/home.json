@@ -1,3 +1,7 @@
 {
-  "usingComponents": {}
+    "usingComponents": {
+      "van-button": "../../dist/button/index",
+      "van-notify": "../../dist/notify/index"   
+    }
+  
 }

@@ -1,0 +1,11 @@
+/* pages/menu/menus.wxss */
+.tapNav {
+  display: block;
+  padding: 0.9rem 0.3rem;
+  background:  rgb(75, 218, 187);
+  color: #fff;
+  width: 100%;
+  text-align: center;
+  font-size: 32rpx;
+  border-bottom: 1px solid #fff;
+}

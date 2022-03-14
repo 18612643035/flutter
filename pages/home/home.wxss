@@ -1,9 +1,12 @@
 /* pages/home/home.wxss */
 .optBt{
   float: right;
+  margin-top: 10px;
+  margin-right: 5px;
 }
 .optContent{
   clear: both;
+  text-indent: 8px;
 }
 .listTitle{
   text-align: left;
@@ -12,15 +15,45 @@
 margin: 20px 0;
 }
 .container .uploadimg{
-  width: 100px;
-  height: 100px;
+  width: 150px;
+  height: 120px;
   margin: 4px;
   display: block;
+  border-radius: 15px;
 }
 .uploadimgbox{
+  justify-content: center;
   display: flex;
-  flex-direction: row;
-  justify-content: left;
   width: 100%;
-   overflow: auto;
+  overflow: auto;
+}
+.uploadimgbox>view{
+  display: flex;
+  overflow: auto;
+}
+.listTitle{
+  color: #7a7979;
+  font-size: 12px;
+}
+.icon-tongzhi{
+  -webkit-animation: animations 3s liner;
+  animation: animations 1.5s infinite;
+  margin-right: 15px;
+}
+.icon-icon_common_add{
+  font-size: 30px;
+}
+.menu{
+  float: left;
+  margin-top: 10px;
+  margin-left: 5px;
+}
+@keyframes animations{
+  0% {
+    opacity: 0;
+  }
+ 100% {
+    opacity: 1;
+  } 
+
 }

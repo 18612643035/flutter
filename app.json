@@ -1,7 +1,18 @@
 {
   "pages": [
     "pages/home/home",
-    "pages/index/index"
+    "pages/login/login",
+    "pages/index/index",
+    "pages/menu/menu",
+    "pages/message/message",
+    "pages/menu/menus",
+    "pages/system/client/addClient",
+    "pages/system/client/queryClient",
+    "pages/system/client/editClient",
+    "pages/system/client/auditClient",
+    "pages/system/pact/auditPact",
+    "pages/system/pact/toPlan",
+    "pages/system/pact/toPending"
   ],
   "window": {
     "backgroundColor": "#F6F6F6",

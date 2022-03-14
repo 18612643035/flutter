@@ -1,0 +1,7 @@
+{
+  "usingComponents": {
+    "van-button": "../../../dist/button/index",
+    "van-dialog": "../../../dist/dialog/index",
+    "select": "../../components/select/select"
+  }
+}

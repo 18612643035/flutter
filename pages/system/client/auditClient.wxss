@@ -1,0 +1,12 @@
+/* pages/system/client/auditClient.wxss */
+.bt_box{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.bt_box button{
+  width: 85px;
+  font-size: 12px;
+  line-height: 30px;
+  margin-top: 1rem;
+}

@@ -1,0 +1,24 @@
+<scroll-view scroll-y class="content">
+      <view wx:for="{{allData}}" class="items">
+        <form bindsubmit='formSubmit'>
+        <view>
+          <text class="l_text">名称:</text>
+          <input name="name" type="text" value="{{item.name}}"/>
+        </view>
+        <view>
+          <text class="l_text">地址:</text>
+          <input name="address" type="text" value="{{item.address}}"/>
+        </view>
+        <view>
+          <text class="l_text">联系人:</text>
+          <input name="contact" type="text" value="{{item.contact}}"/>
+        </view>
+        <view>
+          <text class="l_text">电话:</text>
+          <input name="contactPhone" type="text" value="{{item.contactPhone}}"/>
+        </view>
+        <input style="display: none;" name="id" type="text" value="{{item.id}}"/>
+        <button form-type='submit'>修改</button>
+      </form>
+      </view>
+</scroll-view>

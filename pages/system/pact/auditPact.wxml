@@ -1,0 +1,66 @@
+<!--待审核计划-->
+<text wx-if="{{allData.length<1}}">暂无信息</text>
+<scroll-view scroll-y class="content">
+      <view wx:for="{{allData}}" wx:key = 'index' wx:for-index = "bindex" class="items">
+        <view class="pactCont">
+          <text bindtap="onShowList" data-index="{{bindex}}">合同编号:</text><text class="tapNav food-name">{{item.serialNumber}}</text>
+          <text>客户{{item.customerId}}</text>
+          <view class="bt_box">
+          <button data-id="{{item.id}}" bindtap="onSubmit"> 通过</button>
+          <button data-id="{{item.id}}" bindtap="onReject"> 不通过</button>
+          <button data-id="{{item.id}}" bindtap="onClosed"> 关闭</button>
+          </view>
+        </view>
+      </view>
+</scroll-view>
+<view class="details" wx:if="{{isShow}}">
+          <view class="pop-beg">
+            <view>
+              <text>id:</text><text>{{details.id}}</text>
+            </view>
+            <view>
+              <text>合同编号:</text>
+              <text>{{details.serialNumber}}</text>
+            </view>
+            <view>
+              <text>客户:</text><text>{{details.customerId}}</text>
+            </view>
+            <view>
+              <text>机构名称:</text><text>{{details.partyA}}</text>
+            </view>
+            <view>
+              <text>乙方:</text><text>{{details.partyB}}</text>
+            </view>
+            <view>
+              <text>详细地址:</text><text>{{details.address}}</text>
+            </view>
+            <view>
+              <text>信息科联系人:</text><text>{{details.infoOfficeMan}}</text>
+            </view>
+            <view>
+              <text>信息科联系电话:</text><text>{{details.infoOfficeTelno}}</text>
+            </view>
+            <view>
+              <text>科室名称:</text><text>{{details.deptName}}</text>
+            </view>
+            <view>
+              <text>科室联系人:</text><text>{{details.deptMan}}</text>
+            </view>
+            <view>
+              <text>科室联系电话':</text><text>{{details.deptTelno}}</text>
+            </view>
+            <view>
+              <text>销售':</text><text>{{details.saleName}}</text>
+            </view>
+            <view>
+              <text>合同签订时间':</text><text>{{details.signingTime}}</text>
+            </view>
+            <view>
+              <text>状态':</text><text>{{details.status}}</text>
+            </view>
+            <view>
+              <text>支付状态':</text><text>{{details.payStatus}}</text>
+            </view>
+          </view>
+          <button bindtap="onHidden">关闭</button>
+  </view>

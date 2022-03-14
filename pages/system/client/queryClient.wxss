@@ -1,0 +1,9 @@
+/* pages/system/client/queryClient.wxss */
+.items{
+  border: 1px solid #000;
+  margin: 5px;
+}
+.items view{
+  display: block;
+  width: 100%;
+}

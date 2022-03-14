@@ -1,0 +1,25 @@
+/* pages/client/addClient.wxss */
+.tapNav{
+  display: flex;
+  flex-direction: row;
+  margin-top: 10px;
+}
+.tapNav text{
+  width: 30%;
+  text-align: right;
+  margin-left: 5px;
+}
+.tapNav input{
+  border: 1px solid slategray;
+  color: slategray;
+  margin-left: 1rem;
+  padding-left: 5px;
+  border-radius: 10px;
+}
+button{
+   margin-top: 10%;
+}
+form{
+  display: flex;
+  flex-direction: column;  
+}

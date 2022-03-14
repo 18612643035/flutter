@@ -1,0 +1,23 @@
+<text>审核客户列表</text>
+<!--pages/menu/menus.wxml-->
+<text wx-if="{{allData.length<1}}">暂无信息</text>
+<scroll-view scroll-y class="content">
+      <view wx:for="{{allData}}" class="items">
+        <view>
+          名称:<text class="tapNav food-name">{{item.name}}</text>
+        </view>
+        <view>
+          地址:<text class="tapNav food-name">{{item.address}}</text>
+        </view>
+        <view>
+          联系人:<text class="tapNav food-name">{{item.contact}}</text>
+        </view>
+        <view>
+          联系人:<text class="tapNav food-name">{{item.contactPhone}}</text>
+        </view>
+        <view class="bt_box">
+          <button data-id="{{item.id}}" bindtap="onSubmit"> 通过</button>
+          <button data-id="{{item.id}}" bindtap="onReject"> 不通过</button>
+          </view>
+      </view>
+</scroll-view>

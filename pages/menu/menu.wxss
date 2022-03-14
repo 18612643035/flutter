@@ -1,0 +1,37 @@
+/* pages/menu/menu.wxss */
+.sidebar .tapNav {
+  display: block;
+  padding: 0.9rem 0.3rem;
+  background:  rgb(75, 218, 187);
+  color: #fff;
+  text-align: center;
+  font-size: 32rpx;
+  border-bottom: 1px solid #fff;
+}
+.tapNav.selected{
+  background:lightblue;
+
+}
+.product .sidebar {
+  width: 100%;
+  height: 92vh;
+  background: #ccc;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.ccc {
+  font-size: 12px;
+  color: #434343;
+  font-weight: normal
+}
+
+.container .product {
+  justify-content: space-between;
+  width: 100%;
+  height: 92vh;
+}
+.product .content {
+  width: 74%;
+  height: 92vh;
+  padding-left: 10rpx;
+}

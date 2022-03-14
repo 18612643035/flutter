@@ -1,0 +1,8 @@
+<!--pages/menu/menu.wxml-->
+<view class="container flex-wrap flex-direction-col">
+  <view class="product flex-wrap flex-direction-row">
+    <scroll-view scroll-y class="sidebar flex-wrap flex-direction-col">
+      <text wx:for="{{dataList}}"  class="tapNav {{curNav === index?'selected':''}}" data-name="{{item.name}}" data-index="{{index}}" data-list="{{item.children}}" bindtap="selectNav">{{item.name}}</text>
+    </scroll-view>
+  </view>
+</view>

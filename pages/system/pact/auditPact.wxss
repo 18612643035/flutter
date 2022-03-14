@@ -1,0 +1,38 @@
+/* pages/system/pact/auditPact.wxss */
+.pactCont{
+  width: 60%;
+  margin: 1rem auto;
+  border:1px solid #dddddd;
+  padding: 5%;
+}
+.bt_box{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.bt_box button{
+  width: 85px;
+  font-size: 12px;
+  line-height: 30px;
+  margin-top: 1rem;
+}
+.details{
+  background: #ccc;
+  width: 90%;
+  height: 90%;
+  position: absolute;
+  left: 5%;
+  top: 5%;
+}
+.details view text{
+  line-height: 2rem;
+  padding-left: 5%;
+}
+.details button{
+  width: 100px;
+  font-size: 16px;
+}
+.pop-beg{
+  height: 90%;
+  overflow-y: auto;
+}
