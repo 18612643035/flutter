@@ -1,8 +1,8 @@
 {
   "usingComponents": {
+    "van-toast": "../../../dist/toast/index",
     "van-button": "../../../dist/button/index",
     "van-dialog": "../../../dist/dialog/index",
-    "van-toast": "../../../dist/toast/index",
-    "van-datetime-picker": "../../../dist/datetime-picker/index"
+    "van-picker": "../../../dist/picker/index"
   }
 }

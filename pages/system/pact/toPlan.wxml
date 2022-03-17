@@ -61,3 +61,4 @@
             <button data-id="{{item.id}}" bindtap="onSubmit"> 启动合同</button>
           </view>
   </view>
+  <van-toast id="van-toast" />

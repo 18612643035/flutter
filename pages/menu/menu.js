@@ -1,5 +1,4 @@
 // pages/menu/menu.js
-let Data = require('../data/data.js');
 const config = require('../../config.js');
 Page({
 

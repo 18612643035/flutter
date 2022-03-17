@@ -35,3 +35,70 @@ page{
 .select-wrap{
   width: 50%;
 }
+.datetime-picker{
+  width:100%
+}
+view.van-picker__toolbar{
+  display: none;
+}
+button.van-button--round,.cmt-button{
+  border-radius: 3px;
+  font-size: 1rem;
+  height: auto;
+  line-height: 2rem;
+  color: #fff;
+  background:#409EFF;
+}
+.items>view{
+  width: 100%;
+}
+
+.tabRow{
+  display: flex;
+  flex-direction: row;
+  margin-top: 10px;
+}
+.tabRow>text{
+  width: 30%;
+  text-align: right;
+  margin-left: 5px;
+}
+.tabRow>input,.query>view input{
+  border: 1px solid #ebeef5;
+  color: #606266;
+  margin-left: 1rem;
+  padding-left: 5px;
+  border-radius: 10px;
+}
+.query,.container1,.items{
+  border-bottom: 1px solid #ebeef5;
+  margin-top: 10px;
+  padding-bottom: 10px;
+}
+.query>view{
+  padding-left: 5px;
+  margin-top: 10px;
+  display: flex;
+  flex-direction: row;
+}
+.query>view text{
+  color: #606266;
+  margin-left: 1rem;
+}
+.query>view span{
+  width: 30%;
+  text-align: right;
+  margin-left: 5px;
+  display: block;
+}
+.bt_box{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.bt_box button{
+  width: 85px;
+  font-size: 12px;
+  line-height: 30px;
+  margin-top: 1rem;
+}

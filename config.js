@@ -8,6 +8,7 @@ var host = 'http://192.168.0.250:8778/cpx';
 var user = 'http://192.168.0.250:8778/auth';
 var client = 'http://192.168.0.250:8778/contract';
 var admin = 'http://192.168.0.250:8778/admin';
+var maintain = 'http://192.168.0.250:8778/maintain';
 
 var config = {
 
@@ -21,20 +22,33 @@ var config = {
         login: `${user}/oauth/token`,
         phone: `${user}/sms/send`,
         addObj: `${client}/customer`,
-        queryObj: `${client}/customer/myPage`,
+        queryObj: `${client}/customer/myPage`, //我的客户列表
         userPending: `${client}/customer/pending`, //待审核客户
         userPass: `${client}/customer/pass`, //审核通过
         userFail: `${client}/customer/fail`, //审核通过
         userInfo: `${admin}/user/info`, //用户信息
         menu: `${admin}/menu`,//用户菜单
+        role: `${admin}/user/list`,//获取指派人列表
         pendingList: `${client}/contract/pendingList`,//合同列表
         approved: `${client}/contract/approved`,//合同通过
         denied: `${client}/contract/denied`,//合同不通过
         pactPending: `${client}/contractPlan/myPending`,//待完成计划列表
         planningList: `${client}/contract/planningList`,//待计划列表
-        contractPlan: `${client}/contractPlan`,//修改合同计划
+        contractPlan: `${client}/contractPlan/finish`,//完成合同计划
         startPact: `${client}/contract/start`,//启动计划
         closed: `${client}/contract/closed`, //关闭合同
+        cservicePending: `${maintain}/customersupport/pending`, //获取待指派客服记录列表
+        cservicePage: `${maintain}/customersupport/page`, //获取客服记录列表
+        cserviceTodu: `${maintain}/customersupport/myTodo`, //获取待处理客服记录列表
+        closeCus: `${maintain}/customersupport/close`, //关闭客服记录
+        cvisitPage: `${maintain}/returnVisit/page`, //回访记录
+        vClose: `${maintain}/returnVisit/close`, //回访记录
+        apending: `${maintain}/maintenance/pending`, //待指派维保列表
+        assign: `${maintain}/maintenance/assign`, //指派给指定维保
+        cassign: `${maintain}/customersupport/assign`, //指派给指定客服
+        aservicemy:`${maintain}/maintenance/my`, //当前待处理维保
+        aclose:`${maintain}/maintenance/close`, //关闭维保
+        log:`${maintain}/maintenanceLog`, //新增维保日志
     },
     token:''
 };

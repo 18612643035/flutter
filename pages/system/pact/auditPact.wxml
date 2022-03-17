@@ -1,17 +1,20 @@
 <!--待审核计划-->
 <text wx-if="{{allData.length<1}}">暂无信息</text>
 <scroll-view scroll-y class="content">
-      <view wx:for="{{allData}}" wx:key = 'index' wx:for-index = "bindex" class="items">
-        <view class="pactCont">
-          <text bindtap="onShowList" data-index="{{bindex}}">合同编号:</text><text class="tapNav food-name">{{item.serialNumber}}</text>
-          <text>客户{{item.customerId}}</text>
+      <view wx:for="{{allData}}" wx:key = 'index' wx:for-index = "bindex" class="query">
+          <view>
+            <span bindtap="onShowList" data-index="{{bindex}}">合同编号:</span><text class="tapNav food-name">{{item.serialNumber}}</text>
+          </view>
+         <view>
+          <span>客户:</span><text>{{item.customerId}}</text>
+         </view>
+          
           <view class="bt_box">
-          <button data-id="{{item.id}}" bindtap="onSubmit"> 通过</button>
-          <button data-id="{{item.id}}" bindtap="onReject"> 不通过</button>
-          <button data-id="{{item.id}}" bindtap="onClosed"> 关闭</button>
+          <button class="cmt-button" data-id="{{item.id}}" bindtap="onSubmit"> 通过</button>
+          <button class="cmt-button" data-id="{{item.id}}" bindtap="onReject"> 不通过</button>
+          <button class="cmt-button" data-id="{{item.id}}" bindtap="onClosed"> 关闭</button>
           </view>
         </view>
-      </view>
 </scroll-view>
 <view class="details" wx:if="{{isShow}}">
           <view class="pop-beg">
@@ -50,7 +53,7 @@
               <text>科室联系电话':</text><text>{{details.deptTelno}}</text>
             </view>
             <view>
-              <text>销售':</text><text>{{details.saleName}}</text>
+              <text>销售:</text><text>{{details.saleName}}</text>
             </view>
             <view>
               <text>合同签订时间':</text><text>{{details.signingTime}}</text>
@@ -62,5 +65,6 @@
               <text>支付状态':</text><text>{{details.payStatus}}</text>
             </view>
           </view>
-          <button bindtap="onHidden">关闭</button>
+          <button class="cmt-button" bindtap="onHidden">关闭</button>
   </view>
+  <van-toast id="van-toast" />

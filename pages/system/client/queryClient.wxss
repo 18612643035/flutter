@@ -1,9 +1,9 @@
 /* pages/system/client/queryClient.wxss */
-.items{
-  border: 1px solid #000;
-  margin: 5px;
-}
-.items view{
-  display: block;
-  width: 100%;
+.editgo{
+  margin-left: 5px;
+  background: #66b1ff;
+  border-radius:3px;
+  color:#fff;
+  width:92px;
+  font-size: 1rem;
 }

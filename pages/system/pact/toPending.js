@@ -1,5 +1,6 @@
 // pages/system/pact/toPending.js
-var config = require('../../../config')
+var config = require('../../../config');
+var util = require('../../../utils/util');
 import toast from '../../../dist/toast/toast';
 Page({
   onShareAppMessage() {
@@ -19,23 +20,24 @@ Page({
     finishContent:'',
     finishTime:'',
     status:0,
-    items: [
-      {value: 'USA', name: '完成'},
-      {value: 'CHN', name: '待处理', checked: 'true'},
-    ]
+    minHour: 10,
+    maxHour: 20,
+    minDate: new Date(2000, 10, 1).getTime(),
+    maxDate: new Date(2030, 10, 1).getTime(),
+    currentDate: new Date().getTime(),
   },
-  radioChange(e) {
-    console.log('radio发生change事件，携带value值为：', e.detail.value)
-
-    const items = this.data.items
-    for (let i = 0, len = items.length; i < len; ++i) {
-      items[i].checked = items[i].value === e.detail.value
-    }
-
+  onInput(event) {
     this.setData({
-      items
-    })
+      currentDate: event.detail,
+    });
+    console.log(util.formatTime(new Date(event.detail)));
   },
+  // handChange(e){//状态切换
+  //   let stu = e.detail.value;
+  //   this.setData({
+  //     status: stu
+  //   });
+  // },
   /**
    * 生命周期函数--监听页面加载
    */
@@ -64,28 +66,21 @@ Page({
   },
   getUserInfo: function(e){
     let _this = this;
-    let id = _this.data.details.id;
+    let id = Number(_this.data.details.id);
     let finishContent = _this.data.finishContent;
-    let finishTime = _this.data.finishTime;
+    let finishTime = util.formatTime(new Date(_this.data.currentDate));
     let status = _this.data.status;
     wx.request({
         url: config.service.contractPlan,    
-        method:"PUT", 
+        method:"POST", 
         data:{
           id:id,
-          content:'',
-          contractId:0,
-          director:0,
-          endTime:'',
-          finishContent:finishContent,
-          finishTime:finishTime,
-          startTime:'',
-          status:0,
-          type:0
+          content:finishContent,
+          time:finishTime,
+
         },   
         header:{
-          "Content-Type": "application/x-www-form-urlencoded",
-          "Accpet": "application/json",
+          "content-type":"application/x-www-form-urlencoded",
           'Authorization': 'Bearer '+config.service.token,
         },     
         success:function(res){ 
@@ -106,17 +101,9 @@ Page({
         finishContent:this.data.allData[index].finishContent,
         finishTime:this.data.allData[index].finishTime,
         status:this.data.allData[index].status,
-        show:true
+        show:true,
+        currentDate:new Date(this.data.allData[index].finishTime).getTime()
     })
-  },
-  change (e) {
-    this.setData({
-      selected: { ...e.detail }
-    })
-  },
-  close () {
-    // 关闭select
-    this.selectComponent('#select').close()
   },
   onClose() {
     this.setData({ show: false });

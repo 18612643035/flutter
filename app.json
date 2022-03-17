@@ -12,7 +12,13 @@
     "pages/system/client/auditClient",
     "pages/system/pact/auditPact",
     "pages/system/pact/toPlan",
-    "pages/system/pact/toPending"
+    "pages/system/pact/toPending",
+    "pages/system/cservice/crecord",
+    "pages/system/cservice/cvisit",
+    "pages/system/aservice/pending",
+    "pages/system/aservice/dispose",
+    "pages/system/cservice/todo",
+    "pages/component/remark"
   ],
   "window": {
     "backgroundColor": "#F6F6F6",

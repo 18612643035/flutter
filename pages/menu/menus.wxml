@@ -1,6 +1,6 @@
 <!--pages/menu/menus.wxml-->
 <scroll-view scroll-y class="content flex-wrap flex-direction-col">
-      <view wx:for="{{dataList}}" bindtap="selectBt" class="items   flex-wrap flex-direction-row">
+      <view wx:for="{{dataList}}" bindtap="selectBt" class="flex-wrap flex-direction-row">
         <text bindtap="goMenu" data-src="{{item.id}}"  class="tapNav food-name">{{item.name}}</text>
       </view>
 </scroll-view>

@@ -1,0 +1,54 @@
+<!-- 回访记录 -->
+<scroll-view scroll-y class="content">
+      <view wx:for="{{allData}}" wx:for-index = "bindex" class="items">
+        <view>
+          id:<text class="tapNav food-name">{{item.id}}</text>
+        </view>
+        <view>
+          回访内容:<text class="tapNav food-name">{{item.content}}</text>
+        </view>
+        <view>
+          客户ID:<text class="tapNav food-name">{{item.customerId}}</text>
+        </view>
+        <view>
+          创建ID:<text class="tapNav food-name">{{item.createBy}}</text>
+        </view>
+        <view>
+          联系人:<text class="tapNav food-name">{{item.contact}}</text>
+        </view>
+        <view>
+          联系人电话:<text class="tapNav food-name">{{item.contactPhone}}</text>
+        </view>
+        <view>
+          创建时间:<text class="tapNav food-name">{{item.createTime}}</text>
+        </view>
+        <view>
+          回访结果:<text class="tapNav food-name">{{item.remarks}}</text>
+        </view>
+        <view>
+          修改时间:<text class="tapNav food-name">{{item.updateTime}}</text>
+        </view>
+        <view>
+          状态:
+          <text wx:if="{{item.status==0}}" class="tapNav food-name">创建</text>
+          <text wx:if="{{item.status==1}}" class="tapNav food-name">待处理</text>
+          <text wx:if="{{item.status==2}}" class="tapNav food-name">关闭</text>
+        </view>
+        <view class="button-box">
+          <van-button round type="info" data-index="{{bindex}}" bindtap="showPopup" form-type='submit'>关闭</van-button>
+        </view>
+      </view>
+</scroll-view>
+<van-toast id="van-toast" />
+<van-dialog
+  use-slot
+  title="备注"
+  show="{{ show }}"
+  show-cancel-button
+  bind:confirm="closeRecord"
+  bind:close="onClose"
+>
+<view class="details">
+  <remark bind:text='onReceive'/>
+</view>
+</van-dialog>

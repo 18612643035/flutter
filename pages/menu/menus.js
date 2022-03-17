@@ -7,7 +7,10 @@ Page({
   data: {
     dataList:{"name":"11"},
     url:{"1502":"system/client/addClient","1503":"system/client/auditClient","1501":"system/client/queryClient",
-        "3200":"system/pact/auditPact","3500":"system/pact/toPending","3300":"system/pact/toPlan"},
+        "3200":"system/pact/auditPact","3500":"system/pact/toPending","3300":"system/pact/toPlan","8200":"system/cservice/crecord",
+        "8400":"system/cservice/cvisit","4200":'system/aservice/pending',"4400":"system/aservice/dispose",
+        "8300":"system/cservice/todo"
+      },
   },
 
   /**
@@ -15,8 +18,17 @@ Page({
    */
   onLoad: function (options) {
     console.log(JSON.parse(options.list));
+    let option = JSON.parse(options.list);
+    let data = [];
+    //过滤掉没有的功能
+    for(var i=0;i<option.length;i++){
+      let id = option[i].id;
+        if(this.data.url[id]){
+          data.push(option[i]);
+        }
+    }
     this.setData({
-      dataList: JSON.parse(options.list)
+      dataList: data
     })
   },
 

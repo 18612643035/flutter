@@ -43,20 +43,32 @@
             </view>
             <view>
               <text>合同计划完成时间:</text>
-              <input name="finishTime" type="text" model:value="{{finishTime}}"/>
+              <!-- <input name="finishTime" type="text" model:value="{{finishTime}}"/> -->
             </view>
             <view>
-              <text>合同计划状态:</text>
-              <label class="radio">
-              <radio value="r1" checked="true"/>选中
-              </label>
-              <label  name="status" class="radio">
-                <radio name="status" value="r2" />未选中
-              </label>
+              <van-datetime-picker
+                class="datetime-picker"
+                type="datetime"
+                item-height="33"
+                value="{{ currentDate }}"
+                min-date="{{ minDate }}"
+                max-date="{{ maxDate }}"
+                bind:input="onInput"
+                show-toolbar="flase"
+              />
             </view>
             <!-- <view>
-              <text>合同计划id:</text><text class="tapNav food-name">{{details.id}}</text>
+              <text>合同计划状态:</text>
+              <radio-group bindchange="handChange">
+                <label class="radio">
+                <radio value="0" checked="{{!details.status}}" />待处理
+                </label>
+                <label  name="status" class="radio">
+                  <radio value="1" checked="{{!!details.status}}" />完成
+                </label>
+              </radio-group>
             </view> -->
           </view>
   </view>
 </van-dialog>
+<van-toast id="van-toast" />

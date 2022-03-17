@@ -1,18 +1,19 @@
 <!--pages/menu/menus.wxml-->
 <scroll-view scroll-y class="content">
-      <view wx:for="{{allData}}" class="items">
+      <button wx:if="{{allData.length}}"  bindtap="goEdit" class="editgo">修改客户</button>
+      <view wx:for="{{allData}}" class="query">
         <view>
-          名称:<text class="tapNav food-name">{{item.name}}</text>
+          <span>名称:</span><text class="tapNav food-name">{{item.name}}</text>
         </view>
         <view>
-          地址:<text class="tapNav food-name">{{item.address}}</text>
+          <span>地址:</span><text class="tapNav food-name">{{item.address}}</text>
         </view>
         <view>
-          联系人:<text class="tapNav food-name">{{item.contact}}</text>
+          <span>联系人:</span><text class="tapNav food-name">{{item.contact}}</text>
         </view>
         <view>
-          联系人:<text class="tapNav food-name">{{item.contactPhone}}</text>
+          <span>联系人电话:</span><text class="tapNav food-name">{{item.contactPhone}}</text>
         </view>
-        
       </view>
 </scroll-view>
+<van-toast id="van-toast" />
