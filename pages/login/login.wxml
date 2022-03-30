@@ -3,7 +3,7 @@
  <view class="section">
    <text>手机号码</text>
    <input placeholder="请输入手机号码" type="number" maxlength="11" bindinput="inputPhoneNum" auto-focus />
-   <text wx:if="{{send}}" class="sendMsg" bindtap="sendMsg">发送</text>
+   <button class="cmt-button sendMsg" wx:if="{{send}}" bindtap="sendMsg"> 发送</button>
    <text wx:if="{{alreadySend}}" class="sendMsg" bindtap="sendMsg">{{second+"s"}}</text>
  </view>
   

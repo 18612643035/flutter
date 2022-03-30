@@ -1,6 +1,9 @@
 <!--pages/menu/menus.wxml-->
 <scroll-view scroll-y class="content">
-      <button wx:if="{{allData.length}}"  bindtap="goEdit" class="editgo">修改客户</button>
+         <view class="bt_box">
+            <button wx:if="{{allData.length}}" class="cmt-button"  bindtap="goEdit" class="editgo">修改客户</button>
+          </view>
+      
       <view wx:for="{{allData}}" class="query">
         <view>
           <span>名称:</span><text class="tapNav food-name">{{item.name}}</text>

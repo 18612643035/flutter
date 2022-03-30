@@ -1,35 +1,35 @@
 <!-- 维保待处理 -->
 <scroll-view scroll-y class="content">
-      <view wx:for="{{allData}}" wx:for-index = "bindex"  class="items">
+      <view wx:for="{{allData}}" wx:for-index = "bindex"  class="query">
         <view>
-          ID:<text class="tapNav food-name">{{item.id}}</text>
+          <span>ID:</span><text class="tapNav food-name">{{item.id}}</text>
         </view>
         <view>
-          维保内容:<text class="tapNav food-name">{{item.content}}</text>
+          <span>维保内容:</span><text class="tapNav food-name">{{item.content}}</text>
         </view>
         <view>
-          维保ID:<text class="tapNav food-name">{{item.customerId}}</text>
+          <span>维保ID:</span><text class="tapNav food-name">{{item.customerId}}</text>
         </view>
         <view>
-          创建ID:<text class="tapNav food-name">{{item.createBy}}</text>
+          <span>创建ID:</span><text class="tapNav food-name">{{item.createBy}}</text>
         </view>
         <view>
-          联系人:<text class="tapNav food-name">{{item.contact}}</text>
+          <span>联系人:</span><text class="tapNav food-name">{{item.contact}}</text>
         </view>
         <view>
-          联系人:<text class="tapNav food-name">{{item.contactPhone}}</text>
+          <span>联系人电话:</span><text class="tapNav food-name">{{item.contactPhone}}</text>
         </view>
         <view>
-          创建时间:<text class="tapNav food-name">{{item.createTime}}</text>
+          <span>创建时间:</span><text class="tapNav food-name">{{item.createTime}}</text>
         </view>
         <view>
-          处理备注:<text class="tapNav food-name">{{item.remarks}}</text>
+          <span>处理备注:</span><text class="tapNav food-name">{{item.remarks}}</text>
         </view>
         <view>
-          修改时间:<text class="tapNav food-name">{{item.updateTime}}</text>
+          <span>修改时间:</span><text class="tapNav food-name">{{item.updateTime}}</text>
         </view>
         <view>
-          状态:
+          <span>状态:</span>
           <text wx:if="{{item.status==0}}" class="tapNav food-name">创建</text>
           <text wx:if="{{item.status==1}}" class="tapNav food-name">待处理</text>
           <text wx:if="{{item.status==2}}" class="tapNav food-name">关闭</text>

@@ -12,6 +12,13 @@ Page({
     code: '',
   },
   onShow: function () {
+    let token = wx.getStorageSync('access_token');
+    console.log(token);
+    if(token){
+      wx.navigateTo({
+        url: '../home/home'
+      })  
+    }
   },
 // 手机号部分
   inputPhoneNum: function (e) {

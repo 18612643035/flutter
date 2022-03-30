@@ -1,39 +1,36 @@
-<!--修改合同计划-->
+<!--待处理合同计划-->
 <text wx-if="{{allData.length<1}}">暂无信息</text>
 <scroll-view scroll-y class="content">
-      <view wx:for="{{allData}}" wx:key = 'index' wx:for-index = "bindex" class="items">
-        <view class="pactCont">
+      <view wx:for="{{allData}}" wx:key = 'index' wx:for-index = "bindex" class="query">
           <View>
-            <text data-index="{{bindex}}">合同计划完成详情:</text><text class="tapNav food-name">{{item.finishContent}}</text>
+            <span data-index="{{bindex}}">合同计划完成详情:</span><text class="tapNav food-name">{{item.finishContent}}</text>
           </View>
           <view>
-            <text data-index="{{bindex}}">合同计划完成时间:</text><text wx:if="{{item.finishTime != null}}" class="tapNav food-name">{{item.finishTime}}</text>
+            <span data-index="{{bindex}}">合同计划完成时间:</span><text wx:if="{{item.finishTime != null}}" class="tapNav food-name">{{item.finishTime}}</text>
           </view>
           <view>
-            <text data-index="{{bindex}}">合同计划id:</text><text class="tapNav food-name">{{item.id}}</text>
+            <span data-index="{{bindex}}">合同计划id:</span><text class="tapNav food-name">{{item.id}}</text>
           </view>
           <view>
-            <text data-index="{{bindex}}">合同内容:</text><text class="tapNav food-name">{{item.content}}</text>
+            <span data-index="{{bindex}}">合同内容:</span><text class="tapNav food-name">{{item.content}}</text>
           </view>
           <view>
-            <text data-index="{{bindex}}">合同计划状态:</text>
+            <span data-index="{{bindex}}">合同计划状态:</span>
             <text wx:if="{{item.status}}" class="tapNav food-name">已完成</text>
             <text wx:if="{{!item.status}}" class="tapNav food-name">未完成</text>
           </view>
           <view class="button-box">
-            <van-button round type="info" data-index="{{bindex}}" bindtap="showPopup" form-type='submit'>修改状态</van-button>
+            <van-button round type="info" data-index="{{bindex}}" bindtap="showPopup" form-type='submit'>完成计划</van-button>
           </view>
-        </view>
       </view>
 </scroll-view>
 <van-dialog
   use-slot
-  title="修改合同状态"
+  title="完成计划"
   show="{{ show }}"
   show-cancel-button
-  confirm-button-open-type="getUserInfo"
   bind:close="onClose"
-  bind:getuserinfo="getUserInfo"
+  bind:confirm="getUserInfo"
 >
 <view class="details">
           <view class="pop-beg">

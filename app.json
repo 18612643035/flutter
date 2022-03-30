@@ -18,13 +18,20 @@
     "pages/system/aservice/pending",
     "pages/system/aservice/dispose",
     "pages/system/cservice/todo",
-    "pages/component/remark"
+    "pages/component/remark",
+    "pages/system/cservice/cpage",
+    "pages/system/aservice/done",
+    "pages/system/aservice/inprocess",
+    "pages/system/pact/page",
+    "pages/system/pact/finishedList",
+    "pages/system/pact/pay",
+    "pages/system/pact/payList"
   ],
   "window": {
     "backgroundColor": "#F6F6F6",
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#F6F6F6",
-    "navigationBarTitleText": "上传文件",
+    "navigationBarTitleText": "美德远健",
     "navigationBarTextStyle": "black"
   },
   "sitemapLocation": "sitemap.json"

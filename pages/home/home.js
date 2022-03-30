@@ -11,7 +11,7 @@ Page({
     images: []
   },
   goFileup: function(){
-    wx.redirectTo({
+    wx.navigateTo({
       url: '/pages/index/index',
     })
   },
@@ -32,12 +32,12 @@ Page({
     })
   },
   goMessage: function(){
-    wx.redirectTo({
+    wx.navigateTo({
       url: '/pages/message/message',
     })
   },
   goMenu: function(){
-    wx.redirectTo({
+    wx.navigateTo({
       url: '/pages/menu/menu',
     })
   },
@@ -49,7 +49,7 @@ Page({
       urls: this.data.images // 需要预览的图片http链接列表
     })
   },
-  onLoad: function(){
+  onShow: function(){
     let _this = this;
     let token = wx.getStorageSync('access_token');
     console.log(token);
@@ -95,6 +95,7 @@ Page({
                       wx.setStorageSync('refresh_token', res.data.refresh_token);
                       config.service.token = res.data.access_token;
                       Notify({ type: 'success', message: 'token验证成功' });
+                      _this.onShow();
                     } else {
                       Notify({ type: 'warning', message: 'token验证失败' });
                       wx.removeStorageSync('access_token');

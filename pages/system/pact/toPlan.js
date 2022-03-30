@@ -9,7 +9,7 @@ Page({
   data: {
     allData:[],
     details:[],
-    isShow:false
+    show: false,
   },
 
   /**
@@ -43,7 +43,7 @@ Page({
     data["id"] = e.target.dataset.id;
     wx.request({
         url: config.service.startPact,    
-        method:"POST", 
+        method:"GET", 
         data:{
           id:e.target.dataset.id
         },   
@@ -58,19 +58,17 @@ Page({
               toast.success('启动已完成');
             }
             else{
-              toast.fail('启动失败');
+              toast.fail(res.data.msg);
             } 
         }
       })
   },
-  onShowList: function(e){
-    console.log(e)
+  showPopup(e) {
     let index = e.target.dataset.index;
     this.setData({
-      details:this.data.allData[index],
-      isShow:true
-  })
-  console.log(this.data.details);
+        details:this.data.allData[index],
+        show:true,
+    })
   },
   /**
    * 生命周期函数--监听页面初次渲染完成

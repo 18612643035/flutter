@@ -18,8 +18,8 @@
             <input name="contactPhone" type="text" value="{{item.contactPhone}}"/>
           </view>
           <input style="display: none;" name="id" type="text" value="{{item.id}}"/>
-          <view class="button-box">
-            <van-button round type="info" form-type='submit'>修改</van-button>
+          <view class="bt_box">
+            <button data-id="{{item.id}}" class="cmt-button" form-type='submit'> 修改</button>
           </view>
         </form>
       </view>

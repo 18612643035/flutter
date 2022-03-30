@@ -75,6 +75,11 @@ button.van-button--round,.cmt-button{
   margin-top: 10px;
   padding-bottom: 10px;
 }
+.details .query
+{
+  height: 15rem;
+  overflow: auto;
+}
 .query>view{
   padding-left: 5px;
   margin-top: 10px;

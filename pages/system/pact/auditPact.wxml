@@ -10,9 +10,9 @@
          </view>
           
           <view class="bt_box">
-          <button class="cmt-button" data-id="{{item.id}}" bindtap="onSubmit"> 通过</button>
-          <button class="cmt-button" data-id="{{item.id}}" bindtap="onReject"> 不通过</button>
-          <button class="cmt-button" data-id="{{item.id}}" bindtap="onClosed"> 关闭</button>
+          <button class="cmt-button" data-index="{{bindex}}" bindtap="onShow1"> 通过</button>
+          <button class="cmt-button" data-index="{{bindex}}" bindtap="onShow2"> 不通过</button>
+          <button class="cmt-button" data-index="{{bindex}}" bindtap="onShow3"> 关闭</button>
           </view>
         </view>
 </scroll-view>
@@ -67,4 +67,38 @@
           </view>
           <button class="cmt-button" bindtap="onHidden">关闭</button>
   </view>
+
+  <van-dialog
+  use-slot
+  title="选择合同制定人"
+  show="{{ show }}"
+  show-cancel-button
+  bind:confirm="onSubmit"
+>
+<view>
+     <van-picker columns="{{ columns }}" default-index="{{ 0 }}" bind:change="onChange" />
+  </view>
+</van-dialog>
+<van-dialog
+  use-slot
+  title="不通过原因"
+  show="{{ show2 }}"
+  show-cancel-button
+  bind:confirm="onReject"
+>
+<view>
+  <remark bind:text='onLog1'/>
+</view>
+</van-dialog>
+<van-dialog
+  use-slot
+  title="关闭原因"
+  show="{{ show3 }}"
+  show-cancel-button
+  bind:confirm="onClosed"
+>
+<view>
+  <remark bind:text='onLog2'/>
+</view>
+</van-dialog>
   <van-toast id="van-toast" />

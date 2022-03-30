@@ -7,7 +7,10 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    allData:[],
+    details:[],
+    show:false,
+    log:''
   },
 
   /**
@@ -66,7 +69,8 @@ Page({
         url: config.service.userFail,    
         method:"POST", 
         data:{
-          id:e.target.dataset.id
+          id:_this.data.details.id,
+          reason:_this
         },   
         header:{
           "Content-Type": "application/x-www-form-urlencoded",
@@ -85,52 +89,19 @@ Page({
         }
       })
   },
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
+  onShow: function(e){
+    console.log(e)
+    let index = e.target.dataset.index;
+    this.setData({
+      details:this.data.allData[index],
+      show:true
+    })
   },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
-  }
+    //组件传递的值
+    onLog:function(e){
+      e.detail.textData
+      this.setData({
+          log:e.detail.textData,
+      })
+    },
 })

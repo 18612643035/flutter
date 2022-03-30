@@ -9,7 +9,14 @@ Page({
   data: {
     allData:[],
     details:[],
-    isShow:false
+    isShow:false,
+    show: false,
+    show2: false,
+    show3: false,
+    columns: ['1','2','3'],
+    handler:'',
+    no:'',
+    close:''
   },
 
   /**
@@ -31,6 +38,29 @@ Page({
               _this.setData({
                   allData:res.data.data.records,
               })
+                //获取合同制定人
+                wx.request({
+                  url: config.service.role+'/CONTRACT_DIRECTOR',    
+                  method:"GET",    
+                  header:{
+                    "content-type":"application/json",
+                    'Authorization': 'Bearer '+config.service.token,
+                  },    
+                  success:function(res){ 
+                      console.log(res) 
+                      if(res.data?.data){
+                        let col = [];
+                        for(var i =0;i<res.data.data.length;i++){
+                          col.push({"text":res.data.data[i].name,"handler":res.data.data[i].userId});
+                        }
+                        console.log(col)
+                        _this.setData({
+                          columns:col,
+                          handler:col[0].handler,
+                        });
+                      }
+                  }
+                })
             }
             else{
               toast.fail('查询失败');
@@ -38,15 +68,41 @@ Page({
         }
       })
   },
+  onChange(event) {
+    const { value } = event.detail;
+    this.setData({
+      handler:value.handler,
+    })
+  },
+  onShow1: function(e){
+    let index = e.target.dataset.index;
+    this.setData({
+        details:this.data.allData[index],
+        show:true,
+    })
+  },
+  onShow2: function(e){
+    let index = e.target.dataset.index;
+    this.setData({
+        details:this.data.allData[index],
+        show2:true,
+    })
+  },
+  onShow3: function(e){
+    let index = e.target.dataset.index;
+    this.setData({
+        details:this.data.allData[index],
+        show3:true,
+    })
+  },
   onSubmit: function(e){
     let _this = this;
-    let data = {};
-    data["id"] = e.target.dataset.id;
     wx.request({
         url: config.service.approved,    
         method:"POST", 
         data:{
-          id:e.target.dataset.id
+          id:_this.data.details.id,
+          director: _this.data.handler
         },   
         header:{
           "Content-Type": "application/x-www-form-urlencoded",
@@ -55,19 +111,19 @@ Page({
         },     
         success:function(res){ 
             console.log(res) 
-            if(res.data?.data?.records){
+            if(res?.data.code == 0){
+              toast.success('成功');
             }
         }
       })
   },onReject: function(e){
     let _this = this;
-    let data = {};
-    data["id"] = e.target.dataset.id;
     wx.request({
         url: config.service.denied,    
         method:"POST", 
         data:{
-          id:e.target.dataset.id
+          id:_this.data.details.id,
+          reason:_this.data.no
         },   
         header:{
           "Content-Type": "application/x-www-form-urlencoded",
@@ -75,18 +131,21 @@ Page({
           'Authorization': 'Bearer '+config.service.token,
         },     
         success:function(res){ 
-            console.log(res) 
+          console.log(res);
+          if(res?.data.code == 0){
+            toast.success('成功');
+          }
+          
         }
       })
   },onClosed: function(e){
     let _this = this;
-    let data = {};
-    data["id"] = e.target.dataset.id;
     wx.request({
         url: config.service.closed,    
         method:"POST", 
         data:{
-          id:e.target.dataset.id
+          id:_this.data.details.id,
+          reason:_this.data.close
         },   
         header:{
           "Content-Type": "application/x-www-form-urlencoded",
@@ -94,8 +153,8 @@ Page({
           'Authorization': 'Bearer '+config.service.token,
         },     
         success:function(res){ 
-          if(!res.data?.data?.records){
-            toast.success('关闭成功');
+          if(res?.data.code == 0){
+            toast.success('成功');
           };  
         }
       })
@@ -113,52 +172,17 @@ Page({
       isShow:false
      })
   },
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
+  //组件传递的值
+  onLog1:function(e){
+  e.detail.textData
+  this.setData({
+      no:e.detail.textData,
+  })
+},
+  onLog2:function(e){
+    e.detail.textData
+    this.setData({
+      close:e.detail.textData,
+    })
   }
 })

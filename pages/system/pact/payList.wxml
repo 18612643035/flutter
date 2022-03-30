@@ -1,0 +1,24 @@
+<!--合同付款记录-->
+<view wx:for="{{allData}}" wx:key = 'index' wx:for-index = "bindex" class="query">
+        <view>
+          <span>合同ID:</span><text class="tapNav food-name">{{item.contractId}}</text>
+        </view>
+        <view>
+          <span> 实际付款实际</span><text>{{item.actualTime}}</text>
+        </view>
+        <view>
+          <span> 实际付款金额</span><text>{{item.amount}}</text>
+        </view>
+        <view>
+          <span> 付款记录id</span><text>{{item.id}}</text>
+        </view>
+        <view>
+          <span> 备注信息</span><text>{{item.remarks}}</text>
+        </view>
+        <view>
+          <span>付款状态:</span>
+          <text wx:if="{{item.status==0}}" class="tapNav food-name">未付款</text>
+          <text wx:if="{{itm.status==1}}" class="tapNav food-name">已付款</text>
+        </view>
+</view>
+<van-toast id="van-toast" />

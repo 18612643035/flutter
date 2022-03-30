@@ -7,6 +7,11 @@
 }
 .section input{
   margin-left: 10px;
+  border-bottom: 1px solid #ebeef5;
+  width: 8rem;
+}
+button.sendMsg{
+  margin:0;
 }
 .container{
   display: flex;

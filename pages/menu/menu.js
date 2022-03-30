@@ -7,7 +7,7 @@ Page({
    */
   data: {
     dataList:{"name":"退出登录"},
-
+    url:[1500,3000,8000,4000,1600]
   },
   selectNav: function(e){
     // this.setData({
@@ -20,7 +20,7 @@ Page({
       wx.removeStorageSync('access_token');
       return;
     }
-    wx.navigateTo({
+    wx.redirectTo({
       url: '../menu/menus?list='+JSON.stringify(e.target.dataset.list),
     })
   },
@@ -30,7 +30,7 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
+  onShow: function (options) {
     let _this = this;
     wx.request({
       url: `${config.service.menu}`, 
@@ -42,10 +42,18 @@ Page({
       success: function (res) {
         console.log(res)
         if (res.data && res.data?.data) {
-          res.data.data.push({"name":"退出登录"});
+          let data = [];
+          //过滤掉没有的功能
+          for(var i=0;i<res.data.data.length;i++){
+            let id = res.data.data[i].id;
+              if(_this.data.url.indexOf(id) != -1){
+                data.push(res.data.data[i]);
+              }
+          }
+          data.push({"name":"退出登录"});
           _this.setData(
             {
-              dataList: res.data.data
+              dataList: data
             }
           )
         }
@@ -55,53 +63,4 @@ Page({
       }
     });
   },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
-  }
 })

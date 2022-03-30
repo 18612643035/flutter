@@ -1,4 +1,4 @@
-<!--待启动计划-->
+<!--已完成合同列表-->
 <text wx-if="{{allData.length<1}}">暂无信息</text>
 <scroll-view scroll-y class="content">
       <view wx:for="{{allData}}" wx:key = 'index' wx:for-index = "bindex" class="query">
@@ -8,9 +8,6 @@
         <view>
           <span>客户</span><text>{{item.customerId}}</text>
         </view>
-        <view class="bt_box">
-            <button data-id="{{item.id}}" class="cmt-button" bindtap="onSubmit"> 启动合同</button>
-          </view>
       </view>
 </scroll-view>
 <van-dialog

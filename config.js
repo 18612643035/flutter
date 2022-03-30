@@ -3,12 +3,13 @@
  */
 
 // 此处主机域名修改成腾讯云解决方案分配的域名
-//var host = 'http://192.168.0.183:2119';
-var host = 'http://192.168.0.250:8778/cpx';
-var user = 'http://192.168.0.250:8778/auth';
-var client = 'http://192.168.0.250:8778/contract';
-var admin = 'http://192.168.0.250:8778/admin';
-var maintain = 'http://192.168.0.250:8778/maintain';
+//var ip = 'https://www.madecloud.net:7012';
+var ip = 'http://192.168.0.250';
+var host = ip+'/cpx';
+var user = ip+'/auth';
+var client = ip+'/contract';
+var admin = ip+'/admin';
+var maintain = ip+'/contract';
 
 var config = {
 
@@ -32,8 +33,13 @@ var config = {
         pendingList: `${client}/contract/pendingList`,//合同列表
         approved: `${client}/contract/approved`,//合同通过
         denied: `${client}/contract/denied`,//合同不通过
-        pactPending: `${client}/contractPlan/myPending`,//待完成计划列表
-        planningList: `${client}/contract/planningList`,//待计划列表
+        pactPending: `${client}/contractPlan/myPending`,//get待完成计划列表
+        planningList: `${client}/contract/planningList`,//合同待计划列表
+        pactPage: `${client}/contract/page`,//合同进行中列表
+        finishedList: `${client}/contract/finishedList`,//合同已完成列表
+        pay: `${client}/contractPayment/page`,//合同付款记录
+        paymentList: `${client}/contract/paymentList`,//代付款列表
+        
         contractPlan: `${client}/contractPlan/finish`,//完成合同计划
         startPact: `${client}/contract/start`,//启动计划
         closed: `${client}/contract/closed`, //关闭合同
@@ -42,13 +48,15 @@ var config = {
         cserviceTodu: `${maintain}/customersupport/myTodo`, //获取待处理客服记录列表
         closeCus: `${maintain}/customersupport/close`, //关闭客服记录
         cvisitPage: `${maintain}/returnVisit/page`, //回访记录
-        vClose: `${maintain}/returnVisit/close`, //回访记录
+        vClose: `${maintain}/returnVisit/close`, //关闭回访记录
         apending: `${maintain}/maintenance/pending`, //待指派维保列表
         assign: `${maintain}/maintenance/assign`, //指派给指定维保
         cassign: `${maintain}/customersupport/assign`, //指派给指定客服
         aservicemy:`${maintain}/maintenance/my`, //当前待处理维保
         aclose:`${maintain}/maintenance/close`, //关闭维保
         log:`${maintain}/maintenanceLog`, //新增维保日志
+        aserviceDone:`${maintain}/maintenance/done`, //已完成维保
+        inmProcess:`${maintain}/maintenance/inProcess`, //进行中维保
     },
     token:''
 };

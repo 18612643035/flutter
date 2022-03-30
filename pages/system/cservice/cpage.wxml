@@ -1,4 +1,4 @@
-<!-- 待指派客服记录查询 -->
+<!-- 客服记录查询 -->
 <scroll-view scroll-y class="content">
       <view wx:for="{{allData}}" wx:for-index = "bindex" class="query">
         <view>
@@ -34,21 +34,7 @@
           <text wx:if="{{item.status==1}}" class="tapNav food-name">待处理</text>
           <text wx:if="{{item.status==2}}" class="tapNav food-name">关闭</text>
         </view>
-        <view class="button-box">
-          <van-button round type="info" data-index="{{bindex}}" bindtap="showPopup" form-type='submit'>指派</van-button>
-        </view>
+
       </view>
 </scroll-view>
-<van-dialog
-  use-slot
-  title="指派处理人"
-  show="{{ show }}"
-  show-cancel-button
-  bind:close="onClose"
-  bind:confirm="getUserInfo"
->
-<view class="details">
-     <van-picker columns="{{ columns }}" default-index="{{ 0 }}" bind:change="onChange" />
-  </view>
-</van-dialog>
 <van-toast id="van-toast" />

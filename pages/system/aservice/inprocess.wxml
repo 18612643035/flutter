@@ -1,14 +1,14 @@
-<!-- 待指派客服记录查询 -->
+<!-- 进行中维保列表 -->
 <scroll-view scroll-y class="content">
       <view wx:for="{{allData}}" wx:for-index = "bindex" class="query">
         <view>
           <span>ID:</span><text class="tapNav food-name">{{item.id}}</text>
         </view>
         <view>
-          <span>客服记录内容:</span><text class="tapNav food-name">{{item.content}}</text>
+          <span>维保内容:</span><text class="tapNav food-name">{{item.content}}</text>
         </view>
         <view>
-          <span>客户ID:</span><text class="tapNav food-name">{{item.customerId}}</text>
+          <span>维保ID:</span><text class="tapNav food-name">{{item.customerId}}</text>
         </view>
         <view>
           <span>创建ID:</span><text class="tapNav food-name">{{item.createBy}}</text>
@@ -17,7 +17,7 @@
           <span>联系人:</span><text class="tapNav food-name">{{item.contact}}</text>
         </view>
         <view>
-          <span>联系人电话:</span><text class="tapNav food-name">{{item.contactPhone}}</text>
+          <span>联系人:</span><text class="tapNav food-name">{{item.contactPhone}}</text>
         </view>
         <view>
           <span>创建时间:</span><text class="tapNav food-name">{{item.createTime}}</text>
@@ -34,21 +34,7 @@
           <text wx:if="{{item.status==1}}" class="tapNav food-name">待处理</text>
           <text wx:if="{{item.status==2}}" class="tapNav food-name">关闭</text>
         </view>
-        <view class="button-box">
-          <van-button round type="info" data-index="{{bindex}}" bindtap="showPopup" form-type='submit'>指派</van-button>
-        </view>
       </view>
+
 </scroll-view>
-<van-dialog
-  use-slot
-  title="指派处理人"
-  show="{{ show }}"
-  show-cancel-button
-  bind:close="onClose"
-  bind:confirm="getUserInfo"
->
-<view class="details">
-     <van-picker columns="{{ columns }}" default-index="{{ 0 }}" bind:change="onChange" />
-  </view>
-</van-dialog>
 <van-toast id="van-toast" />

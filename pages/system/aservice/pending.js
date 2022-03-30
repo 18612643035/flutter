@@ -33,8 +33,8 @@ Page({
                 allData:res.data.data.records,
               })
             }else{
-              toast.fail('查询失败');
-            }
+              toast.fail(res.data.msg);
+            } 
         }
       })
     //获取指派人
@@ -58,6 +58,9 @@ Page({
               handler:col[0].handler,
             })
           }
+          else{
+            toast.fail(res.data.msg);
+          } 
       }
     })
   },
@@ -80,7 +83,7 @@ Page({
     let _this = this;
     wx.request({
       url: config.service.assign,    
-      method:"GET",    
+      method:"POST",    
       header:{
         "content-type":"application/x-www-form-urlencoded",
         'Authorization': 'Bearer '+config.service.token,
@@ -94,6 +97,9 @@ Page({
           if(res.data?.data){
             toast.success('指派成功');
           }
+          else{
+            toast.fail(res.data.msg);
+          } 
       }
     })
   }

@@ -1,1 +1,4 @@
 /* pages/system/aservice/dispose.wxss */
+view.button-box{
+  justify-content: space-evenly;
+}
