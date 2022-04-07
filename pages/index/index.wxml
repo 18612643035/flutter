@@ -31,8 +31,22 @@
     <!-- <input class="describe" type="text" value="asdfadf" /> -->
     <textarea maxlength='123456789' bindinput="bzInput" class="describe" value="{{context}}"/>
 </view>
+<van-dialog
+  use-slot
+  title="编辑"
+  show="{{ show }}"
+  show-cancel-button
+  bind:close="onClose"
+  bind:confirm="edit"
+>
+<view class="pop-beg">
+            <view style="display: block;">
+                <text style="margin-left: 5px;">选择客户:</text>
+                <van-picker columns="{{ columns }}" item-height="33" visible-item-count="3"  default-index="{{ 0 }}" bind:change="onChange" />
+            </view>
+  </view>
+</van-dialog>
 <view class='subBtnBox'>
     <button class='subBtn' type='button' bindtap='subFormData'>我要上传</button>
-    
 </view>
 

@@ -11,7 +11,7 @@ Page({
     allData:[],
     details:[],
     show: false,
-    finishTime:''
+    signingTime:''
   },
 
   /**
@@ -34,8 +34,8 @@ Page({
             })
           }
           else{
-            toast.fail('查询失败');
-          } 
+            toast.fail(res.data.msg);
+          }  
         }
       })
   },
@@ -44,7 +44,7 @@ Page({
     this.setData({
         details:this.data.allData[index],
         show:true,
-        finishTime:util.formatTime(new Date(this.data.details.finishTime))
+        signingTime:util.formatTime(new Date(this.data.allData[index].signingTime))
     })
   },
   onTap:function(e){

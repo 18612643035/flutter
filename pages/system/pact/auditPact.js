@@ -1,6 +1,7 @@
 // pages/system/pact/auditPact.js
 var config = require('../../../config')
 import toast from '../../../dist/toast/toast';
+var util = require('../../../utils/util');
 Page({
 
   /**
@@ -9,6 +10,7 @@ Page({
   data: {
     allData:[],
     details:[],
+    signingTime:'',
     isShow:false,
     show: false,
     show2: false,
@@ -63,8 +65,8 @@ Page({
                 })
             }
             else{
-              toast.fail('查询失败');
-            }
+              toast.fail(res.data.msg);
+            }  
         }
       })
   },
@@ -113,7 +115,13 @@ Page({
             console.log(res) 
             if(res?.data.code == 0){
               toast.success('成功');
+              setTimeout(() => {
+                _this.onLoad(); 
+              },1000);
             }
+            else{
+              toast.fail(res.data.msg);
+            }  
         }
       })
   },onReject: function(e){
@@ -134,7 +142,13 @@ Page({
           console.log(res);
           if(res?.data.code == 0){
             toast.success('成功');
+            setTimeout(() => {
+              _this.onLoad(); 
+            },1000);
           }
+          else{
+            toast.fail(res.data.msg);
+          }  
           
         }
       })
@@ -155,7 +169,13 @@ Page({
         success:function(res){ 
           if(res?.data.code == 0){
             toast.success('成功');
-          };  
+            setTimeout(() => {
+              _this.onLoad(); 
+            },1000);
+          }
+          else{
+            toast.fail(res.data.msg);
+          }  
         }
       })
   },
@@ -164,7 +184,8 @@ Page({
     let index = e.target.dataset.index;
     this.setData({
       details:this.data.allData[index],
-      isShow:true
+      isShow:true,
+      signingTime:util.formatTime(new Date(this.data.allData[index].signingTime))
   })
   },
   onHidden: function(){

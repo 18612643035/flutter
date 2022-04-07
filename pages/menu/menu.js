@@ -20,7 +20,7 @@ Page({
       wx.removeStorageSync('access_token');
       return;
     }
-    wx.redirectTo({
+    wx.navigateTo({
       url: '../menu/menus?list='+JSON.stringify(e.target.dataset.list),
     })
   },

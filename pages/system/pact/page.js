@@ -34,8 +34,8 @@ Page({
             })
           }
           else{
-            toast.fail('查询失败');
-          } 
+            toast.fail(res.data.msg);
+          }  
         }
       })
   },

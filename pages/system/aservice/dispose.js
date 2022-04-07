@@ -60,6 +60,9 @@ Page({
                 allData:res.data.data.records,
             })
           }
+          else{
+            toast.fail(res.data.msg);
+          }
       }
     })
   },

@@ -50,14 +50,16 @@ Page({
           "Accpet": "application/json",
           'Authorization': 'Bearer '+config.service.token,
         },     
-        success:function(res){ 
+        success:function(res){
             console.log(res);
             if(res?.data?.code == 0){
-              toast.success('审核通过已完成');
-  
+              toast.success('已完成');
+              setTimeout(() => {
+                _this.onLoad(); 
+              },1000);
             }
             else{
-              toast.fail('审核通过失败');
+              toast.fail(res.data.msg);
             } 
         }
       })
@@ -70,7 +72,7 @@ Page({
         method:"POST", 
         data:{
           id:_this.data.details.id,
-          reason:_this
+          reason:_this.data.log
         },   
         header:{
           "Content-Type": "application/x-www-form-urlencoded",
@@ -80,16 +82,18 @@ Page({
         success:function(res){ 
             console.log(res) 
             if(res?.data?.code == 0){
-              toast.success('审核不通过已完成');
-  
+              toast.success('已完成');
+              setTimeout(() => {
+                _this.onLoad(); 
+              },1000);
             }
             else{
-              toast.fail('审核不通过失败');
+              toast.fail(res.data.msg);
             } 
         }
       })
   },
-  onShow: function(e){
+  onShowDialog: function(e){
     console.log(e)
     let index = e.target.dataset.index;
     this.setData({

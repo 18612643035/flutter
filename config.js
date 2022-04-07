@@ -3,9 +3,9 @@
  */
 
 // 此处主机域名修改成腾讯云解决方案分配的域名
-//var ip = 'https://www.madecloud.net:7012';
-var ip = 'http://192.168.0.250';
-var host = ip+'/cpx';
+var ip = 'https://www.madecloud.net:7012';
+//var ip = 'http://192.168.0.250';
+var host = ip+'/contract';
 var user = ip+'/auth';
 var client = ip+'/contract';
 var admin = ip+'/admin';
@@ -17,13 +17,17 @@ var config = {
     service: {
         host,
         getAll: `${host}/vlog/getAll`,
+        getMy: `${host}/vlog/getMy`,
+        deleteMy: `${host}/vlog/delete`,
         // 上传图片 上传视频
         upFiles: `${host}/vlog/addFile`,
         conText: `${host}/vlog/save`,
         login: `${user}/oauth/token`,
         phone: `${user}/sms/send`,
         addObj: `${client}/customer`,
+        dict: `${client}/customer/dict`,//客户字典
         queryObj: `${client}/customer/myPage`, //我的客户列表
+        queryAll: `${client}/customer/officialCustomer`, //所有客户列表
         userPending: `${client}/customer/pending`, //待审核客户
         userPass: `${client}/customer/pass`, //审核通过
         userFail: `${client}/customer/fail`, //审核通过
@@ -38,6 +42,7 @@ var config = {
         pactPage: `${client}/contract/page`,//合同进行中列表
         finishedList: `${client}/contract/finishedList`,//合同已完成列表
         pay: `${client}/contractPayment/page`,//合同付款记录
+        updatePayStatus: `${client}/contractPayment/updatePayStatus`,//合同付款记录
         paymentList: `${client}/contract/paymentList`,//代付款列表
         
         contractPlan: `${client}/contractPlan/finish`,//完成合同计划

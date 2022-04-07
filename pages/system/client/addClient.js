@@ -14,7 +14,31 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    let _this = this;
+    wx.request({
+        url: config.service.queryObj,    
+        method:"GET",    
+        header:{
+          "content-type":"application/json",
+          'Authorization': 'Bearer '+config.service.token,
+        },     
+        success:function(res){ 
+            console.log(res) 
+            if(res.data?.data?.records){
+              toast.success('查询成功');
+              _this.setData({
+                  allData:res.data.data.records,
+              })
+            }else{
+              toast.fail(res.data.msg);
+            }
+        }
+      })
+  },
+  goEdit:function(e){
+    wx.navigateTo({
+      url: './editClient'
+    })
   },
   bindKeyInput: function (e) {
     this.setData({
@@ -24,6 +48,7 @@ Page({
   formSubmit: function(e){
     console.log(e.detail);
     let data = {};
+    const _this = this;
     data["name"] = e.detail.value.name;
     data["address"] = e.detail.value.address;
     data["contact"] = e.detail.value.contact;
@@ -41,10 +66,12 @@ Page({
           console.log(res) 
           if(res?.data?.code == 0){
             toast.success('新增成功');
-
+            setTimeout(() => {
+              _this.onLoad(); 
+            },1000);
           }
           else{
-            toast.fail('新增失败');
+            toast.fail(res.data.msg);
           }  
       }
     })

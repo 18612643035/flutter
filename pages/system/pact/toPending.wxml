@@ -36,7 +36,7 @@
           <view class="pop-beg">
             <view>
               <text>合同计划完成情况:</text>
-              <input name="finishContent" type="text" model:value="{{finishContent}}"/>
+              <input bindinput='inputChange' name="finishContent" type="text" model:value="{{finishContent}}"/>
             </view>
             <view>
               <text>合同计划完成时间:</text>

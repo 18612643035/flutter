@@ -2,11 +2,12 @@
 <text wx-if="{{allData.length<1}}">暂无信息</text>
 <scroll-view scroll-y class="content">
       <view wx:for="{{allData}}" wx:key = 'index' wx:for-index = "bindex" class="query">
+          <button class="cmt-button" bindtap="onShowList" data-index="{{bindex}}"> 合同详情</button>
           <view>
             <span bindtap="onShowList" data-index="{{bindex}}">合同编号:</span><text class="tapNav food-name">{{item.serialNumber}}</text>
           </view>
          <view>
-          <span>客户:</span><text>{{item.customerId}}</text>
+          <span>客户:</span><text>{{item.customer}}</text>
          </view>
           
           <view class="bt_box">
@@ -16,58 +17,80 @@
           </view>
         </view>
 </scroll-view>
-<view class="details" wx:if="{{isShow}}">
-          <view class="pop-beg">
+<van-dialog
+  use-slot
+  title="详情"
+  show="{{ isShow }}"
+  show-cancel-button
+  bind:close="onClose"
+>
+<view class="dialog">
+          <view class="query">
             <view>
-              <text>id:</text><text>{{details.id}}</text>
+              <span>id:</span><text>{{details.id}}</text>
             </view>
             <view>
-              <text>合同编号:</text>
+              <span>合同编号:</span>
               <text>{{details.serialNumber}}</text>
             </view>
             <view>
-              <text>客户:</text><text>{{details.customerId}}</text>
+              <span>客户:</span><text>{{details.customer}}</text>
             </view>
             <view>
-              <text>机构名称:</text><text>{{details.partyA}}</text>
+              <span>机构名称:</span><text>{{details.partyA}}</text>
             </view>
             <view>
-              <text>乙方:</text><text>{{details.partyB}}</text>
+              <span>乙方:</span><text>{{details.partyB}}</text>
             </view>
             <view>
-              <text>详细地址:</text><text>{{details.address}}</text>
+              <span>详细地址:</span><text>{{details.address}}</text>
             </view>
             <view>
-              <text>信息科联系人:</text><text>{{details.infoOfficeMan}}</text>
+              <span>信息科联系人:</span><text>{{details.infoOfficeMan}}</text>
             </view>
             <view>
-              <text>信息科联系电话:</text><text>{{details.infoOfficeTelno}}</text>
+              <span>信息科联系电话:</span><text>{{details.infoOfficeTelno}}</text>
             </view>
             <view>
-              <text>科室名称:</text><text>{{details.deptName}}</text>
+              <span>科室名称:</span><text>{{details.deptName}}</text>
             </view>
             <view>
-              <text>科室联系人:</text><text>{{details.deptMan}}</text>
+              <span>科室联系人:</span><text>{{details.deptMan}}</text>
             </view>
             <view>
-              <text>科室联系电话':</text><text>{{details.deptTelno}}</text>
+              <span>科室联系电话':</span><text>{{details.deptTelno}}</text>
             </view>
             <view>
-              <text>销售:</text><text>{{details.saleName}}</text>
+              <span>销售:</span><text>{{details.saleName}}</text>
             </view>
             <view>
-              <text>合同签订时间':</text><text>{{details.signingTime}}</text>
+              <span>合同签订时间':</span><text>{{details.signingTime}}</text>
             </view>
             <view>
-              <text>状态':</text><text>{{details.status}}</text>
+              <span>合同创建时间':</span><text>{{details.createTime}}</text>
             </view>
             <view>
-              <text>支付状态':</text><text>{{details.payStatus}}</text>
+              <span>合同更新时间':</span><text>{{details.updateTime}}</text>
+            </view>
+            <view>
+              <span>状态:</span>
+              <text wx:if="{{details.status==0}}" class="tapNav food-name">草稿</text>
+              <text wx:if="{{details.status==1}}" class="tapNav food-name">待审核</text>
+              <text wx:if="{{details.status==2}}" class="tapNav food-name">拒绝</text>
+              <text wx:if="{{details.status==9}}" class="tapNav food-name">关闭</text>
+              <text wx:if="{{details.status==11}}" class="tapNav food-name">通过</text>
+              <text wx:if="{{details.status==12}}" class="tapNav food-name">启动</text>
+              <text wx:if="{{details.status==13}}" class="tapNav food-name">完成</text>
+            </view>
+            <view>
+              <span>支付状态:</span>
+              <text wx:if="{{details.payStatus==0}}" class="tapNav food-name">未支付</text>
+              <text wx:if="{{details.payStatus==1}}" class="tapNav food-name">部分支付</text>
+              <text wx:if="{{details.payStatus==2}}" class="tapNav food-name">已支付</text>
             </view>
           </view>
-          <button class="cmt-button" bindtap="onHidden">关闭</button>
-  </view>
-
+        </view>
+</van-dialog>
   <van-dialog
   use-slot
   title="选择合同制定人"

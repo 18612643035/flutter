@@ -32,7 +32,7 @@ Page({
                   allData:res.data.data.records,
               })
             }else{
-              toast.fail('查询失败');
+              toast.fail(res.data.msg);
             }
         }
       })
@@ -61,6 +61,9 @@ Page({
             console.log(res) 
             if(res.data?.data){
               toast.success('关闭成功');
+            }
+            else{
+              toast.fail(res.data.msg);
             }
         }
       })

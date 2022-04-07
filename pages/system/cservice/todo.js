@@ -62,6 +62,9 @@ Page({
             if(res.data?.data){
               toast.success('关闭成功');
             }
+            else{
+              toast.fail(res.data.msg);
+            }
         }
       })
     },

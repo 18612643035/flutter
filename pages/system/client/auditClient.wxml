@@ -16,7 +16,7 @@
         </view>
         <view class="bt_box">
           <button class="cmt-button" data-id="{{item.id}}" bindtap="onSubmit"> 通过</button>
-          <button class="cmt-button" data-index="{{bindex}}" bindtap="onShow"> 不通过</button>
+          <button class="cmt-button" data-index="{{bindex}}" bindtap="onShowDialog"> 不通过</button>
           </view>
       </view>
 </scroll-view>

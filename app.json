@@ -34,5 +34,9 @@
     "navigationBarTitleText": "美德远健",
     "navigationBarTextStyle": "black"
   },
+  "usingComponents": {
+    "van-tab": "./dist/tab/index",
+    "van-tabs": "./dist/tabs/index"
+  },
   "sitemapLocation": "sitemap.json"
 }

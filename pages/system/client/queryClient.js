@@ -15,7 +15,7 @@ Page({
   onLoad: function (options) {
     let _this = this;
     wx.request({
-        url: config.service.queryObj,    
+        url: config.service.queryAll,    
         method:"GET",    
         header:{
           "content-type":"application/json",

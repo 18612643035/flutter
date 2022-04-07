@@ -25,12 +25,16 @@ page{
   padding-top: 10px;
   justify-content: center;
 }
+.pop-beg{
+  padding: 0 5px;
+}
 .pop-beg>view{
   display: flex;
   flex-direction: row;
 }
 .pop-beg input{
   border-bottom: 1px solid rgb(133, 133, 133);
+  margin-left: 1rem;
 }
 .select-wrap{
   width: 50%;
@@ -106,4 +110,8 @@ button.van-button--round,.cmt-button{
   font-size: 12px;
   line-height: 30px;
   margin-top: 1rem;
+}
+.dialog{
+  max-height: 300px;
+  overflow: auto;
 }

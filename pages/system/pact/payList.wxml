@@ -20,5 +20,42 @@
           <text wx:if="{{item.status==0}}" class="tapNav food-name">未付款</text>
           <text wx:if="{{itm.status==1}}" class="tapNav food-name">已付款</text>
         </view>
+        <view class="bt_box">
+            <button data-index="{{bindex}}" class="cmt-button" bindtap="showPopup">编辑</button>
+        </view>
 </view>
 <van-toast id="van-toast" />
+<van-dialog
+  use-slot
+  title="编辑"
+  show="{{ show }}"
+  show-cancel-button
+  bind:close="onClose"
+  bind:confirm="edit"
+>
+<view class="pop-beg">
+             <view>
+              <text>备注:</text>
+              <input bindinput='inputChange' name="finishContent" type="text" model:value="{{finishContent}}"/>
+            </view>
+            <view>
+              <text>实际付款时间:</text>
+            </view>
+           <view>
+              <van-datetime-picker
+                class="datetime-picker"
+                type="datetime"
+                item-height="33"
+                visible-item-count="3"
+                value="{{ currentDate }}"
+                min-date="{{ minDate }}"
+                max-date="{{ maxDate }}"
+                bind:input="onInput"
+              />
+            </view>
+            <view style="display: block;">
+                <text>状态:</text>
+                <van-picker columns="{{ columns }}" item-height="33" visible-item-count="2"  default-index="{{ 0 }}" bind:change="onChange" />
+            </view>
+  </view>
+</van-dialog>

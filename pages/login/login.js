@@ -174,7 +174,7 @@ Page({
           })  
         } else {
           wx.showToast({
-            title: '验证失败',
+            title: res.data.msg,
           })
         }
       },

@@ -14,12 +14,31 @@ Page({
       upFilesProgress:false,
       maxUploadLen:19,
       context:'',
+      id:0,
+      columns: ['1','2','3'],
   },
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-  
+  onLoad: function () {
+      const _this = this;
+      console.log(1)
+    wx.request({ 
+      url: config.service.dict,  //获取用户信息  
+      method:"GET",    
+      header:{
+        "content-type":"application/json",
+        'Authorization': 'Bearer '+config.service.token,
+      },     
+      success:function(res){ 
+          console.log(res) 
+          let col = [];
+          for(let i=0;i<res.data.data.length;i++){
+            col.push({"text":res.data.data[i].name,"id":res.data.data[i].id});
+          }
+            _this.setData({
+                columns:col,
+                id:col[0].id
+            })
+      }
+    })
   },
   // 预览图片
   previewImg: function (e) {
@@ -115,13 +134,13 @@ Page({
       upData['url'] = config.service;
       
       wx.request({
-        url: upData.url.conText+"?name=admin&content="+_this.data.context,  
+        url: upData.url.conText+"?customerId="+_this.data.id+"&content="+_this.data.context,  
         data:{'name':'admin','content':_this.data.context},   
         method:"POST",    
         header:{
             "Content-Type":"application/x-www-from-urlencoded",
-            "Accpet": "application/json"
-        },   
+            'Authorization': 'Bearer '+config.service.token,
+        }, 
         success:function(res){ 
             console.log(res) 
             console.log(res.data)

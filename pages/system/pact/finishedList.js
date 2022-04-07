@@ -1,6 +1,7 @@
 // pages/system/pact/toPlan.js
 var config = require('../../../config')
 import toast from '../../../dist/toast/toast';
+var util = require('../../../utils/util');
 Page({
 
   /**
@@ -10,6 +11,7 @@ Page({
     allData:[],
     details:[],
     show: false,
+    signingTime:''
   },
 
   /**
@@ -32,8 +34,8 @@ Page({
             })
           }
           else{
-            toast.fail('查询失败');
-          } 
+            toast.fail(res.data.msg);
+          }  
         }
       })
   },
@@ -42,6 +44,7 @@ Page({
     this.setData({
         details:this.data.allData[index],
         show:true,
+        signingTime:util.formatTime(new Date(this.data.allData[index].signingTime))
     })
   },
 })

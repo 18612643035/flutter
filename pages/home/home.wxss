@@ -3,10 +3,7 @@
   float: right;
   margin-top: 10px;
   margin-right: 5px;
-}
-.optContent{
-  clear: both;
-  text-indent: 8px;
+  display: flex;
 }
 .listTitle{
   text-align: left;

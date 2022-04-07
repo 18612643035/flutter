@@ -33,6 +33,7 @@ Page({
   },
   formSubmit: function(e){
     console.log(e.detail);
+    const _this = this;
     let data = {};
     data["name"] = e.detail.value.name;
     data["address"] = e.detail.value.address;
@@ -52,10 +53,12 @@ Page({
           console.log(res) 
           if(res?.data?.code == 0){
             toast.success('修改成功');
-
+            setTimeout(() => {
+              _this.onLoad(); 
+            },1000);
           }
           else{
-            toast.fail('修改失败');
+            toast.fail(res.data.msg);
           } 
       }
     })

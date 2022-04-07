@@ -82,7 +82,7 @@ page{
     width: 80%;
     border: 1px solid #333;
     border-radius: 10px;
-    min-height: 100px;
+    height: 100px;
     padding: 2%;
     font-size: 1rem;
     margin-top: 1rem;

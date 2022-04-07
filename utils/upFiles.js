@@ -110,6 +110,10 @@ var upFilesFun = (t, data, progress, success) =>{
         filePath: filesPath[startIndex],
         name: name,
         formData: formData,
+        header:{
+            "Content-Type":"application/x-www-from-urlencoded",
+            'Authorization': 'Bearer '+config.service.token,
+        },
         success: function (res) {
             //var data = res.data
             if (startIndex == filesPath.length - 1 ){
@@ -124,6 +128,9 @@ var upFilesFun = (t, data, progress, success) =>{
                     title: '上传成功',
                     icon: "loading",
                     duration: 1000
+                  })
+                  wx.navigateTo({
+                    url: '/pages/home/home',
                   })
             }else{
                 startIndex++;

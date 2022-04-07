@@ -59,8 +59,8 @@ Page({
               })
             }
             else{
-              toast.fail('查询失败');
-            }
+              toast.fail(res.data.msg);
+            }  
         }
       })
   },
@@ -90,9 +90,15 @@ Page({
             }
             else{
               toast.fail(res.data.msg);
-            } 
+            }  
         }
       })
+  },
+  inputChange: function (e) {
+    var val = e.detail.value
+    this.setData({
+      finishContent: val
+    })
   },
   showPopup(e) {
     let index = e.target.dataset.index;
