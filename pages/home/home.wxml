@@ -3,12 +3,12 @@
   </view>
   <view class="optBt">
     <!-- <text bindtap='goMessage' class='iconfont icon-tongzhi'></text> -->
-    <text style="margin-right: 5px; line-height: 30px;">{{name}}</text>
+    <text style="margin-right: 5px; line-height: 30px;">欢迎您，{{name}}</text>
     <text bindtap='goFileup' class='iconfont icon-icon_common_add'></text>
   </view>
 </view>
 <van-notify id="van-notify" />
-<van-tabs active="{{ active }}" bind:change="onChange">
+<van-tabs active="{{ active }}"  bind:change="onChange">
   <van-tab title="所有数据">
     <view class="container" wx:for="{{allData}}" wx:for-index="key" wx:for-item="db">
       <view class="uploadimgbox">

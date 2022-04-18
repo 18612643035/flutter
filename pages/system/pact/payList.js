@@ -11,13 +11,14 @@ Page({
     show:false,
     details:[],
     status:0,
-    columns: ['1','2','3'],
+    columns: [{"text":"未付款","status":0},{"text":"已付款","status":1}],
     minHour: 10,
     maxHour: 20,
     minDate: new Date(2000, 10, 1).getTime(),
     maxDate: new Date(2030, 10, 1).getTime(),
     currentDate: new Date().getTime(),
-    remarks:''
+    remarks:'',
+    options:''
   },
 
   /**
@@ -25,8 +26,17 @@ Page({
    */
   onLoad: function (options) {
     let _this = this;
-    console.log(JSON.parse(options.list));
-    let id = JSON.parse(options.list);
+    let db;
+    if(options){
+      _this.setData({
+        options:options,
+      })
+      db = options;
+    }
+    else{
+      db = _this.data.options
+    }
+    let id = JSON.parse(db.list);
     wx.request({
       url: config.service.pay,    
       method:"GET",    
@@ -64,14 +74,14 @@ Page({
   showPopup:function(e){
     let index = e.target.dataset.index;
     console.log(e.target)
-    let col = [{"text":"未付款","status":0},{"text":"已付款","status":1}]
-    console.log(col)
     this.setData({
         details:this.data.allData[index],
         show:true,
         status:this.data.allData[index].status,
-        columns:col,
     })
+    let picker = this.selectComponent(".picker");
+    picker.setColumnIndex(0,this.data.allData[index].status); //设置默认索引
+    console.log(this.data.status)
   },
   inputChange: function (e) {
     var val = e.detail.value
@@ -97,8 +107,11 @@ Page({
       },    
       success:function(res){ 
           console.log(res) 
-          if(res.data?.data){
-            toast.success('指派成功');
+          if(res.data.code == 0){
+            toast.success('成功');
+            setTimeout(() => {
+              _this.onLoad(); 
+            },1000);
           }
       }
     })

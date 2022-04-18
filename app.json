@@ -25,7 +25,9 @@
     "pages/system/pact/page",
     "pages/system/pact/finishedList",
     "pages/system/pact/pay",
-    "pages/system/pact/payList"
+    "pages/system/pact/payList",
+    "pages/system/aservice/editDispose",
+    "pages/system/cservice/addList"
   ],
   "window": {
     "backgroundColor": "#F6F6F6",

@@ -77,6 +77,8 @@ Page({
         details:this.data.allData[index],
         show:true,
     })
+    let picker = this.selectComponent(".picker");
+    picker.setColumnIndex(0,0); //设置默认索引
   },
   //指派处理人
   getUserInfo:function(e){
@@ -94,8 +96,11 @@ Page({
       },    
       success:function(res){ 
           console.log(res) 
-          if(res.data?.data){
+          if(res.data.code == 0){
             toast.success('指派成功');
+            setTimeout(() => {
+              _this.onLoad(); 
+            },1000);
           }
           else{
             toast.fail(res.data.msg);

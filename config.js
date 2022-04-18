@@ -39,7 +39,7 @@ var config = {
         denied: `${client}/contract/denied`,//合同不通过
         pactPending: `${client}/contractPlan/myPending`,//get待完成计划列表
         planningList: `${client}/contract/planningList`,//合同待计划列表
-        pactPage: `${client}/contract/page`,//合同进行中列表
+        pactPage: `${client}/contract/inProcessList`,//合同进行中列表
         finishedList: `${client}/contract/finishedList`,//合同已完成列表
         pay: `${client}/contractPayment/page`,//合同付款记录
         updatePayStatus: `${client}/contractPayment/updatePayStatus`,//合同付款记录
@@ -60,6 +60,8 @@ var config = {
         aservicemy:`${maintain}/maintenance/my`, //当前待处理维保
         aclose:`${maintain}/maintenance/close`, //关闭维保
         log:`${maintain}/maintenanceLog`, //新增维保日志
+        showLog:`${maintain}/maintenanceLog/page`, //查询维保日志
+        deleteLog:`${maintain}/maintenanceLog`, //删除维保日志
         aserviceDone:`${maintain}/maintenance/done`, //已完成维保
         inmProcess:`${maintain}/maintenance/inProcess`, //进行中维保
     },

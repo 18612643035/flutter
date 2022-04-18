@@ -59,8 +59,11 @@ Page({
         },    
         success:function(res){ 
             console.log(res) 
-            if(res.data?.data){
+            if(res.data.code == 0){
               toast.success('关闭成功');
+              setTimeout(() => {
+                _this.onLoad(); 
+              },1000);
             }
             else{
               toast.fail(res.data.msg);

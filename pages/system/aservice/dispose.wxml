@@ -2,16 +2,10 @@
 <scroll-view scroll-y class="content">
       <view wx:for="{{allData}}" wx:for-index = "bindex"  class="query">
         <view>
-          <span>ID:</span><text class="tapNav food-name">{{item.id}}</text>
-        </view>
-        <view>
           <span>维保内容:</span><text class="tapNav food-name">{{item.content}}</text>
         </view>
         <view>
           <span>维保ID:</span><text class="tapNav food-name">{{item.customerId}}</text>
-        </view>
-        <view>
-          <span>创建ID:</span><text class="tapNav food-name">{{item.createBy}}</text>
         </view>
         <view>
           <span>联系人:</span><text class="tapNav food-name">{{item.contact}}</text>
@@ -35,9 +29,13 @@
           <text wx:if="{{item.status==2}}" class="tapNav food-name">关闭</text>
         </view>
         <view class="button-box">
-            <van-button round type="info" data-index="{{bindex}}" bindtap="showPopup" form-type='submit'>新增日志</van-button>
-            <van-button round type="info" data-index="{{bindex}}" bindtap="showPop" form-type='submit'>完成</van-button>
-          </view>
+            <button class="cmt-button" data-index="{{bindex}}" bindtap="showPopup" form-type='submit'> 新增日志</button>
+            <button class="cmt-button" data-index="{{bindex}}" bindtap="showLog" form-type='submit'> 查看日志</button>
+            <button class="cmt-button" data-index="{{bindex}}" bindtap="editLog">编辑日志</button>
+        </view>
+        <view>
+          <button class="cmt-button" data-index="{{bindex}}" bindtap="showPop" form-type='submit'> 完成</button>
+        </view>
       </view>
 </scroll-view>
 <van-toast id="van-toast" />
@@ -64,4 +62,28 @@
 <view class="details">
   <remark bind:text='onLog'/>
 </view>
+</van-dialog>
+<van-dialog
+  use-slot
+  title="日志"
+  show="{{ showLog }}"
+  show-cancel-button
+  bind:close="onClose"
+>
+<view class="dialog">
+          <view wx:for="{{LOG}}" wx:for-index = "bindex" wx:for-item="log" class="query">
+            <view>
+              <span>序号:</span><text>{{log.maintenanceId}}</text>
+            </view>
+            <view>
+              <span>内容:</span><text>{{log.content}}</text>
+            </view>
+            <view>
+              <span>创建时间:</span><text>{{log.createTime}}</text>
+            </view>
+            <view class="button-box">
+                <button class="cmt-button" data-index="{{bindex}}" data-id="{{log.id}}" bindtap="delete">删除</button>
+              </view>
+          </view>
+  </view>
 </van-dialog>

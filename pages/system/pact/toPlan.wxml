@@ -69,6 +69,12 @@
               <text>合同更新时间':</text><text>{{details.updateTime}}</text>
             </view>
             <view>
+              <text>合同计划开始时间':</text><text>{{details.updateTime}}</text>
+            </view>
+            <view>
+              <text>合同计划结束时间':</text><text>{{details.updateTime}}</text>
+            </view>
+            <view>
               <span>状态:</span>
               <text wx:if="{{details.status==0}}" class="tapNav food-name">草稿</text>
               <text wx:if="{{details.status==1}}" class="tapNav food-name">待审核</text>

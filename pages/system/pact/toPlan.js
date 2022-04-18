@@ -59,6 +59,9 @@ Page({
             console.log(res) 
             if(res?.data?.code == 0){
               toast.success('启动已完成');
+              setTimeout(() => {
+                _this.onLoad(); 
+              },1000);
             }
             else{
               toast.fail(res.data.msg);

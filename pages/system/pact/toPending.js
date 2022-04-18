@@ -87,6 +87,9 @@ Page({
             console.log(res) 
             if(res?.data?.code == 0){
               toast.success('完成');
+              setTimeout(() => {
+                _this.onLoad(); 
+              },1000);
             }
             else{
               toast.fail(res.data.msg);
@@ -108,7 +111,7 @@ Page({
         finishTime:this.data.allData[index].finishTime,
         status:this.data.allData[index].status,
         show:true,
-        currentDate:new Date(this.data.allData[index].finishTime).getTime()
+        //currentDate:new Date(this.data.allData[index].finishTime).getTime()
     })
   },
   onClose() {

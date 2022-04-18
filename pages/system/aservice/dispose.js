@@ -8,9 +8,11 @@ Page({
   data: {
     allData:[],
     details:[],
+    LOG:[],
     reslut:'',
     log:'',
     show:false,
+    showLog:false,
     cshow:false,
   },
 
@@ -39,6 +41,30 @@ Page({
         }
       })
   },
+  delete:function(e){
+    let _this = this;
+    let id = e.target.dataset.id;
+    wx.request({
+      url: config.service.deleteLog+'/'+id,    
+      method:"DELETE", 
+      header:{
+        "content-type":"application/x-www-form-urlencoded",
+        'Authorization': 'Bearer '+config.service.token,
+      },     
+      success:function(res){ 
+          console.log(res) 
+          if(res.data.code == 0){
+            toast.success('删除成功');
+            setTimeout(() => {
+              _this.onLoad(); 
+            },1000);
+          }
+          else{
+            toast.fail(res.data.msg);
+          }
+      }
+    })
+  },
   aclose:function(e){
     let _this = this;
     wx.request({
@@ -59,6 +85,9 @@ Page({
             _this.setData({
                 allData:res.data.data.records,
             })
+            setTimeout(() => {
+              _this.onLoad(); 
+            },1000);
           }
           else{
             toast.fail(res.data.msg);
@@ -88,12 +117,52 @@ Page({
      }
     })
   },
+    //编辑维保日志
+    editLog:function(e){
+      let ind = e.target.dataset.index;
+      let id = this.data.allData[ind].id;
+      wx.navigateTo({
+        url: '../aservice/editDispose?id='+id,
+      })
+    },
   showPopup:function(e){
     let index = e.target.dataset.index;
     this.setData({
         details:this.data.allData[index],
         show:true,
     })
+  },
+  showLog:function(e){ //查询维保日志
+    let index = e.target.dataset.index;
+    this.setData({
+        details:this.data.allData[index],
+    })
+    let _this = this;
+    wx.request({
+        url: config.service.showLog,    
+        method:"GET",    
+        header:{
+          "content-type":"application/x-www-form-urlencoded",
+          'Authorization': 'Bearer '+config.service.token,
+        },
+        data:{
+          content:_this.data.log,
+          maintenanceId:_this.data.details.id,
+          size:20
+        },       
+        success:function(res){ 
+            console.log(res) 
+            if(res.data?.data?.records){
+              _this.setData({
+                LOG:res.data.data.records,
+                showLog:true
+              })
+              console.log(_this.data.logData)
+            }else{
+              toast.fail('查询失败');
+            }
+        }
+      });
   },
   showPop:function(e){
     let index = e.target.dataset.index;
@@ -102,14 +171,14 @@ Page({
         cshow:true,
     })
   },
-    //组件传递的值
+    //完成弹框组件传递的值
     onReceive:function(e){
         e.detail.textData
         this.setData({
             reslut:e.detail.textData,
         })
       },
-   //组件传递的值
+   //新增弹框组件传递的值
     onLog:function(e){
       e.detail.textData
       this.setData({

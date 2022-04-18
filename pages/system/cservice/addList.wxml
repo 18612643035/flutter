@@ -1,0 +1,23 @@
+<!--pages/client/addClient.wxml-->
+<form class="container1" bindsubmit='formSubmit'>
+  <view class="tabRow">
+  <text>客户</text> 
+  <input name="name" type="text" />
+</view>
+<view class="tabRow">
+  <text>问题描述</text> 
+  <input name="address" type="text" />
+</view>
+<view class="tabRow">
+<text>联系人</text> 
+  <input name="contact" type="text" />
+</view>
+<view class="tabRow">
+<text>联系人电话</text> 
+  <input name="contactPhone" type="text" />
+</view>
+<view class="button-box">
+  <van-button round type="info" form-type='submit'>提交</van-button>
+</view>
+</form>
+<van-toast id="van-toast" />

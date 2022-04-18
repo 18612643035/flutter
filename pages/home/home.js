@@ -10,8 +10,11 @@ Page({
     allData:[{name:'23'}],
     myData:[],
     images: [],
+    imagesAll:[],
     name:'',
-    active:1
+    active:0,
+    list:[],
+    curpage:0,
   },
   goFileup: function(){
     wx.navigateTo({
@@ -42,7 +45,7 @@ Page({
       },     
       success:function(res){ 
           console.log(res) 
-          if(res.data?.dta?.sysUser){
+          if(res.data.code == 0){
             _this.setData({
                 name:res.data.data.sysUser.name,
             })
@@ -63,7 +66,7 @@ Page({
   onRmove: function(e){ //删除vlog 
     let id = e.target.dataset.id;
     wx.request({ 
-      url: config.service.deleteMy,  //获取用户信息  
+      url: config.service.deleteMy,
       method:"POST",    
       header:{
         "content-type":"application/x-www-form-urlencoded",
@@ -93,77 +96,52 @@ Page({
       urls: this.data.images // 需要预览的图片http链接列表
     })
   },
-  onShow: function(){
+  getVlog:function(page){
     let _this = this;
     wx.request({
-        url: config.service.getAll,//获取所有VLOG列表  
-        method:"GET",    
-        header:{
-            "content-type":"application/json",
-            'Authorization': 'Bearer '+config.service.token,
-        },   
-        success:function(res){ 
-            console.log(res) 
-            if(res.data.code == 0){
-              _this.setData({
-                  allData:res.data.data,
-              })
-              let images = [];
-              for(let img in res.data.data){
-                for(let imgs in res.data.data[img].images){
-                  images.push(res.data.data[img].images[imgs].url);
-                }
+      url: config.service.getAll,//获取所有VLOG列表  
+      method:"GET",    
+      header:{
+          "content-type":"application/x-www-form-urlencoded",
+          'Authorization': 'Bearer '+config.service.token,
+      },
+      data:{
+        page:page
+      },   
+      success:function(res){ 
+          console.log(res) 
+          if(res.data.code == 0){
+            let arr1 = _this.data.list;
+            let arr2 = res.data.data.content;
+            arr1 = arr1.concat(arr2);
+            _this.setData({
+                allData:arr1,
+                curpage:res.data.data.number,
+                list:arr1
+            })
+            let images = [];
+            for(let img in res.data.data.content){
+              for(let imgs in res.data.data.content[img].images){
+                images.push(res.data.data.content[img].images[imgs].url);
               }
-              console.log(images);
-              _this.setData({
-                  images:images,
-              })
-              console.log(_this.data.allData);
             }
-            else if(res.data.code == 401){
-              let token = wx.getStorageSync('refresh_token');
-              wx.request({
-                url: `${config.service.login}`,
-                data: {
-                  username: '',
-                  grant_type: 'refresh_token',
-                  smsCode: '',
-                  refresh_token:token
-                }, 
-                header: {
-                  "Content-Type": "application/x-www-form-urlencoded",
-                 // "Cookie": sessionId,
-                  "Accpet": "application/json",
-                  'Authorization': 'Basic dGVzdDp0ZXN0'
-                },
-                method: 'POST',
-                success: function (res) {
-                  console.log(res)
-                  if (res.data && res.data.access_token) {
-                    wx.setStorageSync('access_token', res.data.access_token);
-                    wx.setStorageSync('refresh_token', res.data.refresh_token);
-                    config.service.token = res.data.access_token;
-                    Notify({ type: 'success', message: 'token验证成功' });
-                    _this.onShow();
-                  } else {
-                    Notify({ type: 'warning', message: 'token验证失败' });
-                    wx.removeStorageSync('access_token');
-                    wx.navigateTo({
-                      url: '../login/login'
-                    })
-                  }
-                 
-                },
-                fail: function (res) {
-                  console.log(res)
-                }
-              })
-            }
-        },
-        fail: function (res) {
-          console.log(res)
-        }
-      });
+            let img1 = _this.data.imagesAll;
+            let img2 = images;
+            img1.concat(img2);
+            console.log(images);
+            _this.setData({
+                images:img1,
+            })
+          }  
+      },
+      fail: function (res) {
+        console.log(res)
+      }
+    });
+  },
+  onShow: function(){
+    let _this = this;
+    this.getVlog(0);
       wx.request({
         url: config.service.getMy,//获取个人VLOG列表  
         method:"GET",    
@@ -195,5 +173,7 @@ Page({
         }
       });
   },
-
+  onReachBottom: function () {
+    this.getVlog(this.data.curpage+1); 
+  }
 })

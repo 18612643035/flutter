@@ -2,16 +2,10 @@
 <scroll-view scroll-y class="content">
       <view wx:for="{{allData}}" wx:for-index = "bindex" class="query">
         <view>
-          <span>ID:</span><text class="tapNav food-name">{{item.id}}</text>
-        </view>
-        <view>
           <span>客服记录内容:</span><text class="tapNav food-name">{{item.content}}</text>
         </view>
         <view>
           <span>客户ID:</span><text class="tapNav food-name">{{item.customerId}}</text>
-        </view>
-        <view>
-          <span>创建ID:</span><text class="tapNav food-name">{{item.createBy}}</text>
         </view>
         <view>
           <span>联系人:</span><text class="tapNav food-name">{{item.contact}}</text>
