@@ -27,9 +27,6 @@
 <view class="dialog">
           <view class="query">
             <view>
-              <span>id:</span><text>{{details.id}}</text>
-            </view>
-            <view>
               <span>合同编号:</span>
               <text>{{details.serialNumber}}</text>
             </view>

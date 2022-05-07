@@ -115,6 +115,7 @@ var upFilesFun = (t, data, progress, success) =>{
             'Authorization': 'Bearer '+config.service.token,
         },
         success: function (res) {
+            wx.hideLoading(); // 關閉加載提示
             //var data = res.data
             if (startIndex == filesPath.length - 1 ){
                 // console.log('completeNumber', startIndex)
@@ -124,14 +125,6 @@ var upFilesFun = (t, data, progress, success) =>{
                 t.setData({
                     uploadedPathArr: []
                 })
-                wx.showToast({
-                    title: '上传成功',
-                    icon: "loading",
-                    duration: 1000
-                  })
-                  wx.navigateTo({
-                    url: '/pages/home/home',
-                  })
             }else{
                 startIndex++;
                 // console.log(startIndex)
@@ -165,6 +158,10 @@ var upFilesFun = (t, data, progress, success) =>{
     })
 
     uploadTask.onProgressUpdate((res) => {
+        wx.showLoading({
+            title: "上传中...",
+            mask:true
+          })
         res['index'] = startIndex;
         // console.log(typeof (progress));
         if (typeof (progress) == 'function') {

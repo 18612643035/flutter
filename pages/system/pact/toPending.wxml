@@ -58,6 +58,7 @@
                 max-date="{{ maxDate }}"
                 bind:input="onInput"
                 show-toolbar="flase"
+                visible-item-count="3"
               />
             </view>
             <!-- <view>

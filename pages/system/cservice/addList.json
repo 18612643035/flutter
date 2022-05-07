@@ -1,3 +1,6 @@
 {
-  "usingComponents": {}
+  "usingComponents": {
+    "van-toast": "../../../dist/toast/index",
+    "van-picker": "../../../dist/picker/index"
+  }
 }

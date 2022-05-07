@@ -25,10 +25,11 @@ Page({
     minDate: new Date(2000, 10, 1).getTime(),
     maxDate: new Date(2030, 10, 1).getTime(),
     currentDate: new Date().getTime(),
+    input:""
   },
   onInput(event) {
     this.setData({
-      currentDate: event.detail,
+      input: event.detail,
     });
     console.log(util.formatTime(new Date(event.detail)));
   },
@@ -68,7 +69,7 @@ Page({
     let _this = this;
     let id = Number(_this.data.details.id);
     let finishContent = _this.data.finishContent;
-    let finishTime = util.formatTime(new Date(_this.data.currentDate));
+    let finishTime = util.formatTime(new Date(_this.data.input));
     let status = _this.data.status;
     wx.request({
         url: config.service.contractPlan,    

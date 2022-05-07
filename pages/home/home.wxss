@@ -6,7 +6,7 @@
   display: flex;
 }
 .van-ellipsis{
-  width:60px;
+  /* width:60px; */
 }
 .listTitle{
   text-align: left;

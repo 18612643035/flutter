@@ -1,7 +1,9 @@
 {
     "usingComponents": {
       "van-button": "../../dist/button/index",
-      "van-notify": "../../dist/notify/index"   
+      "van-notify": "../../dist/notify/index",
+      "van-picker": "../../dist/picker/index",
+      "van-dialog": "../../dist/dialog/index"    
     }
   
 }

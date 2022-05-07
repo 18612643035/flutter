@@ -1,12 +1,15 @@
 <!--pages/client/addClient.wxml-->
 <form class="container1" bindsubmit='formSubmit'>
   <view class="tabRow">
-  <text>客户</text> 
-  <input name="name" type="text" />
+  <text style="line-height:99px;">客户</text> 
+  <!-- <input name="customerId" type="text" /> -->
+  <view style="width:59%">
+    <van-picker columns="{{ columns }}" item-height="33" visible-item-count="3"  default-index="{{ 0 }}" bind:change="onChange" />
+  </view>
 </view>
 <view class="tabRow">
   <text>问题描述</text> 
-  <input name="address" type="text" />
+  <input name="content" type="text" />
 </view>
 <view class="tabRow">
 <text>联系人</text> 
@@ -17,7 +20,7 @@
   <input name="contactPhone" type="text" />
 </view>
 <view class="button-box">
-  <van-button round type="info" form-type='submit'>提交</van-button>
+  <button class="cmt-button" form-type='submit'>提交</button>
 </view>
 </form>
 <van-toast id="van-toast" />

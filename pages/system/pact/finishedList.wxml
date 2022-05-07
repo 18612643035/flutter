@@ -20,9 +20,6 @@
 <view class="dialog">
           <view class="query">
             <view>
-              <span>id:</span><text>{{details.id}}</text>
-            </view>
-            <view>
               <span>合同编号:</span>
               <text>{{details.serialNumber}}</text>
             </view>
@@ -57,13 +54,13 @@
               <span>销售:</span><text>{{details.saleName}}</text>
             </view>
             <view>
-              <text>合同签订时间':</text><text>{{details.signingTime}}</text>
+              <span>合同签订时间':</span><text>{{details.signingTime}}</text>
             </view>
             <view>
-              <text>合同创建时间':</text><text>{{details.createTime}}</text>
+              <span>合同创建时间':</span><text>{{details.createTime}}</text>
             </view>
             <view>
-              <text>合同更新时间':</text><text>{{details.updateTime}}</text>
+              <span>合同更新时间':</span><text>{{details.updateTime}}</text>
             </view>
             <view>
               <span>状态:</span>

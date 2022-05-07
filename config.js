@@ -50,6 +50,7 @@ var config = {
         closed: `${client}/contract/closed`, //关闭合同
         cservicePending: `${maintain}/customersupport/pending`, //获取待指派客服记录列表
         cservicePage: `${maintain}/customersupport/page`, //获取客服记录列表
+        cserviceSave: `${maintain}/customersupport`, //新增客服记录列表
         cserviceTodu: `${maintain}/customersupport/myTodo`, //获取待处理客服记录列表
         closeCus: `${maintain}/customersupport/close`, //关闭客服记录
         cvisitPage: `${maintain}/returnVisit/page`, //回访记录
@@ -65,7 +66,8 @@ var config = {
         aserviceDone:`${maintain}/maintenance/done`, //已完成维保
         inmProcess:`${maintain}/maintenance/inProcess`, //进行中维保
     },
-    token:''
+    token:'',
+    dict:''
 };
 
 module.exports = config;

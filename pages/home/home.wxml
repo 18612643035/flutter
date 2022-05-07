@@ -8,8 +8,11 @@
   </view>
 </view>
 <van-notify id="van-notify" />
-<van-tabs active="{{ active }}"  bind:change="onChange">
+<van-tabs active="{{ active }}" bind:change="onTab">
   <van-tab title="所有数据">
+    <view class="button-box">
+      <button class="cmt-button" bindtap="selectCus">选择客户</button>
+    </view>
     <view class="container" wx:for="{{allData}}" wx:for-index="key" wx:for-item="db">
       <view class="uploadimgbox">
         <view>
@@ -63,8 +66,17 @@
         <text class="listTitle">{{db.time}}</text>
       </view>
       <view class="bt_box">
-          <button class="cmt-button" data-id="{{db.id}}" bindtap="onRmove"> 删除</button>
+        <button class="cmt-button" data-id="{{db.id}}" bindtap="onRmove"> 删除</button>
       </view>
     </view>
   </van-tab>
 </van-tabs>
+<van-dialog use-slot title="选择客户" show="{{ show }}" show-cancel-button bind:close="onClose" bind:confirm="complete">
+  <view class="pop-beg">
+    <view style="display: block;">
+      <text style="margin-left: 5px;">选择客户:</text>
+      <van-picker class="picker" columns="{{ columns }}" item-height="33" visible-item-count="3" default-index="{{ 0 }}"
+        bind:change="onChange" />
+    </view>
+  </view>
+</van-dialog>

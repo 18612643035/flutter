@@ -18,10 +18,9 @@ Page({
       columns: ['1','2','3'],
   },
   onLoad: function () {
-      const _this = this;
-      console.log(1)
+    const _this = this;
     wx.request({ 
-      url: config.service.dict,  //获取用户信息  
+      url: config.service.dict,  //获取客户信息  
       method:"GET",    
       header:{
         "content-type":"application/json",
@@ -118,6 +117,12 @@ Page({
         context:e.detail.value,
     })
   },
+  onChange(event) {
+    const { value } = event.detail;
+    this.setData({
+      id:value.id,
+    })
+  },
   // 上传文件
   subFormData:function(){
       let _this = this;
@@ -128,7 +133,12 @@ Page({
           upFilesProgress:true,
       })
       console.log("开始上传");
-
+      if(!upImgArr  && !upVideoArr && _this.data.context == ""){
+        wx.showToast({
+            title: '不能上传空内容',
+        })
+        return;
+      }
       wx.setStorageSync('time', new Date()); //测试本地存储
       console.log(wx.getStorageInfoSync("time"));
       upData['url'] = config.service;
@@ -143,28 +153,37 @@ Page({
         }, 
         success:function(res){ 
             console.log(res) 
-            console.log(res.data)
-            if(res.data && res.data.data){
-                upData['formData'] = {"id":res.data.data};
-                upFiles.upFilesFun(_this, upData,function(res){
-                    if (res.index < upImgArr.length){
-                        upImgArr[res.index]['progress'] = res.progress
-                        
-                        _this.setData({
-                            upImgArr: upImgArr,
-                        })
-                    }else{
-                        let i = res.index - upImgArr.length;
-                        upVideoArr[i]['progress'] = res.progress
-                        _this.setData({
-                            upVideoArr: upVideoArr,
-                        })
-                    }
-                  //   console.log(res)
-                }, function (arr) {
-                    // success
-                    console.log(arr)
-                })
+            if(res.data.code == 0){
+                if(res.data && res.data.data){
+                    upData['formData'] = {"id":res.data.data};
+                    upFiles.upFilesFun(_this, upData,function(res){
+                        if (res.index < upImgArr.length){
+                            upImgArr[res.index]['progress'] = res.progress
+                            
+                            _this.setData({
+                                upImgArr: upImgArr,
+                            })
+                        }else{
+                            let i = res.index - upImgArr.length;
+                            upVideoArr[i]['progress'] = res.progress
+                            _this.setData({
+                                upVideoArr: upVideoArr,
+                            })
+                        }
+                    }, function (arr) {
+                        // success
+                        wx.navigateTo({
+                            url: '../home/home',
+                          })
+                        console.log(arr)
+                    })
+                }
+                wx.showToast({
+                    title: '上传成功',
+                    icon: "loading",
+                    duration: 1000
+                  })
+
             }
         }
       })
