@@ -3,6 +3,7 @@
     "van-toast": "../../../dist/toast/index",
     "van-button": "../../../dist/button/index",
     "van-dialog": "../../../dist/dialog/index",
-    "remark":"../../component/remark"
+    "remark":"../../component/remark",
+    "van-empty": "../../dist/empty/index"
   }
 }

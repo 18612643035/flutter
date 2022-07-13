@@ -1,5 +1,6 @@
 <!-- 客服记录查询 -->
 <scroll-view scroll-y class="content">
+      <van-empty wx-if="{{allData.length<1}}" description="暂无信息" />
       <view wx:for="{{allData}}" wx:for-index = "bindex" class="query">
         <view>
           <span>客服记录内容:</span><text class="tapNav food-name">{{item.content}}</text>

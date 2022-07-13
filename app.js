@@ -5,5 +5,16 @@ var config = require('./config')
 App({
     onLaunch: function () {
         qcloud.setLoginUrl(config.service.loginUrl)
+    },
+    filter: function (data) {
+        data.map(element => {
+            element.finishTime == null ? element.finishTime = "无" : '';
+            element.startTime == null ? element.startTime = "无" : '';
+            element.endTime == null ? element.endTime = "无" : '';
+            element.updateTime == null ? element.updateTime = "无" : '';
+            element.customer == null ? element.customer = "无" : '';
+            element.remarks  == null ? element.remarks = "无" : '';
+        });
+        return data;
     }
 })

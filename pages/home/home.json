@@ -3,7 +3,9 @@
       "van-button": "../../dist/button/index",
       "van-notify": "../../dist/notify/index",
       "van-picker": "../../dist/picker/index",
-      "van-dialog": "../../dist/dialog/index"    
+      "van-dialog": "../../dist/dialog/index",
+      "van-empty": "../../dist/empty/index",
+      "van-transition": "../../dist/transition"    
     }
   
 }

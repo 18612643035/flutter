@@ -55,7 +55,11 @@
             </view>
             <view style="display: block;">
                 <text>状态:</text>
-                <van-picker class="picker" columns="{{ columns }}" item-height="33" visible-item-count="2"  default-index="{{ status }}" bind:change="onChange" />
+                <!-- <van-picker class="picker" columns="{{ columns }}" item-height="33" visible-item-count="2"  default-index="{{ status }}" bind:change="onChange" /> -->
+                <van-radio-group direction="horizontal" value="{{ status }}" bind:change="onChange">
+                  <van-radio name="0">未付款</van-radio>
+                  <van-radio name="1">已付款</van-radio>
+                </van-radio-group>
             </view>
   </view>
 </van-dialog>

@@ -66,10 +66,10 @@ Page({
     });
   },
   onChange(event) {
-    const { value } = event.detail;
     this.setData({
-      status:value.status,
+      status:event.detail,
     })
+    console.log(event.detail)
   },
   showPopup:function(e){
     let index = e.target.dataset.index;
@@ -79,8 +79,8 @@ Page({
         show:true,
         status:this.data.allData[index].status,
     })
-    let picker = this.selectComponent(".picker");
-    picker.setColumnIndex(0,this.data.allData[index].status); //设置默认索引
+    // let picker = this.selectComponent(".picker");
+    // picker.setColumnIndex(0,this.data.allData[index].status); //设置默认索引
     console.log(this.data.status)
   },
   inputChange: function (e) {

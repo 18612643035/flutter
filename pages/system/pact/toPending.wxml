@@ -1,5 +1,5 @@
 <!--待处理合同计划-->
-<text wx-if="{{allData.length<1}}">暂无信息</text>
+<van-empty wx-if="{{allData.length<1}}" description="暂无信息" />
 <scroll-view scroll-y class="content">
       <view wx:for="{{allData}}" wx:key = 'index' wx:for-index = "bindex" class="query">
           <View>

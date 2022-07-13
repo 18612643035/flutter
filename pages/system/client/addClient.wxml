@@ -22,10 +22,9 @@
 </form>
 <van-toast id="van-toast" />
 <scroll-view scroll-y class="content">
-      <view class="bt_box">
-        <button wx:if="{{allData.length}}" class="cmt-button"  bindtap="goEdit" class="editgo">修改客户</button>
+      <view style="background-color: azure;padding: 5px 0;display: flex;border-bottom: 1px solid #ebeef5;">
+        <button wx:if="{{allData.length}}" class="cmt-button editgo"  bindtap="goEdit">修改客户</button>
       </view>
-      
       <view wx:for="{{allData}}" class="query">
         <view>
           <span>名称:</span><text class="tapNav food-name">{{item.name}}</text>

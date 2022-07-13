@@ -13,8 +13,10 @@ Page({
     allData: [{
       name: '23'
     }],
+    user:[],
     myData: [],
     show: false,
+    userShow:false,
     last: false,
     columns: ["1", "2", "3"],
     id: '',
@@ -25,6 +27,7 @@ Page({
     active: 0,
     list: [],
     curpage: 0,
+    empty:'none'
   },
   goFileup: function () {
     wx.navigateTo({
@@ -42,6 +45,7 @@ Page({
       wx.navigateTo({
         url: '../login/login'
       })
+      return
     } else {
       config.service.token = token;
     }
@@ -62,6 +66,7 @@ Page({
     }).then(res => {
       console.log(res)
       _this.setData({
+        user: res.data.data.sysUser,
         name: res.data.data.sysUser.name,
       })
     }).catch(function (e) {
@@ -184,6 +189,13 @@ Page({
       console.log(e);
     });
   },
+  onRemoveCur: function() {
+    this.setData({
+      id: '',
+      list: []
+    })
+    this.getVlog(0);
+  },
   getMy: function () {
     let _this = this;
     goRequest({
@@ -217,6 +229,11 @@ Page({
     });
   },
   onShow: function () {},
+  userShow: function (e) { //选择客户弹窗
+    this.setData({
+      userShow: true,
+    })
+  },
   selectCus: function (e) { //选择客户弹窗
     let picker = this.selectComponent(".picker");
     picker.setColumnIndex(0, 0); //设置默认索引

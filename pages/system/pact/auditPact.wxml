@@ -1,5 +1,5 @@
 <!--待审核计划-->
-<text wx-if="{{allData.length<1}}">暂无信息</text>
+<van-empty wx-if="{{allData.length<1}}" description="暂无信息" />
 <scroll-view scroll-y class="content">
       <view wx:for="{{allData}}" wx:key = 'index' wx:for-index = "bindex" class="query">
           <button class="cmt-button" bindtap="onShowList" data-index="{{bindex}}"> 合同详情</button>
@@ -21,7 +21,6 @@
   use-slot
   title="详情"
   show="{{ isShow }}"
-  show-cancel-button
   bind:close="onClose"
 >
 <view class="dialog">

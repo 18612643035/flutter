@@ -1,5 +1,6 @@
 <!-- 待指派维保列表 -->
 <scroll-view scroll-y class="content">
+      <van-empty wx-if="{{allData.length<1}}" description="暂无信息" />
       <view wx:for="{{allData}}" wx:for-index = "bindex" class="query">
         <view>
           <span>维保内容:</span><text class="tapNav food-name">{{item.content}}</text>

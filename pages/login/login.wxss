@@ -4,6 +4,7 @@
   flex-direction: row;
   justify-content: center;
   margin: 10px;
+  position: relative;
 }
 .section input{
   margin-left: 10px;
@@ -12,10 +13,24 @@
 }
 button.sendMsg{
   margin:0;
+  line-height: 1.5rem;
+  position: absolute;
+  right: 1rem;
+  top: 0;
+  font-size: 0.8rem;
 }
 .container{
   display: flex;
   height: 100%;
   justify-content: center;
   align-items: center;
+}
+.container image{
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+}
+.section text{
+  color: #fff;
 }

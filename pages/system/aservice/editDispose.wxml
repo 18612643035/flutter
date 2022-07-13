@@ -1,4 +1,5 @@
 <!--修改维保日志-->
+<van-empty wx-if="{{allData.length<1}}" description="暂无信息" />
 <view wx:for="{{allData}}" wx:for-index = "bindex" wx:for-item="log">
   <form bindsubmit='formSubmit'>
     <view class="query">

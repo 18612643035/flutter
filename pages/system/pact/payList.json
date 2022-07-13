@@ -4,6 +4,9 @@
     "van-dialog": "../../../dist/dialog/index",
     "van-picker": "../../../dist/picker/index",
     "van-datetime-picker": "../../../dist/datetime-picker/index",
-    "remark":"../../component/remark"
+    "remark":"../../component/remark",
+    "van-radio": "../../../dist/radio/index",
+    "van-radio-group": "../../../dist/radio-group/index",
+    "van-empty": "../../dist/empty/index"
   }
 }

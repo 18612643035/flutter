@@ -63,6 +63,11 @@ function request(url, params, method, header, resolve, reject) {
           title: 'token验证成功',
         })
       } else {
+        let pages = getCurrentPages();
+        let curpg = pages[pages.length - 1];
+        if(curpg.route == "pages/login/login"){
+          return
+        }
         wx.showToast({
           title: 'token验证失败',
         })

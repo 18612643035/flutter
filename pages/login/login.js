@@ -169,7 +169,7 @@ Page({
             title: '验证成功',
             icon: 'success'
           });
-          wx.navigateTo({
+          wx.switchTab({
             url: '../home/home'
           })  
         } else {

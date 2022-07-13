@@ -13,6 +13,7 @@ Page({
         "4600":"system/aservice/done","3400":"system/pact/page","3700":"system/pact/finishedList",
         "3600":"system/pact/pay","8100":"system/cservice/addList"
       },
+      empty:'none'
   },
 
   /**
@@ -29,8 +30,14 @@ Page({
         }
     }
     this.setData({
-      dataList: data
+      dataList: data,
+      empty:'none'
     })
+    if(!data.length){
+      this.setData({
+        empty:'block'
+      })
+    }
   },
   goMenu: function(e){
     console.log(e.target.dataset.src);

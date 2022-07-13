@@ -4,6 +4,7 @@
     "van-button": "../../../dist/button/index",
     "van-dialog": "../../../dist/dialog/index",
     "van-picker": "../../../dist/picker/index",
-    "remark":"../../component/remark"
+    "remark":"../../component/remark",
+    "van-empty": "../../dist/empty/index"
   }
 }

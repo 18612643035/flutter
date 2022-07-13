@@ -41,7 +41,7 @@
 >
 <view class="pop-beg">
             <view style="display: block;">
-                <text style="margin-left: 5px;">选择客户:</text>
+                <text class="optName" style="margin-left: 5px;">选择客户</text>
                 <van-picker columns="{{ columns }}" item-height="33" visible-item-count="3"  default-index="{{ 0 }}" bind:change="onChange" />
             </view>
   </view>

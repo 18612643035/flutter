@@ -2,6 +2,7 @@
   "usingComponents": {
     "van-toast": "../../../dist/toast/index",
     "van-dialog": "../../../dist/dialog/index",
-    "remark":"../../component/remark"
+    "remark":"../../component/remark",
+    "van-empty": "../../../dist/empty/index"
   }
 }

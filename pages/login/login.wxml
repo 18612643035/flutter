@@ -1,9 +1,12 @@
 <view class='container'>
- 
+ <image src="../styles/images/bg.png" />
  <view class="section">
    <text>手机号码</text>
    <input placeholder="请输入手机号码" type="number" maxlength="11" bindinput="inputPhoneNum" auto-focus />
-   <button class="cmt-button sendMsg" wx:if="{{send}}" bindtap="sendMsg"> 发送</button>
+   <van-transition wx:if="{{send}}" name="fade" custom-class="block">
+    <button class="cmt-button sendMsg" wx:if="{{send}}" bindtap="sendMsg"> 发送</button>
+   </van-transition>
+
    <text wx:if="{{alreadySend}}" class="sendMsg" bindtap="sendMsg">{{second+"s"}}</text>
  </view>
   
@@ -13,6 +16,6 @@
  </view>
   
   
- <button type="{{buttonType}}" disabled="{{disabled}}" bindtap="onSubmit">登录</button>
+ <button style="background-color: rgb(26, 212, 255);line-height: 30px; color: #fff;margin-top: 30px;" type="{{buttonType}}" disabled="{{disabled}}" bindtap="onSubmit">登录</button>
   
  </view>

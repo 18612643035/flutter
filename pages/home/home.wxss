@@ -8,6 +8,20 @@
 .van-ellipsis{
   /* width:60px; */
 }
+page{
+  background: #f2f2f2;
+}
+.open-user{
+  width: 30px;
+  height: 30px;
+  display: block;
+  overflow: hidden;
+  border-radius: 50%;
+  margin: 0 10px;
+}
+.van-tabs__nav{
+  background: azure;
+}
 .listTitle{
   text-align: left;
 }

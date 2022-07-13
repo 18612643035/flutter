@@ -36,6 +36,31 @@
     "navigationBarTitleText": "美德远健",
     "navigationBarTextStyle": "black"
   },
+  "tabBar": {
+    "selectedColor": "#57A2FF",
+    "color": "#999999",
+    "borderStyle": "white",
+    "backgroundColor": "#FFFFFF",
+    "list": [
+      {
+
+        "pagePath": "pages/home/home",
+        "iconPath": "pages/styles/images/home.png",
+        "selectedIconPath": "pages/styles/images/home.png",
+        "text": "首页"
+
+      },
+      {
+
+        "pagePath": "pages/menu/menu",
+        "iconPath": "pages/styles/images/portrait.png",
+        "selectedIconPath": "pages/styles/images/portrait.png",
+        "text": "我的"
+
+      }
+    ]
+
+  },
   "usingComponents": {
     "van-tab": "./dist/tab/index",
     "van-tabs": "./dist/tabs/index"
