@@ -31,6 +31,7 @@ Page({
               toast.success('查询成功');
               _this.setData({
                   allData:res.data.data.records,
+                  dictList:app.dict
               })
             }else{
               toast.fail(res.data.msg);

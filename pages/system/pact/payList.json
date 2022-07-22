@@ -7,6 +7,6 @@
     "remark":"../../component/remark",
     "van-radio": "../../../dist/radio/index",
     "van-radio-group": "../../../dist/radio-group/index",
-    "van-empty": "../../dist/empty/index"
+    "van-empty": "../../../dist/empty/index"
   }
 }

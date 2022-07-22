@@ -40,6 +40,34 @@ Page({
       url: './editClient'
     })
   },
+  goAudit:function (e) {
+    let _this = this;
+    let index = e.target.dataset.index;
+    wx.request({
+        url: config.service.userSubmit,    
+        method:"POST", 
+        data:{
+          id:_this.data.allData[index].id
+        },   
+        header:{
+          "Content-Type": "application/x-www-form-urlencoded",
+          "Accpet": "application/json",
+          'Authorization': 'Bearer '+config.service.token,
+        },     
+        success:function(res){
+            console.log(res);
+            if(res?.data?.code == 0){
+              toast.success('已完成');
+              setTimeout(() => {
+                _this.onLoad(); 
+              },1000);
+            }
+            else{
+              toast.fail(res.data.msg);
+            } 
+        }
+      })
+  },
   bindKeyInput: function (e) {
     this.setData({
       inputValue: e.detail.value

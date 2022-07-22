@@ -170,7 +170,12 @@ Page({
             icon: 'success'
           });
           wx.switchTab({
-            url: '../home/home'
+            url: '../home/home',
+            success: function (e) {//解决不刷新问题
+              var page = getCurrentPages().pop();
+              if (page == undefined || page == null) return;
+              page.onLoad();
+            }
           })  
         } else {
           wx.showToast({

@@ -12,9 +12,13 @@ App({
             element.startTime == null ? element.startTime = "无" : '';
             element.endTime == null ? element.endTime = "无" : '';
             element.updateTime == null ? element.updateTime = "无" : '';
+            element.actualTime  == null ? element.actualTime = "无" : '';
+            element.planTime  == null ? element.planTime = "无" : '';
+            element.createTime  == null ? element.createTime = "无" : '';
             element.customer == null ? element.customer = "无" : '';
             element.remarks  == null ? element.remarks = "无" : '';
         });
         return data;
-    }
+    },
+    dict:[]
 })

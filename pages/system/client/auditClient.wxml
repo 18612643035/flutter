@@ -12,6 +12,9 @@
           <span>联系人:</span><text class="tapNav food-name">{{item.contact}}</text>
         </view>
         <view>
+          <span>添加人:</span><text class="tapNav food-name">{{item.creator}}</text>
+        </view>
+        <view>
           <span>联系人电话:</span><text class="tapNav food-name">{{item.contactPhone}}</text>
         </view>
         <view class="bt_box">

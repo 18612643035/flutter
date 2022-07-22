@@ -4,6 +4,6 @@
     "van-dialog": "../../../dist/dialog/index",
     "van-toast": "../../../dist/toast/index",
     "van-datetime-picker": "../../../dist/datetime-picker/index",
-    "van-empty": "../../dist/empty/index"
+    "van-empty": "../../../dist/empty/index"
   }
 }

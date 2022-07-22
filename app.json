@@ -27,7 +27,8 @@
     "pages/system/pact/pay",
     "pages/system/pact/payList",
     "pages/system/aservice/editDispose",
-    "pages/system/cservice/addList"
+    "pages/system/cservice/addList",
+    "pages/system/pact/haspay"
   ],
   "window": {
     "backgroundColor": "#F6F6F6",
@@ -43,23 +44,18 @@
     "backgroundColor": "#FFFFFF",
     "list": [
       {
-
         "pagePath": "pages/home/home",
         "iconPath": "pages/styles/images/home.png",
         "selectedIconPath": "pages/styles/images/home.png",
         "text": "首页"
-
       },
       {
-
         "pagePath": "pages/menu/menu",
         "iconPath": "pages/styles/images/portrait.png",
         "selectedIconPath": "pages/styles/images/portrait.png",
         "text": "我的"
-
       }
     ]
-
   },
   "usingComponents": {
     "van-tab": "./dist/tab/index",

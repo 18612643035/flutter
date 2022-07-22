@@ -22,10 +22,10 @@
 </form>
 <van-toast id="van-toast" />
 <scroll-view scroll-y class="content">
-      <view style="background-color: azure;padding: 5px 0;display: flex;border-bottom: 1px solid #ebeef5;">
-        <button wx:if="{{allData.length}}" class="cmt-button editgo"  bindtap="goEdit">修改客户</button>
+      <view wx:if="{{allData.length}}" style="background-color: azure;padding: 5px 0;display: flex;justify-content:center;border-bottom: 1px solid #ebeef5;">
+          <button class="cmt-button" bindtap="goEdit">修改客户</button>
       </view>
-      <view wx:for="{{allData}}" class="query">
+      <view wx:for="{{allData}}" wx:for-index = "bindex" class="query">
         <view>
           <span>名称:</span><text class="tapNav food-name">{{item.name}}</text>
         </view>
@@ -43,9 +43,13 @@
         </view>
         <view>
           <span>状态:</span>
-          <text wx:if="{{item.status==0}}" class="tapNav food-name">待审核</text>
-              <text wx:if="{{item.status==2}}" class="tapNav food-name">审核通过</text>
-              <text wx:if="{{item.status==3}}" class="tapNav food-name">审核不通过</text>
+          <text wx:if="{{item.status==0}}" class="tapNav food-name">新增</text>
+          <text wx:if="{{item.status==1}}" class="tapNav food-name">待审核</text>
+          <text wx:if="{{item.status==2}}" class="tapNav food-name">审核通过</text>
+          <text wx:if="{{item.status==3}}" class="tapNav food-name">审核不通过</text>
+        </view>
+        <view class="button-box">
+          <van-button data-index="{{bindex}}" round type="info" bindtap="goAudit">提交审核</van-button>
         </view>
       </view>
 </scroll-view>

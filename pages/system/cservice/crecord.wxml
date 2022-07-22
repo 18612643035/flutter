@@ -6,7 +6,7 @@
           <span>客服记录内容:</span><text class="tapNav food-name">{{item.content}}</text>
         </view>
         <view>
-          <span>客户ID:</span><text class="tapNav food-name">{{item.customerId}}</text>
+          <span>客户:</span><text class="tapNav food-name">{{dictList[item.customerId]}}</text>
         </view>
         <view>
           <span>联系人:</span><text class="tapNav food-name">{{item.contact}}</text>

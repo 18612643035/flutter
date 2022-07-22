@@ -16,9 +16,10 @@
         </view>
         <view>
           <span>状态:</span>
-          <text wx:if="{{item.status==0}}" class="tapNav food-name">待审核</text>
-              <text wx:if="{{item.status==2}}" class="tapNav food-name">审核通过</text>
-              <text wx:if="{{item.status==3}}" class="tapNav food-name">审核不通过</text>
+          <text wx:if="{{item.status==0}}" class="tapNav food-name">新增</text>
+          <text wx:if="{{item.status==1}}" class="tapNav food-name">待审核</text>
+          <text wx:if="{{item.status==2}}" class="tapNav food-name">审核通过</text>
+          <text wx:if="{{item.status==3}}" class="tapNav food-name">审核不通过</text>
         </view>
         <view>
           <span>联系人电话:</span><text class="tapNav food-name">{{item.contactPhone}}</text>

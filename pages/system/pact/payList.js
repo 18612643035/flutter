@@ -50,8 +50,10 @@ Page({
       success:function(res){ 
         if(res.data?.data?.records){
             toast.success('查询成功');
+            let app = getApp();
+            let db =  app.filter(res.data.data.records);
             _this.setData({
-              allData:res.data.data.records,
+              allData:db,
           })
         }
         else{
@@ -102,8 +104,15 @@ Page({
         id:_this.data.details.id,
         status:_this.data.status,
         amount:_this.data.details.amount,
+        contractId:_this.data.details.contractId,
+        createBy:_this.data.createBy,
+        createTime:_this.data.details.createTime,
+        planTime:_this.data.details.planTime,
+        updateBy:_this.data.updateBy,
+        updateTime:_this.data.details.updateTime,
         actualTime:util.formatTime(new Date(_this.data.currentDate)),
         remarks:_this.data.remarks,
+
       },    
       success:function(res){ 
           console.log(res) 

@@ -60,6 +60,8 @@ Page({
               _this.setData({
                   allData:db,
               })
+              console.log(_this.data.allData)
+              console.log(_this.data.allData.length < 1)
             }
             else{
               toast.fail(res.data.msg);
@@ -69,19 +71,25 @@ Page({
   },
   getUserInfo: function(e){
     let _this = this;
-    let id = Number(_this.data.details.id);
-    let finishContent = _this.data.finishContent;
-    let finishTime = util.formatTime(new Date(_this.data.input));
-    let status = _this.data.status;
+    if(_this.data.finishContent == ""){
+      toast.fail('请填写合同计划完成情况');
+      return 
+    }
+    let data = {};
+    data["id"] = Number(_this.data.details.id);
+    data["content"] = _this.data.details.content;
+    data["finishTime"] = util.formatTime(new Date(_this.data.input));
+    data["finishContent"] = _this.data.finishContent;
+    data["startTime"] = _this.data.details.startTime;
+    data["endTime"] = _this.data.details.endTime;
+    data["status"] = _this.data.details.status;
+    data["directorName"] = _this.data.details.directorName;
+    data["contractId"] = _this.data.details.contractId;
+    data["director"] = _this.data.details.director;
     wx.request({
         url: config.service.contractPlan,    
         method:"POST", 
-        data:{
-          id:id,
-          content:finishContent,
-          finishTime:finishTime,
-
-        },   
+        data:data,   
         header:{
           "content-type":"application/x-www-form-urlencoded",
           'Authorization': 'Bearer '+config.service.token,
@@ -114,7 +122,6 @@ Page({
         finishTime:this.data.allData[index].finishTime,
         status:this.data.allData[index].status,
         show:true,
-        //currentDate:new Date(this.data.allData[index].finishTime).getTime()
     })
   },
   onClose() {

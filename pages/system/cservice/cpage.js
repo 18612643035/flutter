@@ -29,6 +29,7 @@ Page({
               let db =  app.filter(res.data.data.records);
               _this.setData({
                   allData:db,
+                  dictList:app.dict
               })
             }else{
               toast.fail(res.data.msg);

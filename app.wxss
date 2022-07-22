@@ -46,7 +46,7 @@ view.van-picker__toolbar{
   display: none;
 }
 button.van-button--round,.cmt-button{
-  border-radius: 3px;
+  border-radius: 1rem;
   font-size: 0.8rem;
   height: auto;
   color: #fff;

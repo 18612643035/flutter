@@ -22,8 +22,9 @@
           </view>
           <view>
             <span data-index="{{bindex}}">合同计划状态:</span>
-            <text wx:if="{{item.status}}" class="tapNav food-name">已完成</text>
-            <text wx:if="{{!item.status}}" class="tapNav food-name">未完成</text>
+            <text wx:if="{{item.status==0}}" class="tapNav food-name">新建 </text>
+            <text wx:if="{{item.status==1}}" class="tapNav food-name">待处理</text>
+            <text wx:if="{{item.status==2}}" class="tapNav food-name">完成 </text>
           </view>
           <view class="button-box">
             <van-button round type="info" data-index="{{bindex}}" bindtap="showPopup" form-type='submit'>完成计划</van-button>

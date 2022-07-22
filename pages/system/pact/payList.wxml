@@ -4,7 +4,7 @@
           <span>合同ID:</span><text class="tapNav food-name">{{item.contractId}}</text>
         </view>
         <view>
-          <span> 实际付款实际</span><text>{{item.actualTime}}</text>
+          <span> 实际付款时间</span><text>{{item.actualTime}}</text>
         </view>
         <view>
           <span> 实际付款金额</span><text>{{item.amount}}</text>
@@ -56,7 +56,7 @@
             <view style="display: block;">
                 <text>状态:</text>
                 <!-- <van-picker class="picker" columns="{{ columns }}" item-height="33" visible-item-count="2"  default-index="{{ status }}" bind:change="onChange" /> -->
-                <van-radio-group direction="horizontal" value="{{ status }}" bind:change="onChange">
+                <van-radio-group direction="horizontal" style="margin-left: 5%;" value="{{ status }}" bind:change="onChange">
                   <van-radio name="0">未付款</van-radio>
                   <van-radio name="1">已付款</van-radio>
                 </van-radio-group>

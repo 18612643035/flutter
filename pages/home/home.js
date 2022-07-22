@@ -91,8 +91,10 @@ Page({
           "id": res.data.data[i].id
         });
       }
+      let app = getApp();
+      app.dict = dict;
       config.dict = dict;
-      console.log( config.dict);
+      console.log( app.dict);
       _this.setData({
         columns: col,
       })

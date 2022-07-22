@@ -29,8 +29,9 @@ var config = {
         queryObj: `${client}/customer/myPage`, //我的客户列表
         queryAll: `${client}/customer/officialCustomer`, //所有客户列表
         userPending: `${client}/customer/pending`, //待审核客户
-        userPass: `${client}/customer/pass`, //审核通过
+        userPass: `${client}/customer/pass`, //审核不通过
         userFail: `${client}/customer/fail`, //审核通过
+        userSubmit: `${client}/customer/submit`, //提交审核
         userInfo: `${admin}/user/info`, //用户信息
         menu: `${admin}/menu`,//用户菜单
         role: `${admin}/user/list`,//获取指派人列表
@@ -42,8 +43,9 @@ var config = {
         pactPage: `${client}/contract/inProcessList`,//合同进行中列表
         finishedList: `${client}/contract/finishedList`,//合同已完成列表
         pay: `${client}/contractPayment/page`,//合同付款记录
-        updatePayStatus: `${client}/contractPayment/updatePayStatus`,//合同付款记录
-        paymentList: `${client}/contract/paymentList`,//代付款列表
+        haspay: `${client}/contract/completePaymentList`,//已付款列表
+        updatePayStatus: `${client}/contractPayment/updatePayStatus`,//合同付款记录状态
+        paymentList: `${client}/contract/paymentList`,//待付款列表
         
         contractPlan: `${client}/contractPlan/finish`,//完成合同计划
         startPact: `${client}/contract/start`,//启动计划
