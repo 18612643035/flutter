@@ -28,6 +28,7 @@ Page({
             console.log(res) 
             if(res.data?.data?.records){
               toast.success('查询成功');
+              let app = getApp();
               _this.setData({
                   allData:res.data.data.records,
                   dictList:app.dict

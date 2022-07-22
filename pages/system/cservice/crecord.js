@@ -29,8 +29,10 @@ Page({
             console.log(res) 
             if(res.data?.data?.records){
               toast.success('查询成功');
+              let app = getApp();
+              let db =  app.filter(res.data.data.records);
               _this.setData({
-                  allData:res.data.data.records,
+                  allData:db,
                   dictList:app.dict
               })
             }else{

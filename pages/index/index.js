@@ -172,7 +172,7 @@ Page({
                         }
                     }, function (arr) {
                         // success
-                        wx.navigateTo({
+                        wx.switchTab({
                             url: '../home/home',
                           })
                         console.log(arr)
