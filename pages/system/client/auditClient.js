@@ -67,6 +67,10 @@ Page({
     let _this = this;
     let data = {};
     data["id"] = e.target.dataset.id;
+    if(_this.data.log == ""){
+      toast.fail('内容不能为空');
+			return
+    }
     wx.request({
         url: config.service.userFail,    
         method:"POST", 

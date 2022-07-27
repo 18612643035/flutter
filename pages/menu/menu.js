@@ -1,5 +1,8 @@
 // pages/menu/menu.js
 const config = require('../../config.js');
+import {
+  goRequest
+} from '../../utils/request.js'
 Page({
 
   /**
@@ -32,17 +35,17 @@ Page({
    */
   onShow: function (options) {
     let _this = this;
-    wx.request({
+    goRequest({
       url: `${config.service.menu}`, 
-      header:{
-        "content-type":"application/json",
-        'Authorization': 'Bearer '+config.service.token,
-      },  
+      params: {},
       method: 'GET',
-      success: function (res) {
-        console.log(res)
-        if (res.data && res.data?.data) {
-          let data = [];
+      header: {
+        "content-type": "application/json",
+        'Authorization': 'Bearer ' + config.service.token,
+      },
+    }).then(res => {
+      console.log(res)
+      let data = [];
           //过滤掉没有的功能
           for(var i=0;i<res.data.data.length;i++){
             let id = res.data.data[i].id;
@@ -56,11 +59,8 @@ Page({
               dataList: data
             }
           )
-        }
-      },
-      fail: function (res) {
-        console.log(res)
-      }
+    }).catch(function (e) {
+      console.log(e);
     });
   },
 })

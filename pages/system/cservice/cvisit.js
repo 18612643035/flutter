@@ -24,6 +24,9 @@ Page({
         header:{
           "content-type":"application/json",
           'Authorization': 'Bearer '+config.service.token,
+        },
+        data:{
+          size:20
         },     
         success:function(res){ 
             console.log(res) 
@@ -50,6 +53,10 @@ Page({
   },
   closeRecord:function(e){
       let _this = this;
+      if(_this.data.reslut == ""){
+        toast.fail('内容不能为空');
+        return 
+      }
       wx.request({
         url: config.service.vClose,    
         method:"POST",    

@@ -245,7 +245,7 @@ Page({
     })
   },
   onTab: function(e) { //切换列表
-    e.detail.index == 0 ? this.getVlog(0) : "";
+    e.detail.index == 0 ? this.getVlog(0) : this.getMy();
     this.setData({
       tabCur:e.detail.index
     })

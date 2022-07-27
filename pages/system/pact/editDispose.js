@@ -8,7 +8,7 @@ Page({
   data: {
     allData:[],
     log:'',
-    maintenanceId:''
+    contractPlanId:''
   },
 
   /**
@@ -16,14 +16,15 @@ Page({
    */
   onLoad: function (options) {
     let _this = this;
-    if(_this.data.maintenanceId == ""){
+    if(_this.data.contractPlanId == ""){
       let id = JSON.parse(options.id);
       _this.setData({
-        maintenanceId:id
+        contractPlanId:id
       })
     }
+    
     wx.request({
-        url: config.service.showLog,    
+        url: config.service.pshowLog,    
         method:"GET",    
         header:{
           "content-type":"application/x-www-form-urlencoded",
@@ -31,7 +32,7 @@ Page({
         },
         data:{
           content:_this.data.log,
-          maintenanceId:id,
+          contractPlanId:_this.data.contractPlanId,
           size:20
         },       
         success:function(res){ 
@@ -50,18 +51,18 @@ Page({
   formSubmit:function(e){
       console.log(e.detail);
       const _this = this;
-      if(_this.data.content == ""){
+      if(e.detail.value.content == ""){
         toast.fail('内容不能为空');
-				return
+        return 
       }
       let data = {};
       data["content"] = e.detail.value.content;
       data["createTime"] = e.detail.value.createTime;
-      data["maintenanceId"] = _this.data.maintenanceId;
-      data["id"] = e.detail.value.maintenanceId;
-      console.log(JSON.stringify(data));
+      data["contractPlanId"] = _this.data.contractPlanId;
+      data["id"] = e.detail.value.contractPlanId;
+      console.log(JSON.stringify(data));  
       wx.request({
-        url: config.service.log,  
+        url: config.service.plog,  
         data: JSON.stringify(data),   
         method:"PUT",    
         header:{
@@ -72,6 +73,7 @@ Page({
             console.log(res) 
             if(res?.data?.code == 0){
               toast.success('修改成功');
+              _this.onLoad();
             }
             else{
               toast.fail(res.data.msg);

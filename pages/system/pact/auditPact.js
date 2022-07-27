@@ -126,6 +126,10 @@ Page({
       })
   },onReject: function(e){
     let _this = this;
+    if(_this.data.no == ""){
+      toast.fail('内容不能为空');
+			return
+    }
     wx.request({
         url: config.service.denied,    
         method:"POST", 
@@ -154,6 +158,10 @@ Page({
       })
   },onClosed: function(e){
     let _this = this;
+    if(_this.data.close == ""){
+      toast.fail('内容不能为空');
+			return
+    }
     wx.request({
         url: config.service.closed,    
         method:"POST", 

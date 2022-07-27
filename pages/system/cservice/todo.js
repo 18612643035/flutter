@@ -29,8 +29,9 @@ Page({
             if(res.data?.data?.records){
               toast.success('查询成功');
               let app = getApp();
+              let db =  app.filter(res.data.data.records);
               _this.setData({
-                  allData:res.data.data.records,
+                  allData:db,
                   dictList:app.dict
               })
             }else{
@@ -48,6 +49,10 @@ Page({
   },
   closeRecord:function(e){
       let _this = this;
+      if(_this.data.reslut == ""){
+        toast.fail('内容不能为空');
+				return
+      }
       wx.request({
         url: config.service.closeCus,    
         method:"POST",    

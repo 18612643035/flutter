@@ -17,9 +17,11 @@ Page({
     details:[],
     isShow:false,
     show: false,
+    pshow:false,
     finishContent:'',
     finishTime:'',
     status:0,
+    log:'',
     minHour: 10,
     maxHour: 20,
     minDate: new Date(2000, 10, 1).getTime(),
@@ -114,17 +116,116 @@ Page({
       finishContent: val
     })
   },
-  showPopup(e) {
+  //新增维保日志
+  addLog:function(e){
+    let _this = this;
+    if(_this.data.log == ""){
+      toast.fail('内容不能为空');
+			return
+    }
+    wx.request({
+      url: config.service.plog,    
+      method:"POST",
+      data:{
+        content:_this.data.log,
+        contractPlanId:_this.data.details.id
+      },   
+      header:{
+        "content-type":"application/json",
+        'Authorization': 'Bearer '+config.service.token,
+      },     
+      success:function(res){ 
+          console.log(res) 
+          if(res.data?.data){
+            toast.success('新增成功');
+           }
+     }
+    })
+  },
+   //编辑日志
+   editLog:function(e){
+    let ind = e.target.dataset.index;
+    let id = this.data.allData[ind].id;
+    wx.navigateTo({
+      url: '../pact/editDispose?id='+id,
+    })
+  },
+  showPopup:function(e){
+    let index = e.target.dataset.index;
+    this.setData({
+        details:this.data.allData[index],
+        show:true,
+    })
+  },
+  showLog:function(e){ //查询日志
+    let index = e.target.dataset.index;
+    this.setData({
+        details:this.data.allData[index],
+    })
+    let _this = this;
+    wx.request({
+        url: config.service.pshowLog,    
+        method:"GET",    
+        header:{
+          "content-type":"application/x-www-form-urlencoded",
+          'Authorization': 'Bearer '+config.service.token,
+        },
+        data:{
+          content:'',
+          contractPlanId:_this.data.details.id,
+          size:20
+        },       
+        success:function(res){ 
+            console.log(res) 
+            if(res.data?.data?.records){
+              _this.setData({
+                LOG:res.data.data.records,
+                showLog:true
+              })
+              console.log(_this.data.logData)
+            }else{
+              toast.fail('查询失败');
+            }
+        }
+      });
+  },
+  delete:function(e){ //删除日志
+    let _this = this;
+    let id = e.target.dataset.id;
+    wx.request({
+      url: config.service.plog+'/'+id,    
+      method:"DELETE", 
+      header:{
+        "content-type":"application/x-www-form-urlencoded",
+        'Authorization': 'Bearer '+config.service.token,
+      },     
+      success:function(res){ 
+          console.log(res) 
+          if(res.data.code == 0){
+            toast.success('删除成功');
+            _this.setData({ showLog: false });
+          }
+          else{
+            toast.fail(res.data.msg);
+          }
+      }
+    })
+  },
+  //新增弹框组件传递的值
+  onLog:function(e){
+    e.detail.textData
+    this.setData({
+      log:e.detail.textData,
+    })
+  },
+  showPop(e) {//完成计划
     let index = e.target.dataset.index;
     this.setData({
         details:this.data.allData[index],
         finishContent:this.data.allData[index].finishContent,
         finishTime:this.data.allData[index].finishTime,
         status:this.data.allData[index].status,
-        show:true,
+        pshow:true,
     })
-  },
-  onClose() {
-    this.setData({ show: false });
   },
 })

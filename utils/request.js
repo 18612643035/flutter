@@ -62,6 +62,9 @@ function request(url, params, method, header, resolve, reject) {
         wx.showToast({
           title: 'token验证成功',
         })
+        wx.switchTab({
+          url: '../home/home'
+        })
       } else {
         let pages = getCurrentPages();
         let curpg = pages[pages.length - 1];

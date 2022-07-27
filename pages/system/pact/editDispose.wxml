@@ -5,7 +5,7 @@
     <view class="query">
       <view style="display: none;">
         <span>序号:</span>
-        <input name="maintenanceId" type="text" value="{{log.id}}"/>
+        <input name="contractPlanId" type="text" value="{{log.id}}"/>
       </view>
       <view>
         <span>内容:</span>

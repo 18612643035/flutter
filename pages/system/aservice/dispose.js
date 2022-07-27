@@ -55,9 +55,7 @@ Page({
           console.log(res) 
           if(res.data.code == 0){
             toast.success('删除成功');
-            setTimeout(() => {
-              _this.onLoad(); 
-            },1000);
+            _this.setData({ showLog: false });
           }
           else{
             toast.fail(res.data.msg);
@@ -67,6 +65,10 @@ Page({
   },
   aclose:function(e){
     let _this = this;
+    if(_this.data.reslut == ""){
+      toast.fail('内容不能为空');
+      return 
+    }
     wx.request({
       url: config.service.aclose,    
       method:"POST",
@@ -98,6 +100,10 @@ Page({
   //新增维保日志
   addLog:function(e){
     let _this = this;
+    if(_this.data.log == ""){
+      toast.fail('内容不能为空');
+      return 
+    }
     wx.request({
       url: config.service.log,    
       method:"POST",
@@ -146,7 +152,7 @@ Page({
           'Authorization': 'Bearer '+config.service.token,
         },
         data:{
-          content:_this.data.log,
+          content:'',
           maintenanceId:_this.data.details.id,
           size:20
         },       

@@ -55,7 +55,7 @@ var config = {
         cserviceSave: `${maintain}/customersupport`, //新增客服记录列表
         cserviceTodu: `${maintain}/customersupport/myTodo`, //获取待处理客服记录列表
         closeCus: `${maintain}/customersupport/close`, //关闭客服记录
-        cvisitPage: `${maintain}/returnVisit/page`, //回访记录
+        cvisitPage: `${maintain}/returnVisit/page`, //回访记录列表
         vClose: `${maintain}/returnVisit/close`, //关闭回访记录
         apending: `${maintain}/maintenance/pending`, //待指派维保列表
         assign: `${maintain}/maintenance/assign`, //指派给指定维保
@@ -65,6 +65,8 @@ var config = {
         log:`${maintain}/maintenanceLog`, //新增维保日志
         showLog:`${maintain}/maintenanceLog/page`, //查询维保日志
         deleteLog:`${maintain}/maintenanceLog`, //删除维保日志
+        plog:`${maintain}/contractPlanLog`, //合同计划日志
+        pshowLog:`${maintain}/contractPlanLog/page`, //查询合同计划日志
         aserviceDone:`${maintain}/maintenance/done`, //已完成维保
         inmProcess:`${maintain}/maintenance/inProcess`, //进行中维保
     },

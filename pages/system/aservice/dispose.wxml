@@ -74,7 +74,7 @@
 <view class="dialog">
           <view wx:for="{{LOG}}" wx:for-index = "bindex" wx:for-item="log" class="query">
             <view>
-              <span>序号:</span><text>{{log.maintenanceId}}</text>
+              <span>序号:</span><text>{{log.id}}</text>
             </view>
             <view>
               <span>内容:</span><text>{{log.content}}</text>
