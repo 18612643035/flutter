@@ -69,6 +69,8 @@ var config = {
         pshowLog:`${maintain}/contractPlanLog/page`, //查询合同计划日志
         aserviceDone:`${maintain}/maintenance/done`, //已完成维保
         inmProcess:`${maintain}/maintenance/inProcess`, //进行中维保
+        showDev:`${maintain}/contractDevice/page`, //查询合同设备
+        deleteDev:`${maintain}/contractDevice`, //删除设备
     },
     token:'',
     dict:''

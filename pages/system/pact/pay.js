@@ -11,7 +11,9 @@ Page({
     allData:[],
     details:[],
     show: false,
-    signingTime:''
+    signingTime:'',
+    curpage:0,
+    list:[],
   },
 
   /**
@@ -21,16 +23,24 @@ Page({
     let _this = this;
     wx.request({
         url: config.service.paymentList,    
-        method:"GET",    
+        method:"GET", 
+        data:{
+            current:_this.data.curpage,
+        },  
         header:{
           "content-type":"application/json",
           'Authorization': 'Bearer '+config.service.token,
         },     
         success:function(res){ 
           if(res.data?.data?.records){
-              toast.success('查询成功');
+              let arr1 = [];
+              res.data.data.current == 0 ? "" : arr1 = _this.data.list;
+              arr1 = arr1.concat(res.data.data.records);
               _this.setData({
-                allData:res.data.data.records,
+                curpage:res.data.data.current,
+                allData:arr1,
+                list:arr1,
+                last: res.data.data.last
             })
           }
           else{
@@ -51,5 +61,14 @@ Page({
     wx.navigateTo({
       url: 'payList?list='+JSON.stringify(e.target.dataset.id),
     })
-  }
+  },
+  onReachBottom: function () { //下拉刷新
+    if (this.data.last) {
+      return;
+    }
+    this.setData({
+      curpage:this.data.curpage+1
+    })
+    this.onLoad();
+  },
 })

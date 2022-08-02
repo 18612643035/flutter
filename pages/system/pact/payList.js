@@ -10,7 +10,7 @@ Page({
     allData:[],
     show:false,
     details:[],
-    status:0,
+    status:'0',
     columns: [{"text":"未付款","status":0},{"text":"已付款","status":1}],
     minHour: 10,
     maxHour: 20,
@@ -79,7 +79,7 @@ Page({
     this.setData({
         details:this.data.allData[index],
         show:true,
-        status:this.data.allData[index].status,
+        status:''+this.data.allData[index].status,
     })
     // let picker = this.selectComponent(".picker");
     // picker.setColumnIndex(0,this.data.allData[index].status); //设置默认索引
@@ -93,6 +93,10 @@ Page({
   },
   edit:function(e){
     let _this = this;
+    // if(_this.data.remarks == ""){
+    //   toast.fail('内容不能为空');
+		// 	return
+    // }
     wx.request({
       url: config.service.updatePayStatus,    
       method:"POST",    
@@ -109,7 +113,7 @@ Page({
         createTime:_this.data.details.createTime,
         planTime:_this.data.details.planTime,
         updateBy:_this.data.updateBy,
-        updateTime:_this.data.details.updateTime,
+        updateTime:_this.data.details.updateTime == "无" ? "": _this.data.details.updateTime,
         actualTime:util.formatTime(new Date(_this.data.currentDate)),
         remarks:_this.data.remarks,
 

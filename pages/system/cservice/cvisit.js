@@ -10,7 +10,9 @@ Page({
     details:[],
     reslut:'',
     show:false,
-    dictList:[]
+    dictList:[],//客户
+    curpage:0,
+    list:[]
   },
 
   /**
@@ -26,7 +28,7 @@ Page({
           'Authorization': 'Bearer '+config.service.token,
         },
         data:{
-          size:20
+          current:_this.data.curpage
         },     
         success:function(res){ 
             console.log(res) 
@@ -34,10 +36,15 @@ Page({
               toast.success('查询成功');
               let app = getApp();
               let db =  app.filter(res.data.data.records);
+              let arr1 = [];
+              res.data.data.current == 0 ? "" : arr1 = _this.data.list;
+              arr1 = arr1.concat(db);
               _this.setData({
-                  allData:db,
-                  dictList:app.dict
-              })
+                curpage:res.data.data.current,
+                allData:arr1,
+                list:arr1,
+                dictList:app.dict
+            })
             }else{
               toast.fail(res.data.msg);
             }
@@ -88,5 +95,15 @@ Page({
       this.setData({
           reslut:e.detail.textData,
       })
+    },
+    onReachBottom: function () { //下拉刷新
+      if (this.data.last) {
+        return;
+      }
+      this.setData({
+        curpage:this.data.curpage+1
+      })
+      this.onLoad();
     }
+    
 })

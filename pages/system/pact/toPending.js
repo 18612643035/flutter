@@ -27,7 +27,7 @@ Page({
     minDate: new Date(2000, 10, 1).getTime(),
     maxDate: new Date(2030, 10, 1).getTime(),
     currentDate: new Date().getTime(),
-    input:""
+    input:"",
   },
   onInput(event) {
     this.setData({
@@ -116,7 +116,7 @@ Page({
       finishContent: val
     })
   },
-  //新增维保日志
+  //新增日志
   addLog:function(e){
     let _this = this;
     if(_this.data.log == ""){
@@ -157,6 +157,13 @@ Page({
         show:true,
     })
   },
+  showPopup2:function(e){
+    let index = e.target.dataset.index;
+    this.setData({
+        details:this.data.allData[index],
+        show2:true,
+    })
+  },
   showLog:function(e){ //查询日志
     let index = e.target.dataset.index;
     this.setData({
@@ -189,6 +196,70 @@ Page({
         }
       });
   },
+  showLog2:function(e){ //查询设备
+    let index = e.target.dataset.index;
+    this.setData({
+        details:this.data.allData[index],
+    })
+    let _this = this;
+    wx.request({
+        url: config.service.showDev,    
+        method:"GET",    
+        header:{
+          "content-type":"application/x-www-form-urlencoded",
+          'Authorization': 'Bearer '+config.service.token,
+        },
+        data:{
+          content:'',
+          contractPlanId:_this.data.details.id,
+          size:20
+        },       
+        success:function(res){ 
+            console.log(res) 
+            if(res.data?.data?.records){
+              _this.setData({
+                LOG:res.data.data.records,
+                showLog2:true
+              })
+              console.log(_this.data.logData)
+            }else{
+              toast.fail('查询失败');
+            }
+        }
+      });
+  },
+   //新增设备
+   addLog2:function(e){
+    let _this = this;
+    if(e.detail.value.type == "" || e.detail.value.number == "" || e.detail.value.setupTime == ""){
+      toast.fail('内容不能为空');
+			return
+    }
+    wx.request({
+      url: config.service.deleteDev,    
+      method:"POST",
+      data:{
+        type:e.detail.value.type,
+        number:e.detail.value.number,
+        setupTime: util.formatTime(new Date(_this.data.input)),
+        contractId:_this.data.details.contractId
+      },   
+      header:{
+        "content-type":"application/json",
+        'Authorization': 'Bearer '+config.service.token,
+      },     
+      success:function(res){ 
+          console.log(res) 
+          if(res.data?.data){
+            toast.success('新增成功');
+            _this.setData({show2:false})
+           }
+           else{
+            toast.fail(res.data.msg);
+          }
+     }
+    })
+  },
   delete:function(e){ //删除日志
     let _this = this;
     let id = e.target.dataset.id;
@@ -204,6 +275,28 @@ Page({
           if(res.data.code == 0){
             toast.success('删除成功');
             _this.setData({ showLog: false });
+          }
+          else{
+            toast.fail(res.data.msg);
+          }
+      }
+    })
+  },
+  delete2:function(e){ //删除设备
+    let _this = this;
+    let id = e.target.dataset.id;
+    wx.request({
+      url: config.service.deleteDev+'/'+id,    
+      method:"DELETE", 
+      header:{
+        "content-type":"application/x-www-form-urlencoded",
+        'Authorization': 'Bearer '+config.service.token,
+      },     
+      success:function(res){ 
+          console.log(res) 
+          if(res.data.code == 0){
+            toast.success('删除成功');
+            _this.setData({ showLog2: false });
           }
           else{
             toast.fail(res.data.msg);
