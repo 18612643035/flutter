@@ -20,5 +20,14 @@ App({
         });
         return data;
     },
-    dict:[]
+    dict:[],
+    onReach: function (item) {
+        // if (item.data.last) {
+        //     return;
+        //   }
+        item.setData({
+            curpage:item.data.curpage+1
+          })
+          item.onLoad();
+    }
 })

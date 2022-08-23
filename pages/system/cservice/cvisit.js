@@ -1,5 +1,6 @@
 var config = require('../../../config')
 import toast from '../../../dist/toast/toast';
+let app = getApp();
 Page({
 
   /**
@@ -34,15 +35,11 @@ Page({
             console.log(res) 
             if(res.data?.data?.records){
               toast.success('查询成功');
-              let app = getApp();
               let db =  app.filter(res.data.data.records);
-              let arr1 = [];
-              res.data.data.current == 0 ? "" : arr1 = _this.data.list;
-              arr1 = arr1.concat(db);
               _this.setData({
                 curpage:res.data.data.current,
-                allData:arr1,
-                list:arr1,
+                allData:_this.data.list.concat(db),
+                list:_this.data.list.concat(db),
                 dictList:app.dict
             })
             }else{
@@ -97,13 +94,7 @@ Page({
       })
     },
     onReachBottom: function () { //下拉刷新
-      if (this.data.last) {
-        return;
-      }
-      this.setData({
-        curpage:this.data.curpage+1
-      })
-      this.onLoad();
+      app.onReach(this);
     }
     
 })

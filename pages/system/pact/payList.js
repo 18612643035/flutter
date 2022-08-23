@@ -1,6 +1,7 @@
 var config = require('../../../config')
 import toast from '../../../dist/toast/toast';
 var util = require('../../../utils/util');
+let app = getApp();
 Page({
 
   /**
@@ -18,7 +19,8 @@ Page({
     maxDate: new Date(2030, 10, 1).getTime(),
     currentDate: new Date().getTime(),
     remarks:'',
-    options:''
+    options:'',
+    curpage:0
   },
 
   /**
@@ -39,7 +41,10 @@ Page({
     let id = JSON.parse(db.list);
     wx.request({
       url: config.service.pay,    
-      method:"GET",    
+      method:"GET",
+      data:{
+        current:_this.data.curpage,
+      },     
       header:{
         "content-type":"application/x-www-form-urlencoded",
         'Authorization': 'Bearer '+config.service.token,
@@ -50,10 +55,10 @@ Page({
       success:function(res){ 
         if(res.data?.data?.records){
             toast.success('查询成功');
-            let app = getApp();
             let db =  app.filter(res.data.data.records);
             _this.setData({
-              allData:db,
+              curpage:res.data.data.current,
+              allData:_this.data.allData.concat(db),
           })
         }
         else{
@@ -128,5 +133,8 @@ Page({
           }
       }
     })
+  },
+  onReachBottom: function () { //下拉刷新
+    app.onReach(this);
   }
 })

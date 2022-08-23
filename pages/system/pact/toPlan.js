@@ -2,6 +2,7 @@
 var config = require('../../../config')
 import toast from '../../../dist/toast/toast';
 var util = require('../../../utils/util');
+let app = getApp();
 Page({
 
   /**
@@ -11,8 +12,8 @@ Page({
     allData:[],
     details:[],
     show: false,
-    signingTime:''
-
+    signingTime:'',
+    curpage:0
   },
 
   /**
@@ -22,7 +23,10 @@ Page({
     let _this = this;
     wx.request({
         url: config.service.planningList,    
-        method:"GET",    
+        method:"GET",
+        data:{
+          current:_this.data.curpage,
+        },     
         header:{
           "content-type":"application/json",
           'Authorization': 'Bearer '+config.service.token,
@@ -33,7 +37,8 @@ Page({
 							let app = getApp();
 							let db =  app.filter(res.data.data.records);
               _this.setData({
-                allData:db,
+                curpage:res.data.data.current,
+                allData:_this.data.allData.concat(res.data.data.records)
             })
           }
           else{
@@ -79,52 +84,7 @@ Page({
         signingTime:util.formatTime(new Date(this.data.allData[index].signingTime))
     })
   },
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
+  onReachBottom: function () { //下拉刷新
+    app.onReach(this);
   }
 })

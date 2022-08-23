@@ -1,13 +1,14 @@
 // pages/client/addClient.js
 var config = require('../../../config')
 import toast from '../../../dist/toast/toast';
+let app = getApp();
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-
+    curpage: 0
   },
 
   /**
@@ -17,7 +18,10 @@ Page({
     let _this = this;
     wx.request({
         url: config.service.queryObj,    
-        method:"GET",    
+        method:"GET",
+        data:{
+          current:_this.data.curpage,
+        },     
         header:{
           "content-type":"application/json",
           'Authorization': 'Bearer '+config.service.token,
@@ -27,7 +31,8 @@ Page({
             if(res.data?.data?.records){
               toast.success('查询成功');
               _this.setData({
-                  allData:res.data.data.records,
+                curpage:res.data.data.current,
+                allData:_this.data.allData.concat(res.data.data.records),
               })
             }else{
               toast.fail(res.data.msg);
@@ -103,5 +108,8 @@ Page({
           }  
       }
     })
-  }
+  },
+  onReachBottom: function () { //下拉刷新
+    app.onReach(this);
+  },
 })

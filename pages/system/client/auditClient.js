@@ -1,6 +1,7 @@
 // pages/system/client/auditClient.js
 var config = require('../../../config')
 import toast from '../../../dist/toast/toast';
+let app = getApp();
 Page({
 
   /**
@@ -10,7 +11,8 @@ Page({
     allData:[],
     details:[],
     show:false,
-    log:''
+    log:'',
+    curpage: 0
   },
 
   /**
@@ -24,12 +26,16 @@ Page({
         header:{
           "content-type":"application/json",
           'Authorization': 'Bearer '+config.service.token,
-        },     
+        },
+        data:{
+          current:_this.data.curpage,
+        },      
         success:function(res){ 
             console.log(res) 
             if(res.data?.data?.records){
               _this.setData({
-                  allData:res.data.data.records,
+                curpage:res.data.data.current,
+                allData:_this.data.allData.concat(res.data.data.records),
               })
             }
         }
@@ -111,5 +117,8 @@ Page({
       this.setData({
           log:e.detail.textData,
       })
+    },
+    onReachBottom: function () { //下拉刷新
+      app.onReach(this);
     },
 })

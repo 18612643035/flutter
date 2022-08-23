@@ -1,5 +1,6 @@
 var config = require('../../../config')
 import toast from '../../../dist/toast/toast';
+let app = getApp();
 Page({
 
   /**
@@ -14,6 +15,7 @@ Page({
     show:false,
     showLog:false,
     cshow:false,
+    curpage:0
   },
 
   /**
@@ -23,7 +25,10 @@ Page({
     let _this = this;
     wx.request({
         url: config.service.aservicemy,    
-        method:"GET",    
+        method:"GET",
+        data:{
+          current:_this.data.curpage,
+        },       
         header:{
           "content-type":"application/json",
           'Authorization': 'Bearer '+config.service.token,
@@ -33,7 +38,8 @@ Page({
             if(res.data?.data?.records){
               toast.success('查询成功');
               _this.setData({
-                  allData:res.data.data.records,
+                  curpage:res.data.data.current,
+                  allData:_this.data.allData.concat(res.data.data.records),
               })
             }else{
               toast.fail('查询失败');
@@ -190,5 +196,8 @@ Page({
       this.setData({
         log:e.detail.textData,
       })
-    }
+    },
+    onReachBottom: function () { //下拉刷新
+      app.onReach(this);
+    },
 })

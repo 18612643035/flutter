@@ -2,6 +2,7 @@
 var config = require('../../../config');
 var util = require('../../../utils/util');
 import toast from '../../../dist/toast/toast';
+let app = getApp();
 Page({
   onShareAppMessage() {
     return {
@@ -28,6 +29,7 @@ Page({
     maxDate: new Date(2030, 10, 1).getTime(),
     currentDate: new Date().getTime(),
     input:"",
+    curpage:0
   },
   onInput(event) {
     this.setData({
@@ -48,7 +50,10 @@ Page({
     let _this = this;
     wx.request({
         url: config.service.pactPending,    
-        method:"GET",    
+        method:"GET",
+        data:{
+          current:_this.data.curpage,
+        },     
         header:{
           "content-type":"application/json",
           'Authorization': 'Bearer '+config.service.token,
@@ -57,10 +62,10 @@ Page({
             console.log(res) 
             if(res.data?.data?.records){
               toast.success('查询成功');
-              let app = getApp();
               let db =  app.filter(res.data.data.records);
               _this.setData({
-                  allData:db,
+                  curpage:res.data.data.current,
+                  allData:_this.data.allData.concat(db),
               })
               console.log(_this.data.allData)
               console.log(_this.data.allData.length < 1)
@@ -180,7 +185,7 @@ Page({
         data:{
           content:'',
           contractPlanId:_this.data.details.id,
-          size:20
+          size:200
         },       
         success:function(res){ 
             console.log(res) 
@@ -212,7 +217,7 @@ Page({
         data:{
           content:'',
           contractPlanId:_this.data.details.id,
-          size:20
+          size:200
         },       
         success:function(res){ 
             console.log(res) 
@@ -321,4 +326,7 @@ Page({
         pshow:true,
     })
   },
+  onReachBottom: function () { //下拉刷新
+    app.onReach(this);
+  }
 })

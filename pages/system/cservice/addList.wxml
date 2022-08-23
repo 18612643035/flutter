@@ -1,4 +1,4 @@
-<!--pages/client/addClient.wxml-->
+<!--新增客服记录-->
 <form class="container1" bindsubmit='formSubmit'>
   <view class="tabRow">
   <text style="line-height:99px;">客户</text> 

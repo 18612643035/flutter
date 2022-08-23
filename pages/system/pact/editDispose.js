@@ -1,5 +1,6 @@
 var config = require('../../../config')
 import toast from '../../../dist/toast/toast';
+let app = getApp();
 Page({
 
   /**
@@ -8,7 +9,8 @@ Page({
   data: {
     allData:[],
     log:'',
-    contractPlanId:''
+    contractPlanId:'',
+    curpage:0
   },
 
   /**
@@ -33,13 +35,14 @@ Page({
         data:{
           content:_this.data.log,
           contractPlanId:_this.data.contractPlanId,
-          size:20
+          current:_this.data.curpage,
         },       
         success:function(res){ 
             console.log(res) 
             if(res.data?.data?.records){
               _this.setData({
-                allData:res.data.data.records,
+                curpage:res.data.data.current,
+                allData:_this.data.allData.concat(res.data.data.records),
               })
               console.log(_this.data.logData)
             }else{
@@ -80,5 +83,8 @@ Page({
             } 
         }
       })
-  }
+  },
+  onReachBottom: function () { //下拉刷新
+    app.onReach(this);
+  },
 })
