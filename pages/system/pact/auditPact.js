@@ -11,7 +11,6 @@ Page({
   data: {
     allData:[],
     details:[],
-    signingTime:'',
     isShow:false,
     show: false,
     show2: false,
@@ -194,13 +193,11 @@ Page({
       })
   },
   onShowList: function(e){
-    console.log(e)
-    let index = e.target.dataset.index;
-    this.setData({
-      details:this.data.allData[index],
-      isShow:true,
-      signingTime:util.formatTime(new Date(this.data.allData[index].signingTime))
-  })
+    let id = this.data.allData[e.target.dataset.index].id;
+    wx.navigateTo({
+      url: '../pact/details?id='+id,
+    })
+
   },
   onHidden: function(){
     this.setData({

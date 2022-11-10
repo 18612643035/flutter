@@ -1,6 +1,13 @@
 <!--pages/client/addClient.wxml-->
 <form class="container1" bindsubmit='formSubmit'>
-  <view class="tabRow">
+<view class="pop-beg">
+  <view style="display: block;">
+    <text style="margin-left: 5px;">选择地区:</text>
+    <van-picker class="picker" columns="{{ columns }}" item-height="33" visible-item-count="3" default-index="{{ 0 }}"
+      bind:change="onChange" />
+  </view>
+</view>
+<view class="tabRow">
   <text>客户姓名</text> 
   <input name="name" type="text" />
 </view>
@@ -26,6 +33,9 @@
           <button class="cmt-button" bindtap="goEdit">修改客户</button>
       </view>
       <view wx:for="{{allData}}" wx:for-index = "bindex" class="query">
+        <view>
+          <span>地区:</span><text class="tapNav food-name">{{item.region}}</text>
+        </view>
         <view>
           <span>名称:</span><text class="tapNav food-name">{{item.name}}</text>
         </view>

@@ -1,6 +1,13 @@
 <scroll-view scroll-y class="content">
       <view class="container1" wx:for="{{allData}}">
         <form bindsubmit='formSubmit'>
+          <view class="pop-beg">
+          <view style="display: block;">
+              <text style="margin-left: 5px;">选择地区:</text>
+              <van-picker class="picker" columns="{{ columns }}" item-height="33" visible-item-count="3" default-index="{{ 0 }}"
+                bind:change="onChange" />
+          </view>
+          </view>
           <view class="tabRow">
             <text class="l_text">名称:</text>
             <input name="name" type="text" value="{{item.name}}"/>

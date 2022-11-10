@@ -8,7 +8,10 @@ Page({
    * 页面的初始数据
    */
   data: {
-    curpage: 0
+    curpage: 1,
+    columns:[],
+    allData:[],
+    dictId:''
   },
 
   /**
@@ -16,6 +19,7 @@ Page({
    */
   onLoad: function (options) {
     let _this = this;
+   
     wx.request({
         url: config.service.queryObj,    
         method:"GET",
@@ -30,19 +34,39 @@ Page({
             console.log(res) 
             if(res.data?.data?.records){
               toast.success('查询成功');
+              res.data.data.records.map((item) =>{
+                item.region = config.regDict[item.region];
+              });
+              let col = [];
+              for(let key in config.regDict){
+                 config.regDict[key]
+                 col.push({
+                  "text": config.regDict[key],
+                  "id": key
+                });
+              }
               _this.setData({
                 curpage:res.data.data.current,
+                columns:col,
                 allData:_this.data.allData.concat(res.data.data.records),
               })
             }else{
               toast.fail(res.data.msg);
             }
         }
-      })
+      });
   },
   goEdit:function(e){
     wx.navigateTo({
       url: './editClient'
+    })
+  },
+  onChange(event) { ///选中地区
+    const {
+      value
+    } = event.detail;
+    this.setData({
+      dictId: value.id
     })
   },
   goAudit:function (e) {
@@ -86,6 +110,7 @@ Page({
     data["address"] = e.detail.value.address;
     data["contact"] = e.detail.value.contact;
     data["contactPhone"] = e.detail.value.contactPhone;
+    data["region"] =_this.data.dictId;
     console.log(JSON.stringify(data));
     wx.request({
       url: config.service.addObj,  

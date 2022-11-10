@@ -46,12 +46,15 @@ Page({
       })
   },
   showPopup(e) {
-    let index = e.target.dataset.index;
-    this.setData({
-        details:this.data.allData[index],
-        show:true,
-        signingTime:util.formatTime(new Date(this.data.allData[index].signingTime))
+    let id = this.data.allData[e.target.dataset.index].id;
+    wx.navigateTo({
+      url: '../pact/details?id='+id,
     })
+    // this.setData({
+    //     details:this.data.allData[index],
+    //     show:true,
+    //     signingTime:util.formatTime(new Date(this.data.allData[index].signingTime))
+    // })
   },
   onTap:function(e){
     wx.navigateTo({

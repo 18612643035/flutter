@@ -29,7 +29,8 @@
     "pages/system/aservice/editDispose",
     "pages/system/cservice/addList",
     "pages/system/pact/haspay",
-    "pages/system/pact/editDispose"
+    "pages/system/pact/editDispose",
+    "pages/system/pact/details"
   ],
   "window": {
     "backgroundColor": "#F6F6F6",

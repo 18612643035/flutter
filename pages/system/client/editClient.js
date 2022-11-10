@@ -7,7 +7,10 @@ Page({
    * 页面的初始数据
    */
   data: {
-    curpage: 0
+    curpage: 1,
+    columns:[],
+    allData:[],
+    dictId:''
   },
 
   /**
@@ -28,13 +31,34 @@ Page({
         success:function(res){ 
             console.log(res) 
             if(res.data?.data?.records){
+              res.data.data.records.map((item) =>{
+                item.region = config.regDict[item.region];
+              });
+              let col = [];
+              for(let key in config.regDict){
+                 config.regDict[key]
+                 col.push({
+                  "text": config.regDict[key],
+                  "id": key
+                });
+              }
+              console.log(col)
               _this.setData({
                 curpage:res.data.data.current,
+                columns:col,
                 allData:_this.data.allData.concat(res.data.data.records),
               })
             }
         }
       })
+  },
+  onChange(event) { ///选中地区
+    const {
+      value
+    } = event.detail;
+    this.setData({
+      dictId: value.id
+    })
   },
   formSubmit: function(e){
     console.log(e.detail);
@@ -44,6 +68,7 @@ Page({
     data["address"] = e.detail.value.address;
     data["contact"] = e.detail.value.contact;
     data["id"] = e.detail.value.id;
+    data["region"] =_this.data.dictId;
     data["contactPhone"] = e.detail.value.contactPhone;
     console.log(JSON.stringify(data));
     wx.request({

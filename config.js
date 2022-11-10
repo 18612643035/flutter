@@ -3,8 +3,8 @@
  */
 
 // 此处主机域名修改成腾讯云解决方案分配的域名
-var ip = 'https://www.madecloud.net:7012';
-//var ip = 'http://192.168.0.250';
+//var ip = 'https://www.madecloud.net:7012';
+var ip = 'http://192.168.0.250';
 var host = ip+'/contract';
 var user = ip+'/auth';
 var client = ip+'/contract';
@@ -36,6 +36,7 @@ var config = {
         menu: `${admin}/menu`,//用户菜单
         role: `${admin}/user/list`,//获取指派人列表
         pendingList: `${client}/contract/pendingList`,//合同列表
+        details: `${client}/contract/details`,//合同详情
         approved: `${client}/contract/approved`,//合同通过
         denied: `${client}/contract/denied`,//合同不通过
         pactPending: `${client}/contractPlan/myPending`,//get待完成计划列表
@@ -71,9 +72,11 @@ var config = {
         inmProcess:`${maintain}/maintenance/inProcess`, //进行中维保
         showDev:`${maintain}/contractDevice/page`, //查询合同设备
         deleteDev:`${maintain}/contractDevice`, //删除设备
+        region:`${admin}/dict/type/customer_region`, //获取地区
     },
     token:'',
-    dict:''
+    dict:'',//医院字典
+    regDict:''//地区字典
 };
 
 module.exports = config;

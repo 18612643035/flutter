@@ -1,4 +1,4 @@
-var config = require('../../../config')
+var config = require('../../../config');
 import toast from '../../../dist/toast/toast';
 let app = getApp();
 Page({

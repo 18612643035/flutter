@@ -1,6 +1,6 @@
 <!--pages/component/remark.wxml-->
 <view>
-  <text>处理结果*</text>
-  <input name="contact" type="text" bindinput='inputChange' />
+  <!-- <text>处理结果*{{title}}</text> -->
+  <input style="margin:0 25px;text-indent:15px;border:1px solid #ebedf0" name="contact" type="text" bindinput='inputChange' />
 </view>
 

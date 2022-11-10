@@ -73,7 +73,7 @@ Page({
       console.log(e);
     });
     goRequest({
-      url: config.service.dict, //获取客户信息
+      url: config.service.dict, //获取客户字典
       params: {},
       method: 'GET',
       header: {
@@ -100,6 +100,31 @@ Page({
       })
     }).catch(function (e) {
       console.log(e);
+    });
+    wx.request({ //地区字典
+      url: config.service.region,    
+      method:"GET",   
+      header:{
+        "content-type":"application/json",
+        'Authorization': 'Bearer '+config.service.token,
+      },     
+      success:function(res){ 
+          console.log(res) 
+          if(res.data.code == 0){
+            let col = [];
+            let dict = {};
+            for (let i = 0; i < res.data.data.length; i++) {
+              dict[res.data.data[i].id] = res.data.data[i].label;
+              col.push({
+                "text": res.data.data[i].label,
+                "id": res.data.data[i].id
+              });
+            }
+            config.regDict = dict;
+          }else{
+            toast.fail(res.data.msg);
+          }
+      }
     });
   },
   goMenu: function () { //打开菜单栏
