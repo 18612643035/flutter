@@ -13,7 +13,7 @@ Page({
     details:[],
     show: false,
     signingTime:'',
-    curpage:0
+    curpage:1
   },
 
   /**

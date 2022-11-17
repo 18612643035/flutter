@@ -15,7 +15,7 @@ Page({
     show:false,
     showLog:false,
     cshow:false,
-    curpage:0
+    curpage:1
   },
 
   /**

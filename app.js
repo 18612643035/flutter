@@ -22,9 +22,6 @@ App({
     },
     dict:[],
     onReach: function (item) {
-        // if (item.data.last) {
-        //     return;
-        //   }
         item.setData({
             curpage:item.data.curpage+1
           })

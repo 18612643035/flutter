@@ -12,7 +12,7 @@ Page({
     details:[],
     show:false,
     log:'',
-    curpage: 0
+    curpage: 1
   },
 
   /**

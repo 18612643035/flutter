@@ -20,7 +20,7 @@ Page({
     currentDate: new Date().getTime(),
     remarks:'',
     options:'',
-    curpage:0
+    curpage:1
   },
 
   /**

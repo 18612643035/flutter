@@ -19,7 +19,7 @@ Page({
     handler:'',
     no:'',
     close:'',
-    curpage:0,
+    1,
   },
 
   /**

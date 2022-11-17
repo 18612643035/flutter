@@ -12,7 +12,7 @@ Page({
     reslut:'',
     show:false,
     dictList:[],//客户
-    curpage:0,
+    curpage:1,
     list:[]
   },
 

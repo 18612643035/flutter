@@ -10,7 +10,8 @@ Page({
     curpage: 1,
     columns:[],
     allData:[],
-    dictId:''
+    dictId:'',
+    index:0
   },
 
   /**
@@ -31,18 +32,19 @@ Page({
         success:function(res){ 
             console.log(res) 
             if(res.data?.data?.records){
-              res.data.data.records.map((item) =>{
-                item.region = config.regDict[item.region];
-              });
               let col = [];
               for(let key in config.regDict){
-                 config.regDict[key]
                  col.push({
                   "text": config.regDict[key],
                   "id": key
                 });
               }
-              console.log(col)
+              res.data.data.records.map((item) =>{
+                item.region = config.regDict[item.region]; 
+                let name = item.region;
+                item.index =  col.findIndex((item) => item.text === name);
+              });
+
               _this.setData({
                 curpage:res.data.data.current,
                 columns:col,

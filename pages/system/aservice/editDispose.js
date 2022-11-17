@@ -10,7 +10,7 @@ Page({
     allData: [],
     log: '',
     maintenanceId: '',
-    curpage: 0
+    curpage: 1
   },
 
   /**

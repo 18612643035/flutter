@@ -8,7 +8,7 @@ Page({
    */
   data: {
     allData:[],
-    curpage:0
+    curpage:1
   },
 
   /**

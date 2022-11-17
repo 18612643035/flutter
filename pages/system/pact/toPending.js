@@ -29,7 +29,7 @@ Page({
     maxDate: new Date(2030, 10, 1).getTime(),
     currentDate: new Date().getTime(),
     input:"",
-    curpage:0
+    curpage:1
   },
   onInput(event) {
     this.setData({

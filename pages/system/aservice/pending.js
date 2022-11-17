@@ -12,7 +12,7 @@ Page({
     show: false,
     columns: ['1','2','3'],
     handler:'',
-    curpage: 0
+    curpage: 1
   },
 
   /**

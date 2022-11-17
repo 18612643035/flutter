@@ -26,7 +26,7 @@ Page({
     name: '',
     active: 0,
     list: [],
-    curpage: 0,
+    curpage: 1,
     empty:'none'
   },
   goFileup: function () {

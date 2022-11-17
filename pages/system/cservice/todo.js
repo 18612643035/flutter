@@ -11,7 +11,7 @@ Page({
     details:[],
     reslut:'',
     show:false,
-    curpage:0
+    curpage:1
   },
 
   /**

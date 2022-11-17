@@ -10,7 +10,7 @@ Page({
     allData:[],
     log:'',
     contractPlanId:'',
-    curpage:0
+    curpage:1
   },
 
   /**

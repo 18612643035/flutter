@@ -17,9 +17,15 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
+  onShow: function (options) {
+    this.setData({
+      curpage:1,
+      allData:[]
+    })
+    this.request()
+  },
+  request:function(params) {
     let _this = this;
-   
     wx.request({
         url: config.service.queryObj,    
         method:"GET",
@@ -39,7 +45,6 @@ Page({
               });
               let col = [];
               for(let key in config.regDict){
-                 config.regDict[key]
                  col.push({
                   "text": config.regDict[key],
                   "id": key
@@ -135,6 +140,10 @@ Page({
     })
   },
   onReachBottom: function () { //下拉刷新
-    app.onReach(this);
+    //app.onReach(this);
+    this.setData({
+      curpage:this.data.curpage+1
+    })
+    this.request();
   },
 })
