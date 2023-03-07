@@ -1,0 +1,103 @@
+<!--创建维保-->
+<form class="container1" bindsubmit='formSubmit'>
+
+<view class="tabRow">
+<text>*合同编号</text> 
+  <input name="amount" type="text" />
+</view>
+<view class="tabRow">
+<text>经销商</text> 
+  <input name="dealer" type="text" />
+</view>
+<view class="tabRow">
+  <text>*终端用户</text> 
+  <view class="dropdown">
+    <van-dropdown-menu height='30'>
+      <van-dropdown-item value="{{customerId}}" bind:change='optChange2' options="{{ option2 }}" />
+    </van-dropdown-menu>
+  </view>
+</view>
+<view class="tabRow">
+<text>*合同金额</text> 
+  <input name="serialNumber" type="text" />
+</view>
+<view class="tabRow">
+<text>销售</text> 
+  <input name="saleName" type="text" />
+</view>
+<view class="tabRow">
+<text>*签订时间</text> 
+  <input name="signingTime" value="{{time}}" bindtap="onTime" type="text" />
+</view>
+<view class="button-box">
+  <van-button round type="info" form-type='submit'>提交</van-button>
+</view>
+</form>
+<van-toast id="van-toast" />
+<van-dialog
+  use-slot
+  title="选择时间"
+  show="{{ show }}"
+  show-cancel-button
+  bind:confirm="cmtTime"
+  bind:close="onClose"
+>
+  <view class="block">
+      <van-datetime-picker
+        type="date"
+        value="{{ currentDate }}"
+        bind:input="onInput"
+        min-date="{{ minDate }}"
+        formatter="{{ formatter }}"
+      />
+  </view>
+</van-dialog>
+<scroll-view scroll-y class="content">
+  <van-divider
+  contentPosition="center"
+  customStyle="color: #1989fa; border-color: #1989fa; font-size: 18px;"
+>
+  新增合同列表
+</van-divider>
+      <view wx:for="{{allData}}" wx:for-index = "bindex" class="query">
+        <view>
+          <span>序号:</span><text class="tapNav food-name">{{bindex}}</text>
+        </view>
+        <view>
+          <span>客户:</span><text class="tapNav food-name">{{item.customer}}</text>
+        </view>
+        <view>
+          <span>设备类型:</span><text class="tapNav food-name">{{item.deviceTypeName}}</text>
+        </view>
+        <view>
+          <span>设备:</span><text class="tapNav food-name">{{item.devices}}</text>
+        </view>
+        <view>
+          <span>联系人:</span><text class="tapNav food-name">{{item.contact}}</text>
+        </view>
+        <view>
+          <span>联系电话:</span><text class="tapNav food-name">{{item.contactPhone}}</text>
+        </view>
+        <view>
+          <span>维修时间:</span><text class="tapNav food-name">{{item.maintainTime}}</text>
+        </view>
+        <view>
+          <span>问题描述:</span><text class="tapNav food-name">{{item.content}}</text>
+        </view>
+        <view>
+          <span>处理结果:</span><text class="tapNav food-name">{{item.result}}</text>
+        </view>
+        <view>
+          <span>处理人:</span><text class="tapNav food-name">{{item.handlerName}}</text>
+        </view>
+        <view>
+          <span>状态:</span>
+          <text wx:if="{{item.status==0}}" class="tapNav food-name">新建</text>
+          <text wx:if="{{item.status==1}}" class="tapNav food-name">关闭</text>
+        </view>
+        <view class="button-box">
+          <van-button data-index="{{bindex}}" round type="info" bindtap="goEdit">修改</van-button>
+          <van-button data-index="{{bindex}}" round type="info" bindtap="delMaintenance">删除</van-button>
+        </view>
+      </view>
+</scroll-view>

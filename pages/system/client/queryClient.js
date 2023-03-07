@@ -7,7 +7,8 @@ Page({
    * 页面的初始数据
    */
   data: {
-    curpage: 1
+    curpage: 1,
+    allData:[]
   },
 
   /**

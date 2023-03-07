@@ -126,6 +126,27 @@ Page({
           }
       }
     });
+    wx.request({ //设备类型字典
+      url: config.service.device_type,    
+      method:"GET",   
+      header:{
+        "content-type":"application/json",
+        'Authorization': 'Bearer '+config.service.token,
+      },     
+      success:function(res){ 
+          console.log(res) 
+          if(res.data.code == 0){
+            let col = [];
+            let device_type = {};
+            for (let i = 0; i < res.data.data.length; i++) {
+              device_type[res.data.data[i].value] = res.data.data[i].label;
+            }
+            config.device_type = device_type;
+          }else{
+            toast.fail(res.data.msg);
+          }
+      }
+    });
   },
   goMenu: function () { //打开菜单栏
     wx.reLaunch({

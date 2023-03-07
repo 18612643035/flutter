@@ -1,86 +1,82 @@
-<!--待处理合同计划-->
+<!--待处理合同安装任务-->
 <van-empty wx-if="{{allData.length<1}}" description="暂无信息" />
 <scroll-view scroll-y class="content">
   <view wx:for="{{allData}}" wx:key='index' wx:for-index="bindex" class="query">
     <View>
-      <span data-index="{{bindex}}">合同计划完成详情:</span><text class="tapNav food-name">{{item.finishContent}}</text>
+      <span data-index="{{bindex}}">序号:</span><text class="tapNav food-name">{{item.id}}</text>
     </View>
     <view>
-      <span data-index="{{bindex}}">合同计划完成时间:</span><text class="tapNav food-name">{{item.finishTime}}</text>
+      <span data-index="{{bindex}}">设备类型:</span>
+      <!-- <text wx:if="{{item.type==0}}" class="tapNav food-name">新建 </text>
+      <text wx:if="{{item.type==1}}" class="tapNav food-name">待处理</text>
+      <text wx:if="{{item.type==2}}" class="tapNav food-name">完成 </text> -->
+      <text  class="tapNav food-name">{{device_type[item.type]}}</text>
     </view>
     <view>
-      <span data-index="{{bindex}}">合同计划开始时间:</span><text class="tapNav food-name">{{item.startTime}}</text>
+      <span data-index="{{bindex}}">设备数量:</span><text class="tapNav food-name">{{item.deviceAmount}}</text>
     </view>
     <view>
-      <span data-index="{{bindex}}">合同计划结束时间:</span><text class="tapNav food-name">{{item.endTime}}</text>
+      <span data-index="{{bindex}}">保修期:</span><text class="tapNav food-name">{{item.warranty}}</text>
     </view>
     <view>
-      <span data-index="{{bindex}}">合同计划id:</span><text class="tapNav food-name">{{item.id}}</text>
+      <span data-index="{{bindex}}">终端用户:</span><text class="tapNav food-name">{{item.id}}</text>
     </view>
     <view>
-      <span data-index="{{bindex}}">合同内容:</span><text class="tapNav food-name">{{item.content}}</text>
+      <span data-index="{{bindex}}">详细地址:</span><text class="tapNav food-name">{{item.address}}</text>
     </view>
     <view>
-      <span data-index="{{bindex}}">合同计划状态:</span>
+      <span data-index="{{bindex}}">信息科联系人:</span><text class="tapNav food-name">{{item.infoDeptContact}}</text>
+    </view>
+    <view>
+      <span data-index="{{bindex}}">信息科联系电话:</span><text class="tapNav food-name">{{item.infoDeptPhone}}</text>
+    </view>
+    <view>
+      <span data-index="{{bindex}}">科室名称:</span><text class="tapNav food-name">{{item.deptName}}</text>
+    </view>
+    <view>
+      <span data-index="{{bindex}}">科室联系人:</span><text class="tapNav food-name">{{item.deptContact}}</text>
+    </view>
+    <view>
+      <span data-index="{{bindex}}">科室联系电话:</span><text class="tapNav food-name">{{item.deptPhone}}</text>
+    </view>
+    <view>
+      <span data-index="{{bindex}}">状态:</span>
       <text wx:if="{{item.status==0}}" class="tapNav food-name">新建 </text>
       <text wx:if="{{item.status==1}}" class="tapNav food-name">待处理</text>
       <text wx:if="{{item.status==2}}" class="tapNav food-name">完成 </text>
     </view>
     <view class="button-box">
-      <button class="cmt-button" data-index="{{bindex}}" bindtap="showPopup" form-type='submit'> 新增日志</button>
-      <button class="cmt-button" data-index="{{bindex}}" bindtap="showLog" form-type='submit'> 查看日志</button>
-      <button class="cmt-button" data-index="{{bindex}}" bindtap="editLog">编辑日志</button>
-    </view>
-    <view class="button-box" style="flex-direction: space-evenly;">
-
-      <button wx-if="{{item.type == 4}}" class="cmt-button" data-index="{{bindex}}" bindtap="showLog2">查看设备</button>
-      <button wx-if="{{item.type == 4}}" class="cmt-button" data-index="{{bindex}}" bindtap="showPopup2">添加设备</button>
-      <button class="cmt-button" data-index="{{bindex}}" bindtap="showPop" form-type='submit'>完成计划</button>
+      <button class="cmt-button" data-index="{{bindex}}" bindtap="showLog2" form-type='submit'> 查看设备</button>
+      <button class="cmt-button" data-index="{{bindex}}" bindtap="showPopup2" form-type='submit'> 添加设备</button>
+      <button class="cmt-button" data-index="{{bindex}}" bindtap="showPop" form-type='submit'> 完成</button>
     </view>
   </view>
 </scroll-view>
-<van-dialog use-slot title="完成计划" show="{{ pshow }}" show-cancel-button bind:close="onClose" bind:confirm="getUserInfo">
-  <view class="details">
-    <view class="pop-beg">
-      <view>
-        <text>合同计划完成情况:</text>
-        <input bindinput='inputChange' name="finishContent" type="text" model:value="{{finishContent}}" />
-      </view>
-      <view>
-        <text>合同计划完成时间:</text>
-        <!-- <input name="finishTime" type="text" model:value="{{finishTime}}"/> -->
-      </view>
-      <view>
-        <van-datetime-picker class="datetime-picker" type="datetime" item-height="33" value="{{ currentDate }}"
-          min-date="{{ minDate }}" max-date="{{ maxDate }}" bind:input="onInput" show-toolbar="flase"
-          visible-item-count="3" />
-      </view>
-    </view>
-  </view>
-</van-dialog>
-<van-dialog use-slot title="新增日志" show="{{ show }}" show-cancel-button="true" bind:confirm="addLog"
-  bind:close="onClose">
-  <view class="details">
-    <remark bind:text='onLog' />
-  </view>
+<van-dialog use-slot title="完成安装任务" show="{{ pshow }}" show-cancel-button bind:close="onClose" bind:confirm="getUserInfo">
+  <text>是否确认完成ID为{{details.id}}的安装任务</text>
 </van-dialog>
 <van-dialog use-slot title="添加设备" show="{{ show2 }}" show-confirm-button="{{false}}" show-cancel-button="true" confirm-button-text="123">
   <view class="details">
     <form class="container1" bindsubmit='addLog2'>
       <view class="tabRow">
         <text>类型</text>
-        <input name="type" type="text" />
+        <text>{{device_type[details.type]}}</text>
+        <input name="type" style="display: none;" type="text" value="{{device_type[details.type]}}" />
       </view>
       <view class="tabRow">
         <text>编号</text>
         <input name="number" type="text" />
       </view>
       <view class="tabRow">
+        <text>安装备注</text>
+        <input name="remarks" type="text" />
+      </view>
+      <view class="tabRow">
         <text>安装时间</text>
         <input style="display: none;" type="text" />
       </view>
       <view>
-          <van-datetime-picker class="datetime-picker" type="datetime" item-height="33" value="{{ currentDate }}"
+          <van-datetime-picker class="datetime-picker" type="date" item-height="33" value="{{ currentDate }}"
             min-date="{{ minDate }}" max-date="{{ maxDate }}" bind:input="onInput" show-toolbar="flase"
             visible-item-count="3" />
         </view>
@@ -90,35 +86,23 @@
     </form>
   </view>
 </van-dialog>
-<van-dialog use-slot title="日志" show="{{ showLog }}" bind:close="onClose">
-  <view class="dialog">
-    <view wx:for="{{LOG}}" wx:for-index="bindex" wx:for-item="log" class="query">
-      <view>
-        <span>序号:</span><text>{{log.id}}</text>
-      </view>
-      <view>
-        <span>内容:</span><text>{{log.content}}</text>
-      </view>
-      <view>
-        <span>创建时间:</span><text>{{log.createTime}}</text>
-      </view>
-      <view class="button-box">
-        <button class="cmt-button" data-index="{{bindex}}" data-id="{{log.id}}" bindtap="delete">删除</button>
-      </view>
-    </view>
-  </view>
-</van-dialog>
 <van-dialog use-slot title="设备" show="{{ showLog2 }}" bind:close="onClose">
   <view class="dialog">
     <view wx:for="{{LOG}}" wx:for-index="bindex" wx:for-item="log" class="query">
       <view>
-        <span>设备类型:</span><text>{{log.type}}</text>
+        <span>设备类型:</span><text>{{device_type[log.type]}}</text>
+        <van-dropdown-menu>
+          <van-dropdown-item value="{{ value1 }}" options="{{ option1 }}" />
+        </van-dropdown-menu>
       </view>
       <view>
-        <span>设备编号:</span><text>{{log.number}}</text>
+        <span>序号:</span><text>{{log.id}}</text>
       </view>
       <view>
         <span>安装时间:</span><text>{{log.setupTime}}</text>
+      </view>
+      <view>
+        <span>保修期:</span><text>{{log.warranty}}</text>
       </view>
       <view class="button-box">
         <button class="cmt-button" data-index="{{bindex}}" data-id="{{log.id}}" bindtap="delete2">删除</button>

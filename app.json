@@ -30,7 +30,10 @@
     "pages/system/cservice/addList",
     "pages/system/pact/haspay",
     "pages/system/pact/editDispose",
-    "pages/system/pact/details"
+    "pages/system/pact/details",
+    "pages/system/aservice/addMaintain",
+    "pages/system/aservice/editMaintain",
+    "pages/system/pact/addPact"
   ],
   "window": {
     "backgroundColor": "#F6F6F6",

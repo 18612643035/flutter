@@ -115,7 +115,7 @@ Page({
     data["address"] = e.detail.value.address;
     data["contact"] = e.detail.value.contact;
     data["contactPhone"] = e.detail.value.contactPhone;
-    data["region"] =_this.data.dictId;
+    data["region"] =_this.data.dictId == '' ? this.data.columns[1].id :'';
     console.log(JSON.stringify(data));
     wx.request({
       url: config.service.addObj,  
@@ -130,7 +130,7 @@ Page({
           if(res?.data?.code == 0){
             toast.success('新增成功');
             setTimeout(() => {
-              _this.onLoad(); 
+              _this.onShow(); 
             },1000);
           }
           else{

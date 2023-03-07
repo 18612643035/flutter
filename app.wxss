@@ -114,3 +114,30 @@ button.van-button--round,.cmt-button{
   max-height: 300px;
   overflow: auto;
 }
+.vsearch{
+  display: flex;justify-content: center;align-items: center;position: relative;
+}
+.searchCont{
+  position: absolute;
+  height: 200px;
+  overflow-y: auto;
+  background:#f7f8fa ;
+  z-index: 999;
+  left: 14px;
+  right: 12px;
+  padding: 1px;
+  top: 44px;
+}
+.dropdown{
+  margin-left: 15px;
+  width:100px;
+  height: 30px;
+}
+.link{
+  border-bottom: 1px solid #1989fa;
+  width: auto;
+}
+.vsearch>view{
+  width: 80%;
+  position: relative;
+}

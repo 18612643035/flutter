@@ -29,7 +29,8 @@ Page({
     maxDate: new Date(2030, 10, 1).getTime(),
     currentDate: new Date().getTime(),
     input:"",
-    curpage:1
+    curpage:1,
+    device_type:''
   },
   onInput(event) {
     this.setData({
@@ -66,9 +67,9 @@ Page({
               _this.setData({
                   curpage:res.data.data.current,
                   allData:_this.data.allData.concat(db),
+                  device_type:config.device_type
               })
-              console.log(_this.data.allData)
-              console.log(_this.data.allData.length < 1)
+              console.log(_this.data)
             }
             else{
               toast.fail(res.data.msg);
@@ -76,23 +77,12 @@ Page({
         }
       })
   },
-  getUserInfo: function(e){
+  getUserInfo: function(e){//完成合同
     let _this = this;
-    if(_this.data.finishContent == ""){
-      toast.fail('请填写合同计划完成情况');
-      return 
-    }
     let data = {};
     data["id"] = Number(_this.data.details.id);
-    data["content"] = _this.data.details.content;
-    data["finishTime"] = util.formatTime(new Date(_this.data.input));
-    data["finishContent"] = _this.data.finishContent;
-    data["startTime"] = _this.data.details.startTime;
-    data["endTime"] = _this.data.details.endTime;
-    data["status"] = _this.data.details.status;
-    data["directorName"] = _this.data.details.directorName;
-    data["contractId"] = _this.data.details.contractId;
-    data["director"] = _this.data.details.director;
+    console.log(data.id)
+    return false;
     wx.request({
         url: config.service.contractPlan,    
         method:"POST", 
@@ -121,40 +111,6 @@ Page({
       finishContent: val
     })
   },
-  //新增日志
-  addLog:function(e){
-    let _this = this;
-    if(_this.data.log == ""){
-      toast.fail('内容不能为空');
-			return
-    }
-    wx.request({
-      url: config.service.plog,    
-      method:"POST",
-      data:{
-        content:_this.data.log,
-        contractPlanId:_this.data.details.id
-      },   
-      header:{
-        "content-type":"application/json",
-        'Authorization': 'Bearer '+config.service.token,
-      },     
-      success:function(res){ 
-          console.log(res) 
-          if(res.data?.data){
-            toast.success('新增成功');
-           }
-     }
-    })
-  },
-   //编辑日志
-   editLog:function(e){
-    let ind = e.target.dataset.index;
-    let id = this.data.allData[ind].id;
-    wx.navigateTo({
-      url: '../pact/editDispose?id='+id,
-    })
-  },
   showPopup:function(e){
     let index = e.target.dataset.index;
     this.setData({
@@ -168,38 +124,6 @@ Page({
         details:this.data.allData[index],
         show2:true,
     })
-  },
-  showLog:function(e){ //查询日志
-    let index = e.target.dataset.index;
-    this.setData({
-        details:this.data.allData[index],
-    })
-    let _this = this;
-    wx.request({
-        url: config.service.pshowLog,    
-        method:"GET",    
-        header:{
-          "content-type":"application/x-www-form-urlencoded",
-          'Authorization': 'Bearer '+config.service.token,
-        },
-        data:{
-          content:'',
-          contractPlanId:_this.data.details.id,
-          size:200
-        },       
-        success:function(res){ 
-            console.log(res) 
-            if(res.data?.data?.records){
-              _this.setData({
-                LOG:res.data.data.records,
-                showLog:true
-              })
-              console.log(_this.data.logData)
-            }else{
-              toast.fail('查询失败');
-            }
-        }
-      });
   },
   showLog2:function(e){ //查询设备
     let index = e.target.dataset.index;
@@ -215,8 +139,8 @@ Page({
           'Authorization': 'Bearer '+config.service.token,
         },
         data:{
-          content:'',
-          contractPlanId:_this.data.details.id,
+          current:1,
+          installId:_this.data.details.id,
           size:200
         },       
         success:function(res){ 
@@ -236,6 +160,9 @@ Page({
    //新增设备
    addLog2:function(e){
     let _this = this;
+    _this.setData({
+        details:_this.data.allData[index],
+    })
     if(e.detail.value.type == "" || e.detail.value.number == "" || e.detail.value.setupTime == ""){
       toast.fail('内容不能为空');
 			return
@@ -244,9 +171,11 @@ Page({
       url: config.service.deleteDev,    
       method:"POST",
       data:{
+        installId:_this.data.details.id,
         type:e.detail.value.type,
         number:e.detail.value.number,
-        setupTime: util.formatTime(new Date(_this.data.input)),
+        notes:e.detail.value.remarks,
+        setupTime: util.formatTime2(new Date(_this.data.input)),
         contractId:_this.data.details.contractId
       },   
       header:{
@@ -255,7 +184,7 @@ Page({
       },     
       success:function(res){ 
           console.log(res) 
-          if(res.data?.data){
+          if(res.code == 0){
             toast.success('新增成功');
             _this.setData({show2:false})
            }
@@ -263,28 +192,6 @@ Page({
             toast.fail(res.data.msg);
           }
      }
-    })
-  },
-  delete:function(e){ //删除日志
-    let _this = this;
-    let id = e.target.dataset.id;
-    wx.request({
-      url: config.service.plog+'/'+id,    
-      method:"DELETE", 
-      header:{
-        "content-type":"application/x-www-form-urlencoded",
-        'Authorization': 'Bearer '+config.service.token,
-      },     
-      success:function(res){ 
-          console.log(res) 
-          if(res.data.code == 0){
-            toast.success('删除成功');
-            _this.setData({ showLog: false });
-          }
-          else{
-            toast.fail(res.data.msg);
-          }
-      }
     })
   },
   delete2:function(e){ //删除设备
@@ -316,13 +223,10 @@ Page({
       log:e.detail.textData,
     })
   },
-  showPop(e) {//完成计划
+  showPop(e) {//完成任务
     let index = e.target.dataset.index;
     this.setData({
         details:this.data.allData[index],
-        finishContent:this.data.allData[index].finishContent,
-        finishTime:this.data.allData[index].finishTime,
-        status:this.data.allData[index].status,
         pshow:true,
     })
   },

@@ -1,0 +1,232 @@
+<!--创建维保-->
+<form class="container1" bindsubmit='formSubmit'>
+<view class="pop-beg">
+  <view class="vsearch">
+    <!-- <text style="margin-left: 5px;">*客户</text> -->
+    <view>
+      <van-search
+        value="{{ value }}"
+        label="*客户"
+        placeholder="请输入客户名字"
+        use-action-slot
+        bind:change="onChange"
+        bind:search="onSearch"
+      >
+      </van-search>
+      <view class="searchCont" wx:if='{{isShow}}'>
+        <view wx:for="{{searchText}}"  wx:for-item="item"  class="query">
+            <text data-id='{{item.id}}' data-value='{{item.name}}' bindtap="onClick">{{item.name}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
+<view class="tabRow">
+  <text>*设备类型</text> 
+  <view class="dropdown">
+    <van-dropdown-menu height='30'>
+      <van-dropdown-item value='{{devType}}' bind:change="optChange" options="{{ option1 }}" />
+    </van-dropdown-menu>
+  </view>
+</view>
+<view class="tabRow">
+  <text>*设备编号</text> 
+  <view class="dropdown">
+    <van-dropdown-menu height='30'>
+      <van-dropdown-item value='{{deviceIds}}' bind:change='optChange2' options="{{ option2 }}" />
+    </van-dropdown-menu>
+  </view>
+</view>
+<view class="tabRow">
+<text>设备详情</text> 
+  <span style="margin-left: 5px;" bindtap='showDetails' class="link">{{deviceIdsName}}</span>
+</view>
+<view class="tabRow">
+<text>*联系人</text> 
+  <input name="contact" type="text" />
+</view>
+<view class="tabRow">
+<text>*联系电话</text> 
+  <input name="contactPhone" type="text" />
+</view>
+<view class="tabRow">
+<text>*维修时间</text> 
+  <input name="maintainTime" value="{{time}}" bindtap="onTime" type="text" />
+</view>
+<view class="tabRow">
+<text>*问题描述</text> 
+  <input name="content" type="text" />
+</view>
+<view class="tabRow">
+<text>*处理结果</text> 
+  <input name="result" type="text" />
+</view>
+<view class="button-box">
+  <van-button round type="info" form-type='submit'>提交</van-button>
+</view>
+</form>
+<van-toast id="van-toast" />
+<van-dialog
+  use-slot
+  title="选择时间"
+  show="{{ show }}"
+  show-cancel-button
+  bind:confirm="cmtTime"
+  bind:close="onClose"
+>
+  <view class="block">
+      <van-datetime-picker
+        type="date"
+        value="{{ currentDate }}"
+        bind:input="onInput"
+        min-date="{{ minDate }}"
+        formatter="{{ formatter }}"
+      />
+  </view>
+</van-dialog>
+<van-dialog
+  use-slot
+  title="设备详情"
+  show="{{ show2 }}"
+  show-cancel-button
+>
+<scroll-view scroll-y class="content" style="max-height: 500px;">
+<van-divider
+  contentPosition="center"
+  customStyle="color: #1989fa; border-color: #1989fa; font-size: 18px;"
+>
+  设备基本信息
+</van-divider>
+<view class="query">
+        <view>
+          <span>合同id:</span><text class="tapNav food-name">{{devDetails.basicInfo.contractId}}</text>
+        </view>
+        <view>
+          <span>客户名字:</span><text class="tapNav food-name">{{devDetails.basicInfo.customer}}</text>
+        </view>
+        <view>
+          <span>经销商:</span><text class="tapNav food-name">{{devDetails.basicInfo.dealer}}</text>
+        </view>
+        <view>
+          <span>保修到期日:</span><text class="tapNav food-name">{{devDetails.basicInfo.expireDate}}</text>
+        </view>
+        <view>
+          <span>设备id:</span><text class="tapNav food-name">{{devDetails.basicInfo.id}}</text>
+        </view>
+        <view>
+          <span>安装人:</span><text class="tapNav food-name">{{devDetails.basicInfo.installer}}</text>
+        </view>
+        <view>
+          <span>设备编号:</span><text class="tapNav food-name">{{devDetails.basicInfo.number}}</text>
+        </view>
+        <view>
+          <span>安装日期:</span><text class="tapNav food-name">{{devDetails.basicInfo.setupDate}}</text>
+        </view>
+        <view>
+          <span>培训日期:</span><text class="tapNav food-name">{{devDetails.basicInfo.trainDate}}</text>
+        </view>
+        <view>
+          <span>设备类型名字:</span><text class="tapNav food-name">{{devDetails.basicInfo.type}}</text>
+        </view>
+        <view>
+          <span>保险期:</span><text class="tapNav food-name">{{devDetails.basicInfo.warranty}}</text>
+        </view>
+        <van-divider
+          contentPosition="center"
+          customStyle="color: #1989fa; border-color: #1989fa; font-size: 18px;"
+        >
+        设备维保记录
+        </van-divider>
+        <view wx:for="{{devDetails.maintenanceList}}" wx:for-index = "bindex" class="query" style="display: block;">
+          <view>
+          <span>联系人:</span><text class="tapNav food-name">{{item.contact}}</text>
+          </view>
+          <view>
+            <span>联系人电话:</span><text class="tapNav food-name">{{item.contactPhone}}</text>
+          </view>
+          <view>
+            <span>问题描述:</span><text class="tapNav food-name">{{item.content}}</text>
+          </view>
+          <view>
+            <span>创建时间:</span><text class="tapNav food-name">{{item.createTime}}</text>
+          </view>
+          <view>
+            <span>客户名:</span><text class="tapNav food-name">{{item.customer}}</text>
+          </view>
+          <view>
+            <span>设备类型:</span><text class="tapNav food-name">{{item.deviceType}}</text>
+          </view>
+          <view>
+            <span>设备类型名字:</span><text class="tapNav food-name">{{item.deviceTypeName}}</text>
+          </view>
+          <view>
+            <span>设备编号集合:</span><text class="tapNav food-name">{{item.devices}}</text>
+          </view>
+          <view>
+            <span>处理人姓名:</span><text class="tapNav food-name">{{devDetails.maintenanceList.handlerName}}</text>
+          </view>
+          <view>
+            <span>维修时间:</span><text class="tapNav food-name">{{devDetails.maintenanceList.maintainTime}}</text>
+          </view>
+          <view>
+            <span>处理结果:</span><text class="tapNav food-name">{{devDetails.maintenanceList.result}}</text>
+          </view>
+          <view>
+            <span>状态:</span>
+            <text wx:if="{{devDetails.devDetails.status==0}}" class="tapNav food-name">新建</text>
+            <text wx:if="{{devDetails.devDetails.status==1}}" class="tapNav food-name">关闭</text>
+          </view>
+        </view>
+       
+</view>
+</scroll-view>
+</van-dialog>
+<scroll-view scroll-y class="content">
+  <van-divider
+  contentPosition="center"
+  customStyle="color: #1989fa; border-color: #1989fa; font-size: 18px;"
+>
+  新增维保列表
+</van-divider>
+      <view wx:for="{{allData}}" wx:for-index = "bindex" class="query">
+        <view>
+          <span>序号:</span><text class="tapNav food-name">{{bindex}}</text>
+        </view>
+        <view>
+          <span>客户:</span><text class="tapNav food-name">{{item.customer}}</text>
+        </view>
+        <view>
+          <span>设备类型:</span><text class="tapNav food-name">{{item.deviceTypeName}}</text>
+        </view>
+        <view>
+          <span>设备:</span><text class="tapNav food-name">{{item.devices}}</text>
+        </view>
+        <view>
+          <span>联系人:</span><text class="tapNav food-name">{{item.contact}}</text>
+        </view>
+        <view>
+          <span>联系电话:</span><text class="tapNav food-name">{{item.contactPhone}}</text>
+        </view>
+        <view>
+          <span>维修时间:</span><text class="tapNav food-name">{{item.maintainTime}}</text>
+        </view>
+        <view>
+          <span>问题描述:</span><text class="tapNav food-name">{{item.content}}</text>
+        </view>
+        <view>
+          <span>处理结果:</span><text class="tapNav food-name">{{item.result}}</text>
+        </view>
+        <view>
+          <span>处理人:</span><text class="tapNav food-name">{{item.handlerName}}</text>
+        </view>
+        <view>
+          <span>状态:</span>
+          <text wx:if="{{item.status==0}}" class="tapNav food-name">新建</text>
+          <text wx:if="{{item.status==1}}" class="tapNav food-name">关闭</text>
+        </view>
+        <view class="button-box">
+          <van-button data-index="{{bindex}}" round type="info" bindtap="goEdit">修改</van-button>
+          <van-button data-index="{{bindex}}" round type="info" bindtap="delMaintenance">删除</van-button>
+        </view>
+      </view>
+</scroll-view>
