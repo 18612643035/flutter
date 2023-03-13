@@ -41,6 +41,7 @@ Page({
               deviceList:deviceList[0],
               payment:payment[0],
               terms:terms,
+              dict:config.dict,
               isShow:true,
           })
         }

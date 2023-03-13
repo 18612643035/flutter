@@ -31,7 +31,7 @@ VantComponent({
         width: null,
         zIndex: {
             type: Number,
-            value: 2000,
+            value: 999,
         },
         confirmButtonText: {
             type: String,

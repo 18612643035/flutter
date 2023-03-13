@@ -26,6 +26,7 @@ var config = {
         phone: `${user}/sms/send`,
         addObj: `${client}/customer`,
         dict: `${client}/customer/dict`,//客户字典
+        officialDict:`${client}/customer/officialDict`, //客户字典
         queryObj: `${client}/customer/myPage`, //我的客户列表
         queryAll: `${client}/customer/officialCustomer`, //所有客户列表
         userPending: `${client}/customer/pending`, //待审核客户
@@ -48,8 +49,9 @@ var config = {
         haspay: `${client}/contract/completePaymentList`,//已付款列表
         updatePayStatus: `${client}/contractPayment/updatePayStatus`,//合同付款记录状态
         paymentList: `${client}/contract/paymentList`,//待付款列表
-        
+        installList: `${client}/contractInstall/page`,//已完成安装任务列表
         contractPlan: `${client}/contractInstall/finish`,//完成安装任务
+        addContractPlan: `${client}/contractInstall`,//添加安装任务
         startPact: `${client}/contract/start`,//启动计划
         closed: `${client}/contract/closed`, //关闭合同
         cservicePending: `${maintain}/customersupport/pending`, //获取待指派客服记录列表
@@ -78,13 +80,16 @@ var config = {
         numberDev:`${maintain}/contractDevice/deviceDictByCustomerAndType`, //根据设备类型查编号
         deleteDev:`${maintain}/contractDevice`, //设备
         devDetails:`${maintain}/contractDevice/getDetails`, //设备详情
+        deviceList:`${maintain}/contractDevice/maintainDevices`, //设备列表
         region:`${admin}/dict/type/customer_region`, //获取地区
         device_type:`${admin}/dict/type/device_type`, //设备类型字典
     },
     token:'',
     dict:'',//医院字典
     regDict:'',//地区字典
-    device_type:'',//
+    dictCol:[],//地区字典集合
+    //offDict:'',//客户字典
+    device_type:'',//设备类型字典
 		check:{
 			//手机号验证
 			testMobileNo(s) {
@@ -128,7 +133,12 @@ var config = {
 					return true;
 				}
 			}
-		}
+    },
+    setData(data){
+      data.map((v,i)=>{
+
+      })
+    }
 };
 
 

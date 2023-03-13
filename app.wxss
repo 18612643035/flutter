@@ -141,3 +141,6 @@ button.van-button--round,.cmt-button{
   width: 80%;
   position: relative;
 }
+.van-icon{
+  color: #1989fa;
+}

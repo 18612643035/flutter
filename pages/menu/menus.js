@@ -12,7 +12,8 @@ Page({
         "1641":"system/cservice/todo","8500":"system/cservice/cpage","4300":"system/aservice/inprocess",
         "4600":"system/aservice/done","3400":"system/pact/page","3700":"system/pact/finishedList",
         "3600":"system/pact/pay","8100":"system/cservice/addList","3500":"system/pact/haspay",
-        "4100":"system/aservice/addMaintain"//,"3100":"system/pact/addPact",
+        "4100":"system/aservice/addMaintain",//"3100":"system/pact/addPact",
+        "4700":"system/aservice/device","3801":"system/pact/finishDevice",
       },
       empty:'none'
   },

@@ -16,27 +16,111 @@ Page({
   data: {
     allData:[],
     details:[],
+    finish:{
+      infoDeptContact: '',
+      infoDeptPhone: '',
+      deptName: '',
+      deptContact: '',
+      deptPhone: '',
+      finishTime: '',
+    },
+    addData:{
+      number:"",
+      remarks:"",
+    },
+    editData:{},
     isShow:false,
-    show: false,
+    show:false,
+    show3:false,
+    installShow:false,
+    finishShow:false,
     pshow:false,
     finishContent:'',
     finishTime:'',
     status:0,
     log:'',
+    input:"",
+    input2:"",
+    input3:"",
+    time:'',
+    time2:'',
+    time3:'',
+    curpage:1,
+    device_type:'',
     minHour: 10,
     maxHour: 20,
     minDate: new Date(2000, 10, 1).getTime(),
     maxDate: new Date(2030, 10, 1).getTime(),
     currentDate: new Date().getTime(),
-    input:"",
-    curpage:1,
-    device_type:''
+    formatter(type, value) {
+      if (type === 'year') {
+        return `${value}年`;
+      }
+      if (type === 'month') {
+        return `${value}月`;
+      }
+      return value;
+    }
   },
   onInput(event) {
     this.setData({
       input: event.detail,
     });
     console.log(util.formatTime(new Date(event.detail)));
+  },
+  onInput3(event) {
+    this.setData({
+      input3: event.detail,
+    });
+    console.log(util.formatTime(new Date(event.detail)));
+  },
+  onInput2(event) {
+    this.setData({
+      input2: event.detail,
+    });
+    console.log(util.formatTime(new Date(event.detail)));
+  },
+  cmtTime(e){
+    if(this.data.show3){
+      this.setData({
+        'editData.setupTime':util.formatTime2(new Date(this.data.input))
+      })
+    }else{
+      this.setData({
+        time:util.formatTime2(new Date(this.data.input))
+      })
+    }
+  },
+  cmtTime3(e){
+    this.setData({
+      time3:util.formatTime2(new Date(this.data.input3))
+    })
+  },
+  cmtTime2(e){
+    if(this.data.show3){
+      this.setData({
+        'editData.trainTime':util.formatTime2(new Date(this.data.input2))
+      })
+    }else{
+      this.setData({
+        time2:util.formatTime2(new Date(this.data.input2))
+      })
+    }
+  },
+  onTime(e){
+    this.setData({
+      installShow:true
+    })
+  },
+  onTime2(e){
+    this.setData({
+      show:true
+    })
+  },
+  onTime3(e){
+    this.setData({
+      finishShow:true
+    })
   },
   // handChange(e){//状态切换
   //   let stu = e.detail.value;
@@ -81,14 +165,21 @@ Page({
     let _this = this;
     let data = {};
     data["id"] = Number(_this.data.details.id);
+    data["address"] = _this.data.finish.address ? _this.data.finish.address : _this.data.details.address;
+    data["infoDeptContact"] = _this.data.finish.infoDeptContact ? _this.data.finish.infoDeptContact : _this.data.details.infoDeptContact;
+    data["infoDeptPhone"] = _this.data.finish.infoDeptPhone ? _this.data.finish.infoDeptPhone : _this.data.details.infoDeptPhone;
+    data["deptName"] = _this.data.finish.deptName ? _this.data.finish.deptName : _this.data.details.deptName;
+    data["deptContact"] = _this.data.finish.deptContact ? _this.data.finish.deptContact : _this.data.details.deptContact;
+    data["deptPhone"] = _this.data.finish.deptPhone ? _this.data.finish.deptPhone : _this.data.details.deptPhone;
+    data["finishTime"] = _this.data.time3;
     console.log(data.id)
-    return false;
+    
     wx.request({
         url: config.service.contractPlan,    
         method:"POST", 
-        data:data,   
+        data:JSON.stringify(data),   
         header:{
-          "content-type":"application/x-www-form-urlencoded",
+          "content-type":"application/json",
           'Authorization': 'Bearer '+config.service.token,
         },     
         success:function(res){ 
@@ -104,6 +195,27 @@ Page({
             }  
         }
       })
+  },
+  inputSetData(e){
+      let db = this.data.finish;
+      db[e.target.dataset.name] = e.detail.value
+      this.setData({
+        finish:db
+      })
+  },
+  inputSetData2(e){
+    let db = this.data.addData;
+    db[e.target.dataset.name] = e.detail.value
+    this.setData({
+      addData: db
+    })
+},
+  inputSetData3(e){
+    let db = this.data.editData;
+    db[e.target.dataset.name] = e.detail.value
+    this.setData({
+      editData: db
+    })
   },
   inputChange: function (e) {
     var val = e.detail.value
@@ -123,6 +235,8 @@ Page({
     this.setData({
         details:this.data.allData[index],
         show2:true,
+        time:'',
+        time2:''
     })
   },
   showLog2:function(e){ //查询设备
@@ -160,22 +274,16 @@ Page({
    //新增设备
    addLog2:function(e){
     let _this = this;
-    _this.setData({
-        details:_this.data.allData[index],
-    })
-    if(e.detail.value.type == "" || e.detail.value.number == "" || e.detail.value.setupTime == ""){
-      toast.fail('内容不能为空');
-			return
-    }
     wx.request({
       url: config.service.deleteDev,    
       method:"POST",
       data:{
         installId:_this.data.details.id,
-        type:e.detail.value.type,
-        number:e.detail.value.number,
-        notes:e.detail.value.remarks,
-        setupTime: util.formatTime2(new Date(_this.data.input)),
+        type:_this.data.details.type,
+        number:_this.data.addData.number,
+        notes:_this.data.addData.remarks,
+        setupTime: util.formatTime2(new Date(_this.data.time)),
+        trainTime: util.formatTime2(new Date(_this.data.time2)),
         contractId:_this.data.details.contractId
       },   
       header:{
@@ -192,6 +300,53 @@ Page({
             toast.fail(res.data.msg);
           }
      }
+    })
+  },
+  onEditClose:function(e){
+      this.setData({ show3: false });
+  },
+  //提交编辑
+  cmtEdit:function(e) {
+    console.log(this.data.editData)
+    let _this = this;
+    wx.request({
+      url: config.service.deleteDev,    
+      method:"PUT",
+      data:{
+        contractId:this.data.editData.contractId,
+        notes:this.data.editData.notes,
+        number:this.data.editData.number,
+        setupTime:this.data.editData.setupTime,
+        trainTime:this.data.editData.trainTime,
+        type:this.data.editData.type,
+        installId:this.data.editData.installId,
+        id:this.data.editData.id
+      }, 
+      header:{
+        "content-type":"application/json",
+        'Authorization': 'Bearer '+config.service.token,
+      }, 
+      success:function(res){ 
+          console.log(res) 
+          if(res.data.code == 0){
+            toast.success('编辑成功');
+          }
+          else{
+            toast.fail(res.data.msg);
+          }
+          _this.setData({ show3: false });
+      }
+    })
+  },
+  //编辑设备
+  editDevice:function(e){
+    let _this = this;
+    let index = e.target.dataset.index;
+    console.log(this.data.LOG[index])
+    this.setData({
+        editData: this.data.LOG[index],
+        showLog2:false,
+        show3:true
     })
   },
   delete2:function(e){ //删除设备

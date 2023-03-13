@@ -1,0 +1,65 @@
+<form class="container1" bindsubmit='formSubmit'>
+<view class="tabRow">
+  <text>*终端用户</text> 
+  <view class="dropdown">
+    <van-dropdown-menu height='30'>
+      <van-dropdown-item bind:change="optChange" options="{{ dict }}" />
+    </van-dropdown-menu>
+  </view>
+</view>
+<van-divider
+  contentPosition="center"
+  customStyle="color: #1989fa; border-color: #1989fa; font-size: 18px;"
+>
+  设备信息
+</van-divider>
+<view class="tabRow">
+  <text>*设备类型</text> 
+  <view class="dropdown">
+    <van-dropdown-menu height='30'>
+      <van-dropdown-item options='{{deviceTypes}}' bind:change='optChange2' />
+    </van-dropdown-menu>
+  </view>
+</view>
+<view class="tabRow">
+<text>*设备数量</text> 
+  <input name="number" type="text" />
+</view>
+<view class="tabRow">
+<text>*保修期(月)</text> 
+  <input name="warranty" type="text" />
+</view>
+<van-divider
+  contentPosition="center"
+  customStyle="color: #1989fa; border-color: #1989fa; font-size: 18px;"
+>
+  用户信息
+</van-divider>
+<view class="tabRow">
+<text>详细地址</text> 
+  <input name="maintainTime" value="{{time}}" bindtap="onTime" type="text" />
+</view>
+<view class="tabRow">
+<text>信息科联系人</text> 
+  <input name="content" type="text" />
+</view>
+<view class="tabRow">
+<text>信息科联系电话</text> 
+  <input name="result" type="text" />
+</view>
+<view class="tabRow">
+<text>科室名称</text> 
+  <input name="result" type="text" />
+</view>
+<view class="tabRow">
+<text>科室联系人</text> 
+  <input name="result" type="text" />
+</view>
+<view class="tabRow">
+<text>科室联系电话</text> 
+  <input name="result" type="text" />
+</view>
+<view class="button-box">
+  <van-button round type="info" form-type='submit'>提交</van-button>
+</view>
+</form>

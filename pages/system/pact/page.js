@@ -10,10 +10,13 @@ Page({
    */
   data: {
     allData:[],
+    allData2:[],
     details:[],
+    show2:false,
     show: false,
     signingTime:'',
-    curpage:1
+    curpage:1,
+    curpage2:1
   },
 
   /**
@@ -46,6 +49,36 @@ Page({
         }
       })
   },
+  showInstall(e){
+    let _this = this;
+    wx.request({
+        url: config.service.installList,    
+        method:"GET",
+        data:{
+          current:_this.data.curpage2,
+          contractId:_this.data.allData[e.target.dataset.index].id
+        },     
+        header:{
+          "content-type":"application/json",
+          'Authorization': 'Bearer '+config.service.token,
+        },     
+        success:function(res){ 
+          if(res.data?.data?.records){
+              toast.success('查询成功');
+              let db =  app.filter(res.data.data.records);
+              _this.setData({
+                curpage2:res.data.data.current,
+                allData2:_this.data.allData2.concat(db),
+                show2:true,
+                devType:config.device_type
+            })
+          }
+          else{
+            toast.fail(res.data.msg);
+          }  
+        }
+      })
+  },
   showPopup(e) {
     let id = this.data.allData[e.target.dataset.index].id;
     wx.navigateTo({
@@ -56,6 +89,11 @@ Page({
     //     show:true,
     //     signingTime:util.formatTime(new Date(this.data.allData[index].signingTime))
     // })
+  },
+  goAddInstall(){
+    wx.navigateTo({
+      url: '../pact/addInstall?eidt=true',
+    })
   },
   onReachBottom: function () { //下拉刷新
     app.onReach(this);

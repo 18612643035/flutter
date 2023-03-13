@@ -88,12 +88,14 @@ Page({
         dict[res.data.data[i].id] = res.data.data[i].name;
         col.push({
           "text": res.data.data[i].name,
-          "id": res.data.data[i].id
+          "id": res.data.data[i].id,
+          "value": res.data.data[i].id
         });
       }
       let app = getApp();
       app.dict = dict;
       config.dict = dict;
+      config.dictCol = col;
       console.log( app.dict);
       _this.setData({
         columns: col,
