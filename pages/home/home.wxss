@@ -1,4 +1,5 @@
 /* pages/home/home.wxss */
+
 .optBt{
   float: right;
   margin-top: 10px;
@@ -9,7 +10,8 @@
   /* width:60px; */
 }
 page{
-  background: #f2f2f2;
+  /* background: #f2f2f2; */
+  background: #fff;
 }
 .open-user{
   width: 30px;
@@ -26,24 +28,30 @@ page{
   text-align: left;
 }
 .container{
-margin: 20px 0;
+  width: 90%;
+  margin: 0 auto;
+  flex-direction: row;
+  align-items: initial;
 }
 .container .uploadimg{
-  width: 150px;
-  height: 120px;
-  margin: 4px;
+  width: 100px;
+  height: 100px;
+  margin: 3px;
   display: block;
-  border-radius: 15px;
 }
 .uploadimgbox{
-  justify-content: center;
-  display: flex;
-  width: 100%;
-  overflow: auto;
+
+}
+.userContext{
+  border-bottom: 1px solid #f3f3f3;
+  padding: 10px 0;
+  flex: 1;
+  overflow: hidden;
 }
 .uploadimgbox>view{
   display: flex;
-  overflow: auto;
+  overflow: hidden;
+  flex-wrap: wrap;
 }
 .listTitle{
   color: #7a7979;
@@ -61,6 +69,14 @@ margin: 20px 0;
   float: left;
   margin-top: 10px;
   margin-left: 5px;
+}
+.user{
+  color: #576b95;
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+.userImg{
+  width: 36px;margin-top:-3px;padding-right: 12px;
 }
 @keyframes animations{
   0% {

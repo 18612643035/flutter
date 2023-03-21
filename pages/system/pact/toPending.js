@@ -122,15 +122,6 @@ Page({
       finishShow:true
     })
   },
-  // handChange(e){//状态切换
-  //   let stu = e.detail.value;
-  //   this.setData({
-  //     status: stu
-  //   });
-  // },
-  /**
-   * 生命周期函数--监听页面加载
-   */
   onLoad: function (options) {
     let _this = this;
     wx.request({
@@ -146,7 +137,7 @@ Page({
         success:function(res){ 
             console.log(res) 
             if(res.data?.data?.records){
-              toast.success('查询成功');
+              res.data.data.records.length?toast.success('查询成功'):toast.success('暂无更多数据');
               let db =  app.filter(res.data.data.records);
               _this.setData({
                   curpage:res.data.data.current,
@@ -172,7 +163,9 @@ Page({
     data["deptContact"] = _this.data.finish.deptContact ? _this.data.finish.deptContact : _this.data.details.deptContact;
     data["deptPhone"] = _this.data.finish.deptPhone ? _this.data.finish.deptPhone : _this.data.details.deptPhone;
     data["finishTime"] = _this.data.time3;
-    console.log(data.id)
+    const db =[{text:'地址',value:data.address,},{text:'完成时间',value:data.finishTime}];
+    let isCheck =  config.check.verify(db);
+    if(!isCheck) return;
     
     wx.request({
         url: config.service.contractPlan,    
@@ -223,13 +216,13 @@ Page({
       finishContent: val
     })
   },
-  showPopup:function(e){
-    let index = e.target.dataset.index;
-    this.setData({
-        details:this.data.allData[index],
-        show:true,
-    })
-  },
+  // showPopup:function(e){
+  //   let index = e.target.dataset.index;
+  //   this.setData({
+  //       details:this.data.allData[index],
+  //       show:true,
+  //   })
+  // },
   showPopup2:function(e){
     let index = e.target.dataset.index;
     this.setData({
@@ -274,6 +267,9 @@ Page({
    //新增设备
    addLog2:function(e){
     let _this = this;
+    const db =[{text:'设备编号',value:_this.data.addData.number,},{text:'安装时间',value:_this.data.time},{text:'培训时间',value:_this.data.time2}];
+    let isCheck =  config.check.verify(db);
+    if(!isCheck) return;
     wx.request({
       url: config.service.deleteDev,    
       method:"POST",
@@ -307,20 +303,22 @@ Page({
   },
   //提交编辑
   cmtEdit:function(e) {
-    console.log(this.data.editData)
     let _this = this;
+    const db =[{text:'设备编号',value:_this.data.editData.number},{text:'安装时间',value:_this.data.editData.setupTime},{text:'培训时间',value:_this.data.editData.trainTime}];
+    let isCheck =  config.check.verify(db);
+    if(!isCheck) return;
     wx.request({
       url: config.service.deleteDev,    
       method:"PUT",
       data:{
-        contractId:this.data.editData.contractId,
-        notes:this.data.editData.notes,
-        number:this.data.editData.number,
-        setupTime:this.data.editData.setupTime,
-        trainTime:this.data.editData.trainTime,
-        type:this.data.editData.type,
-        installId:this.data.editData.installId,
-        id:this.data.editData.id
+        contractId:_this.data.editData.contractId,
+        notes:_this.data.editData.notes,
+        number:_this.data.editData.number,
+        setupTime:_this.data.editData.setupTime,
+        trainTime:_this.data.editData.trainTime,
+        type:_this.data.editData.type,
+        installId:_this.data.editData.installId,
+        id:_this.data.editData.id
       }, 
       header:{
         "content-type":"application/json",
@@ -372,12 +370,12 @@ Page({
     })
   },
   //新增弹框组件传递的值
-  onLog:function(e){
-    e.detail.textData
-    this.setData({
-      log:e.detail.textData,
-    })
-  },
+  // onLog:function(e){
+  //   e.detail.textData
+  //   this.setData({
+  //     log:e.detail.textData,
+  //   })
+  // },
   showPop(e) {//完成任务
     let index = e.target.dataset.index;
     this.setData({

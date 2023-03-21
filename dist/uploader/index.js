@@ -108,7 +108,7 @@ VantComponent({
         },
         deleteItem(event) {
             const { index } = event.currentTarget.dataset;
-            this.$emit('delete', Object.assign(Object.assign({}, this.getDetail(index)), { file: this.data.fileList[index] }));
+            this.$emit('delete', Object.assign(Object.assign({}, this.getDetail(index))), { file: this.data.fileList[index] });
         },
         onPreviewImage(event) {
             if (!this.data.previewFullImage)

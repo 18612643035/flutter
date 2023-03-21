@@ -15,6 +15,12 @@
           <span>联系人:</span><text class="tapNav food-name">{{item.contact}}</text>
         </view>
         <view>
+          <span>备注:</span><text class="tapNav food-name">{{item.remarks}}</text>
+        </view>
+        <view>
+          <span>添加人:</span><text class="tapNav food-name">{{item.creator}}</text>
+        </view>
+        <view>
           <span>状态:</span>
           <text wx:if="{{item.status==0}}" class="tapNav food-name">新增</text>
           <text wx:if="{{item.status==1}}" class="tapNav food-name">待审核</text>

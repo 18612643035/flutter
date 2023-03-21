@@ -1,5 +1,5 @@
 <!--pages/menu/menu.wxml-->
-<view class="container flex-wrap flex-direction-col">
+<!-- <view class="container flex-wrap flex-direction-col">
   <view class="product flex-wrap flex-direction-row">
     <scroll-view scroll-y class="sidebar flex-wrap flex-direction-col">
       <van-transition name="fade-down" duration="1000" custom-class="block">
@@ -8,4 +8,7 @@
       
     </scroll-view>
   </view>
+</view> -->
+<view>
+  <web-view src="{{link}}"></web-view>
 </view>

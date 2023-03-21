@@ -36,7 +36,7 @@ Page({
         success:function(res){ 
             console.log(res) 
             if(res.data?.data?.records){
-              toast.success('查询成功');
+              res.data.data.records.length?toast.success('查询成功'):toast.success('暂无更多数据');
               _this.setData({
                   curpage:res.data.data.current,
                   allData:_this.data.allData.concat(res.data.data.records),

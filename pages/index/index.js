@@ -14,8 +14,12 @@ Page({
       upFilesProgress:false,
       maxUploadLen:19,
       context:'',
-      id:0,
-      columns: ['1','2','3'],
+      userName:'',
+      searchText:{},
+      isShow:false,
+      value:'',
+      checked:false,
+      customerId:''
   },
   onLoad: function () {
     const _this = this;
@@ -38,6 +42,18 @@ Page({
             })
       }
     })
+  },
+  onClick(e) {
+    console.log(e)
+    let _that = this;
+    this.setData({
+      value:e.target.dataset.value,
+      isShow:false,
+      customerId:e.target.dataset.id
+    })
+  },
+  onChange({ detail }) {
+    this.setData({ checked: detail });
   },
   // 预览图片
   previewImg: function (e) {
@@ -113,15 +129,53 @@ Page({
   },
   bzInput:function(e){
     let _this = this;
+    let key =  e.target.dataset.name;
     _this.setData({
-        context:e.detail.value,
+        [key]:e.detail.value,
     })
+    console.log(this.data)
   },
-  onChange(event) {
-    const { value } = event.detail;
-    this.setData({
-      id:value.id,
-    })
+  userChange(e) { //模糊查询
+    let _that = this;
+    if(e.detail != ''){
+      this.setData({
+        value: e.detail,
+        isShow: true
+      });
+      
+      wx.request({
+        url: config.service.userSearch,  
+        data: {name:e.detail},   
+        method:"get",    
+        header:{
+          "content-type":"application/json",
+          'Authorization': 'Bearer '+config.service.token,
+      },   
+        success:function(res){ 
+            console.log(res) 
+            if(res?.data?.code == 0){
+              if(res.data.data.length<1){
+                _that.setData({
+                  searchText:[{name:'无数据'}]
+                })
+              }else{
+                _that.setData({
+                  searchText:res.data.data
+                })
+              }
+            }
+            else{
+              toast.fail(res.data.msg);
+            }  
+        }
+      })
+    }else{
+      this.setData({
+        value: e.detail,
+        isShow: false,
+        customerId:'',
+      });
+    }
   },
   // 上传文件
   subFormData:function(){
@@ -144,7 +198,7 @@ Page({
       upData['url'] = config.service;
       
       wx.request({
-        url: upData.url.conText+"?customerId="+_this.data.id+"&content="+_this.data.context,  
+        url: upData.url.conText+"?customerId="+_this.data.customerId+"&content="+_this.data.context,  
         data:{'name':'admin','content':_this.data.context},   
         method:"POST",    
         header:{

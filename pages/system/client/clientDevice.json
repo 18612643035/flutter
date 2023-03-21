@@ -1,0 +1,9 @@
+{
+  "usingComponents": {
+    "van-toast": "../../../dist/toast/index",
+    "van-empty": "../../../dist/empty/index",
+    "van-divider": "../../../dist/divider/index",
+    "van-icon": "../../../dist/icon/index",
+    "van-dialog": "../../../dist/dialog/index"
+  }
+}

@@ -5,7 +5,8 @@
       "van-picker": "../../dist/picker/index",
       "van-dialog": "../../dist/dialog/index",
       "van-empty": "../../dist/empty/index",
-      "van-transition": "../../dist/transition"    
+      "van-transition": "../../dist/transition",
+      "van-icon": "../../dist/icon/index"    
     }
   
 }

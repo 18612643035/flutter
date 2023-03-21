@@ -3,7 +3,7 @@
  */
 
 // 此处主机域名修改成腾讯云解决方案分配的域名
-//var ip = 'https://www.madecloud.net:7012';
+var ip = 'https://www.madecloud.net:7012';
 var ip = 'http://192.168.0.250';
 var host = ip+'/contract';
 var user = ip+'/auth';
@@ -20,6 +20,7 @@ var config = {
         getMy: `${host}/vlog/getMy`,
         deleteMy: `${host}/vlog/delete`,
         // 上传图片 上传视频
+        upLoad: `${host}/file/upload`,
         upFiles: `${host}/vlog/addFile`,
         conText: `${host}/vlog/save`,
         login: `${user}/oauth/token`,
@@ -81,6 +82,7 @@ var config = {
         deleteDev:`${maintain}/contractDevice`, //设备
         devDetails:`${maintain}/contractDevice/getDetails`, //设备详情
         deviceList:`${maintain}/contractDevice/maintainDevices`, //设备列表
+        cDeviceList:`${maintain}/contractDevice/customerDevices`, //客户设备列表
         region:`${admin}/dict/type/customer_region`, //获取地区
         device_type:`${admin}/dict/type/device_type`, //设备类型字典
     },
@@ -132,7 +134,24 @@ var config = {
 				else{
 					return true;
 				}
-			}
+      },
+      //综合验证
+      verify(isNullData){
+        if(isNullData !==""){
+          for(let key in isNullData){
+            let test =  this.testNull(isNullData[key].value,isNullData[key].text);
+            if(!test){
+              return false;
+            }
+            else if(isNullData[key].isMobile){
+              if(!this.testMobileNo(isNullData[key].value)){
+                return false;
+              }
+            }
+          }   
+        }
+        return true;
+      }
     },
     setData(data){
       data.map((v,i)=>{

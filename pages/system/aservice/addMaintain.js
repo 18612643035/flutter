@@ -9,6 +9,8 @@ Page({
    * 页面的初始数据
    */
   data: {
+    fileList: [],
+    files:{},
     curpage:1,
     allData:[],
     columns:[],
@@ -20,7 +22,7 @@ Page({
     searchText:[],
     devType:'',
     deviceIds:'',
-    deviceIdsName:'',
+    deviceIdsName:[],
     option1:[],
     option2:[],
     customerId:'',
@@ -85,10 +87,42 @@ Page({
         }
       });
   },
+  deleteImg(event) {
+    console.log(event)
+    let file = this.data.fileList;
+    file.splice(event.detail.index,1);
+    this.setData({
+      fileList:file
+    })
+  },
+  afterRead(event) {  //上传
+    let _this = this;
+    const { file } = event.detail;
+    wx.uploadFile({
+      url: config.service.upLoad,
+      filePath: file.url,
+      name: 'file',
+      formData: {
+        'user': 'test'
+      },
+      header:{
+        "Content-Type":"application/x-www-from-urlencoded",
+        'Authorization': 'Bearer '+config.service.token,
+      },
+      success(res) {
+        // 上传完成需要更新 fileList
+        const { fileList = [] } = _this.data;
+        let db = JSON.parse(res.data)
+        fileList.push({ ...file, url: db.data.url });
+        _this.setData({ fileList });
+      },
+    });
+  },
   showDetails: function(e){
     let _this = this;
+    let index = e.target.dataset.index;
     wx.request({
-        url: config.service.devDetails+'/'+this.data.deviceIds,    
+        url: config.service.devDetails+'/'+this.data.deviceIdsName[index].id,     
         method:"GET",    
         header:{
           "content-type":"application/json",
@@ -186,7 +220,7 @@ Page({
         option2:[],
         customerId:'',
         deviceIds:'',
-        deviceIdsName:'',
+        deviceIdsName:[],
         devType:''
       });
     }
@@ -260,16 +294,36 @@ Page({
     })
   },
   optChange2(e){
-    let name='';
+    let db ={ };
     for(let i=0;i<this.data.option2.length;i++){
       if(this.data.option2[i].value == e.detail){
-        name = this.data.option2[i].text;
+        db.name = this.data.option2[i].text;
+        db.id = this.data.option2[i].value;
       }
     }
-    this.setData({
-      deviceIds:e.detail,
-      deviceIdsName:name
-    })
+    let arr = this.data.deviceIdsName;
+    if(arr.map(e => e.name).indexOf(db.name)== -1){
+      arr.push(db);
+      this.setData({
+        deviceIds:e.detail,
+        deviceIdsName:arr
+      })
+    }
+  },
+  closeDevices(e){
+    let arr = this.data.deviceIdsName;
+    arr.splice(e.target.dataset.index,1);
+    if(arr.length<1){
+      this.setData({
+        deviceIds:'',
+        deviceIdsName:arr,
+      })
+    }else{
+      this.setData({
+        deviceIdsName:arr,
+        deviceIds:arr[0].id,
+      })
+    }
   },
   cmtTime(e){
     this.setData({
@@ -293,10 +347,11 @@ Page({
     if(isNull){
       return false;
     }
+    let arr = _this.data.deviceIdsName.map(e => e.id);
     let data = {};
     data["customerId"] = _this.data.customerId;
     data["deviceType"] = _this.data.devType;
-    data["deviceIds"] = [_this.data.deviceIds];
+    data["deviceIds"] = arr;
     data["contact"] = e.detail.value.contact;
     data["contactPhone"] = e.detail.value.contactPhone;
     data["maintainTime"] = e.detail.value.maintainTime;

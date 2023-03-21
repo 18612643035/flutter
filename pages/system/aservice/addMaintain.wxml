@@ -38,8 +38,12 @@
   </view>
 </view>
 <view class="tabRow">
-<text>设备详情</text> 
-  <span style="margin-left: 5px;" bindtap='showDetails' class="link">{{deviceIdsName}}</span>
+  <text>设备详情</text>
+  <view wx:for="{{deviceIdsName}}" wx:for-index = "bindex" class="query">
+    <span style="margin-left: 5px;" data-index="{{bindex}}" bindtap='showDetails' class="link">{{item.name}}
+    </span>
+    <van-icon data-index="{{bindex}}" bind:click="closeDevices" name="close" />
+  </view> 
 </view>
 <view class="tabRow">
 <text>*联系人</text> 
@@ -61,6 +65,11 @@
 <text>*处理结果</text> 
   <input name="result" type="text" />
 </view>
+<view class="tabRow">
+  <text>上传文件</text> 
+  <van-uploader file-list="{{ fileList }}" bind:delete="deleteImg" deletable="{{ true }}" bind:after-read="afterRead" />
+</view>
+
 <view class="button-box">
   <van-button round type="info" form-type='submit'>提交</van-button>
 </view>

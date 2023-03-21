@@ -45,12 +45,19 @@ Page({
     this.setData({
       db:JSON.parse(options.list)
     })
+    let arr = [];
+    this.data.db.deviceIds.map((v,i)=>{
+      let db={};
+      db['id'] = v;
+      db['name'] = this.data.db.devices[i];
+      arr.push(db);
+    })
     this.setData({
       value:this.data.db.customer,
       customerId:this.data.db.customerId,
       devType:this.data.db.deviceType,
       deviceIds:this.data.db.deviceIds[0],
-      deviceIdsName: this.data.db.devices[0],
+      deviceIdsName: arr,
     })
     console.log(this.data)
     this.queryDev();
@@ -169,8 +176,9 @@ Page({
   },
   showDetails: function(e){
     let _this = this;
+    let index = e.target.dataset.index;
     wx.request({
-        url: config.service.devDetails+'/'+this.data.deviceIds,    
+        url: config.service.devDetails+'/'+this.data.deviceIdsName[index].id,    
         method:"GET",    
         header:{
           "content-type":"application/json",
@@ -229,16 +237,36 @@ Page({
    
   },
   optChange2(e){
-    let name='';
+    let db ={ };
     for(let i=0;i<this.data.option2.length;i++){
       if(this.data.option2[i].value == e.detail){
-        name = this.data.option2[i].text;
+        db.name = this.data.option2[i].text;
+        db.id = this.data.option2[i].value;
       }
     }
-    this.setData({
-      deviceIds:e.detail,
-      deviceIdsName:name
-    })
+    let arr = this.data.deviceIdsName;
+    if(arr.map(e => e.name).indexOf(db.name)== -1){
+      arr.push(db);
+      this.setData({
+        deviceIds:e.detail,
+        deviceIdsName:arr
+      })
+    }
+  },
+  closeDevices(e){
+    let arr = this.data.deviceIdsName;
+    arr.splice(e.target.dataset.index,1);
+    if(arr.length<1){
+      this.setData({
+        deviceIds:'',
+        deviceIdsName:arr,
+      })
+    }else{
+      this.setData({
+        deviceIdsName:arr,
+        deviceIds:arr[0].id,
+      })
+    }
   },
   onInput(event) {
     this.setData({

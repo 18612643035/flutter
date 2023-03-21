@@ -39,7 +39,12 @@ Page({
         success:function(res){ 
             console.log(res) 
             if(res.data?.data?.records){
-              toast.success('查询成功');
+              if(!res.data.data.records.length && _this.data.curpage >1){
+                toast.success('暂无更多数据');
+                _this.setData({curpage:_this.data.curpage-1});
+                return
+              }
+              //toast.success('查询成功')
               res.data.data.records.map((item) =>{
                 item.region = config.regDict[item.region];
               });
@@ -47,7 +52,7 @@ Page({
               for(let key in config.regDict){
                  col.push({
                   "text": config.regDict[key],
-                  "id": key
+                  "value": key
                 });
               }
               _this.setData({
@@ -62,16 +67,16 @@ Page({
       });
   },
   goEdit:function(e){
+    let index = e.target.dataset.index;
+    let db = [];
+    db.push(this.data.allData[index])
     wx.navigateTo({
-      url: './editClient'
+      url: './editClient?list='+JSON.stringify(db)
     })
   },
   onChange(event) { ///选中地区
-    const {
-      value
-    } = event.detail;
     this.setData({
-      dictId: value.id
+      dictId: event.detail
     })
   },
   goAudit:function (e) {
@@ -102,6 +107,30 @@ Page({
         }
       })
   },
+  goDelete:function (e) {
+    let _this = this;
+    let index = e.target.dataset.index;
+    wx.request({
+        url: config.service.addObj+'/'+_this.data.allData[index].id,    
+        method:"DELETE", 
+        header:{
+          "content-type":"application/json",
+          'Authorization': 'Bearer '+config.service.token,
+      },     
+        success:function(res){
+            console.log(res);
+            if(res?.data?.code == 0){
+              toast.success('已完成');
+              setTimeout(() => {
+                _this.onShow(); 
+              },1000);
+            }
+            else{
+              toast.fail(res.data.msg);
+            } 
+        }
+      })
+  },
   bindKeyInput: function (e) {
     this.setData({
       inputValue: e.detail.value
@@ -114,8 +143,9 @@ Page({
     data["name"] = e.detail.value.name;
     data["address"] = e.detail.value.address;
     data["contact"] = e.detail.value.contact;
+    data["remarks"] = e.detail.value.remarks;
     data["contactPhone"] = e.detail.value.contactPhone;
-    data["region"] =_this.data.dictId == '' ? this.data.columns[1].id :'';
+    data["region"] =_this.data.dictId == '' ? this.data.columns[1].id : _this.data.dictId;
     console.log(JSON.stringify(data));
     wx.request({
       url: config.service.addObj,  

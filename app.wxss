@@ -5,11 +5,18 @@
   flex-direction: column;
   align-items: center;
   box-sizing: border-box;
-} 
+}
 page{
   height: 100%;
+  font-size: 28rpx;
 }
+ textarea,input,span,view,button{
+  font-size: 28rpx;
+} 
 
+view.van-switch__node{
+  font-size: 24px;
+}
 .flex-wrap{
   display: flex;
 
@@ -23,7 +30,8 @@ page{
 .button-box{
   display: flex;
   padding-top: 10px;
-  justify-content: center;
+  /* justify-content: center; */
+  justify-content: space-evenly;
 }
 .pop-beg{
   padding: 0 5px;
@@ -32,7 +40,7 @@ page{
   display: flex;
   flex-direction: row;
 }
-.pop-beg input{
+.pop-beg>input{
   border-bottom: 1px solid rgb(133, 133, 133);
   margin-left: 1rem;
 }
@@ -143,4 +151,11 @@ button.van-button--round,.cmt-button{
 }
 .van-icon{
   color: #1989fa;
+}
+.query .query{
+  display: block;
+}
+.layOutend{
+  display: flex;
+  justify-content: space-between;
 }

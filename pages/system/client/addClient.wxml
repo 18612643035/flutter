@@ -1,10 +1,13 @@
 <!--pages/client/addClient.wxml-->
 <form class="container1" bindsubmit='formSubmit'>
 <view class="pop-beg">
-  <view style="display: block;">
-    <text style="margin-left: 5px;">选择地区:</text>
-    <van-picker class="picker" columns="{{ columns }}" item-height="33" visible-item-count="3" default-index="{{ 1 }}"
-      bind:change="onChange" />
+  <view class="tabRow">
+    <text>*选择地区</text> 
+    <view class="dropdown">
+      <van-dropdown-menu height='30'>
+        <van-dropdown-item bind:change="onChange"  options="{{ columns }}" />
+      </van-dropdown-menu>
+    </view>
   </view>
 </view>
 <view class="tabRow">
@@ -23,15 +26,16 @@
 <text>电话</text> 
   <input name="contactPhone" type="text" />
 </view>
+<view class="tabRow">
+<text>备注</text> 
+  <input name="remarks" type="text" />
+</view>
 <view class="button-box">
   <van-button round type="info" form-type='submit'>提交</van-button>
 </view>
 </form>
 <van-toast id="van-toast" />
 <scroll-view scroll-y class="content">
-      <view wx:if="{{allData.length}}" style="background-color: azure;padding: 5px 0;display: flex;justify-content:center;border-bottom: 1px solid #ebeef5;">
-          <button class="cmt-button" bindtap="goEdit">修改客户</button>
-      </view>
       <view wx:for="{{allData}}" wx:for-index = "bindex" class="query">
         <view>
           <span>地区:</span><text class="tapNav food-name">{{item.region}}</text>
@@ -48,6 +52,9 @@
         <view>
           <span>联系人电话:</span><text class="tapNav food-name">{{item.contactPhone}}</text>
         </view>
+        <view>
+          <span>备注:</span><text class="tapNav food-name">{{item.remarks}}</text>
+        </view>
         <view  wx:if="{{item.failReason != null}}">
           <span>客户不通过的原因:</span><text class="tapNav food-name">{{item.failReason}}</text>
         </view>
@@ -60,6 +67,8 @@
         </view>
         <view class="button-box">
           <van-button data-index="{{bindex}}" round type="info" bindtap="goAudit">提交审核</van-button>
+          <van-button data-index="{{bindex}}" round type="info" bindtap="goDelete">删除</van-button>
+          <van-button data-index="{{bindex}}" round type="info" bindtap="goEdit">修改</van-button>
         </view>
       </view>
 </scroll-view>

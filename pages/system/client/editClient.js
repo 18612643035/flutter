@@ -19,47 +19,54 @@ Page({
    */
   onLoad: function (options) {
     let _this = this;
-    wx.request({
-        url: config.service.queryObj,    
-        method:"GET",
-        data:{
-          current:_this.data.curpage,
-        },     
-        header:{
-          "content-type":"application/json",
-          'Authorization': 'Bearer '+config.service.token,
-        },     
-        success:function(res){ 
-            console.log(res) 
-            if(res.data?.data?.records){
-              let col = [];
-              for(let key in config.regDict){
-                 col.push({
-                  "text": config.regDict[key],
-                  "id": key
-                });
-              }
-              res.data.data.records.map((item) =>{
-                item.region = config.regDict[item.region]; 
-                let name = item.region;
-                item.index =  col.findIndex((item) => item.text === name);
-              });
+    const db = JSON.parse(options.list);
+    let col = [];
+    let id = "";
+    console.log(db)
+    
+    for(let key in config.regDict){
+       col.push({
+        "text": config.regDict[key],
+        "value": key
+      });
+      if(config.regDict[key] == db[0].region){
+        id = key;
+      }
+    }
+    console.log(col)
+    _this.setData({
+      columns:col,
+      allData:db,
+      dictId:id
+    })
+    // wx.request({
+    //     url: config.service.queryObj,    
+    //     method:"GET",
+    //     data:{
+    //       current:_this.data.curpage,
+    //     },     
+    //     header:{
+    //       "content-type":"application/json",
+    //       'Authorization': 'Bearer '+config.service.token,
+    //     },     
+    //     success:function(res){ 
+    //         console.log(res) 
+    //         if(res.data?.data?.records){
 
-              _this.setData({
-                curpage:res.data.data.current,
-                columns:col,
-                allData:_this.data.allData.concat(res.data.data.records),
-              })
-            }
-        }
-      })
+    //           res.data.data.records.map((item) =>{
+    //             item.region = config.regDict[item.region]; 
+    //             let name = item.region;
+    //             item.index =  col.findIndex((item) => item.text === name);
+    //           });
+
+
+    //         }
+    //     }
+    //   })
   },
   onChange(event) { ///选中地区
-    const {
-      value
-    } = event.detail;
     this.setData({
-      dictId: value.id
+      dictId: event.detail
     })
   },
   formSubmit: function(e){

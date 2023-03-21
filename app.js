@@ -17,6 +17,8 @@ App({
             element.createTime  == null ? element.createTime = "无" : '';
             element.customer == null ? element.customer = "无" : '';
             element.remarks  == null ? element.remarks = "无" : '';
+            element.trainTime  == null ? element.trainTime = "无" : '';
+            
         });
         return data;
     },

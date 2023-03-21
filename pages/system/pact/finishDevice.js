@@ -36,13 +36,13 @@ Page({
         },     
         success:function(res){ 
           if(res.data?.data?.records){
-              toast.success('查询成功');
+              res.data.data.records.length?toast.success('查询成功'):toast.success('暂无更多数据');
               let db =  app.filter(res.data.data.records);
               _this.setData({
                 curpage:res.data.data.current,
                 devType:config.device_type,
                 dict:config.dict,
-                allData:_this.data.allData.concat(db),
+                allData:app.filter(_this.data.allData.concat(db)),
             })
           }
           else{
@@ -71,12 +71,9 @@ Page({
             console.log(res) 
             if(res.data?.data?.records){
               _this.setData({
-                deviceDb:res.data.data.records,
+                deviceDb:app.filter(res.data.data.records),
                 show:true
               })
-              res.data.data.records.map((item,i)=>{
-                console.log(item,i)
-            })
               console.log(_this.data.deviceDb)
             }else{
               toast.fail('查询失败');

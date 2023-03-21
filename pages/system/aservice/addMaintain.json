@@ -8,6 +8,7 @@
     "van-dropdown-menu": "../../../dist/dropdown-menu/index",
     "van-dropdown-item": "../../../dist/dropdown-item/index",
     "van-divider": "../../../dist/divider/index",
-    "van-icon": "../../../dist/icon/index"
+    "van-icon": "../../../dist/icon/index",
+    "van-uploader": "../../../dist/uploader/index"
   }
 }

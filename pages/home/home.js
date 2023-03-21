@@ -113,14 +113,9 @@ Page({
       success:function(res){ 
           console.log(res) 
           if(res.data.code == 0){
-            let col = [];
             let dict = {};
             for (let i = 0; i < res.data.data.length; i++) {
-              dict[res.data.data[i].id] = res.data.data[i].label;
-              col.push({
-                "text": res.data.data[i].label,
-                "id": res.data.data[i].id
-              });
+              dict[res.data.data[i].value] = res.data.data[i].label;
             }
             config.regDict = dict;
           }else{

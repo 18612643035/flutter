@@ -1,10 +1,25 @@
-<van-toast id="van-toast" />
-<view wx:for="{{allData}}" wx:for-index = "bindex" class="query">
+<!--设备列表-->
+<scroll-view scroll-y class="content">
+      <van-empty wx-if="{{allData.length<1}}" description="暂无信息" />
+      <view wx:for="{{allData}}" wx:for-index="bindex"  class="query">
         <view>
           <span>序号:</span><text class="tapNav food-name">{{bindex}}</text>
         </view>
         <view>
-          <span>设备类型:</span><text class="tapNav food-name">{{types[item.type]}}</text>
+          <span>客户:</span><text class="tapNav food-name">{{cDict[item.customerId]}}</text>
+        </view>
+        <view>
+          <span>经销商:</span><text class="tapNav food-name">{{item.dealer}}</text>
+        </view>
+        <view>
+          <span>合同编号:</span><text class="tapNav food-name">{{item.contractNo}}</text>
+          <van-icon data-index="{{bindex}}" bind:click="showPact" name="browsing-history" />
+        </view>
+        <view>
+          <span>合同日期:</span><text class="tapNav food-name">{{item.contractDate}}</text>
+        </view>
+        <view>
+          <span>设备类型:</span><text class="tapNav food-name">{{typeDict[item.type]}}</text>
         </view>
         <view>
           <span>设备编号:</span><text class="tapNav food-name">{{item.number}}</text>
@@ -13,24 +28,19 @@
           <span>安装日期:</span><text class="tapNav food-name">{{item.setupDate}}</text>
         </view>
         <view>
-          <span>保修期(月):</span><text class="tapNav food-name">{{item.warranty}}</text>
+          <span>培训日期:</span><text class="tapNav food-name">{{item.trainDate}}</text>
+        </view>
+        <view>
+          <span>保修日期:</span><text class="tapNav food-name">{{item.expireDate}}</text>
+        </view>
+        <view>
+          <span>保修月:</span><text class="tapNav food-name">{{item.warranty}}</text>
         </view>
         <view>
           <span>安装人:</span><text class="tapNav food-name">{{item.installer}}</text>
         </view>
-        <view>
-          <span>客户:</span><text class="tapNav food-name">{{dict[item.customerId]}}</text>
-        </view>
-        <view>
-          <span>经销商:</span><text class="tapNav food-name">{{item.dealer}}</text>
-        </view>
-        <view>
-          <span>合同编号:</span><text class="tapNav food-name">{{item.contractNo}}</text><van-icon data-index="{{bindex}}" bind:click="showPact" name="browsing-history" />
-        </view>
-        <view>
-          <span>合同日期:</span><text class="tapNav food-name">{{item.contractDate}}</text>
-        </view>
-</view>
+      </view>
+</scroll-view>
 <van-dialog
   use-slot
   title="详情"
@@ -93,13 +103,13 @@
       >
         安装记录
       </van-divider>
-      <view wx:for="{{installs}}" wx:for-index = "bindex" class="query">
+      <view wx:for="{{installs}}" wx:for-index="bindex"  class="query">
         <view>
-          <span>终端用户:</span>
-          <text>{{dict[item.customerId]}}</text>
+        <span>终端用户:</span>
+        <text>{{cDict[item.customerId]}}</text>
         </view>
         <view>
-          <span>设备类型:</span><text>{{types[item.type]}}</text>
+          <span>设备类型:</span><text>{{typeDict[item.type]}}</text>
         </view>
         <view>
           <span>设备数量:</span><text>{{item.deviceAmount}}</text><van-icon data-index="{{bindex}}" bind:click="showDevices" name="browsing-history" />
@@ -112,28 +122,34 @@
           <text wx:if="{{item.status==0}}" class="tapNav food-name">未完成</text>
           <text wx:if="{{item.status==1}}" class="tapNav food-name">完成</text>
         </view>
-        
       </view>
-     
    
       <van-divider
         contentPosition="center"
         customStyle="color: #1989fa; border-color: #1989fa; font-size: 18px;"
       >
-        合同特殊条款
+        付款信息
       </van-divider>
-      <view>
-        <span>条款内容:</span>
-        <text>{{terms.content}}</text>
+      <view wx:for="{{payment}}" wx:for-index="bindex"  class="query">
+        <view>
+          <span>付款金额:</span>
+          <text>{{item.amount}}</text>
+        </view>
+        <view>
+          <span>计划付款时间:</span>
+          <text>{{item.planTime}}</text>
+        </view>
+        <view>
+          <span>实际付款时间:</span>
+          <text>{{item.actualTime}}</text>
+        </view>
+        <view>
+          <span>状态:</span>
+          <text wx:if="{{item.status==0}}" class="tapNav food-name">未付款</text>
+          <text wx:if="{{item.status==1}}" class="tapNav food-name">已付款</text>
+        </view>
       </view>
-      <view>
-        <span>条款类别:</span>
-        <text wx:if="{{terms.type==0}}" class="tapNav food-name">基本</text>
-        <text wx:if="{{terms.type==1}}" class="tapNav food-name">维保</text>
-      </view>
-      <view>
-        <span>特殊条款ID:</span><text>{{terms.id}}</text>
-      </view>
+      
     </view>
 </scroll-view>
 </van-dialog>
@@ -151,7 +167,7 @@
   </view>
   <view>
     <span>类型:</span>
-    <text>{{types[item.type]}}</text>
+    <text>{{typeDict[item.type]}}</text>
   </view>
   <view>
     <span>编号:</span><text>{{item.number}}</text>
@@ -174,3 +190,4 @@
 </view>
 </scroll-view>
 </van-dialog>
+<van-toast id="van-toast" />

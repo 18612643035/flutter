@@ -120,9 +120,9 @@
   bind:close="onClose"
 >
 <view class="dialog">
-  <!-- <view class="button-box">
-        <button class="cmt-button" data-index="{{bindex}}" data-id="{{log.id}}" bindtap="goAddInstall">新增</button>
-    </view> -->
+ <view class="button-box">
+        <van-button round type="info" class="cmt-button" data-index="{{bindex}}" data-id="{{log.id}}" bindtap="goAddInstall">新增</van-button>
+    </view>
   <view class="query" wx:for="{{allData2}}" wx:key='index' wx:for-index="bindex">
     <view>
       <span>序号:</span><text class="tapNav food-name">{{bindex}}</text>
@@ -137,14 +137,11 @@
       <span>保修期(月):</span><text class="tapNav food-name">{{item.warranty}}</text>
     </view> 
     <view>
-      <span>合同编号:</span><text class="tapNav food-name">{{item.serialNumber}}</text>
+      <span>合同编号:</span><text class="tapNav food-name">{{item.contractNo}}</text>
       
     </view>
     <view>
       <span>终端用户:</span><text>{{dict[item.customerId]}}</text>
-    </view>
-    <view>
-      <span>经销商:</span><text>{{item.dealer}}</text>
     </view>
     <view>
       <span>详细地址:</span><text>{{item.address}}</text>
@@ -156,23 +153,19 @@
       <span>信息科联系电话:</span><text>{{item.infoDeptPhone}}</text>
     </view>
     <view>
+      <span>科室名称:</span><text>{{item.deptName}}</text>
+    </view>
+    <view>
+      <span>科室联系人:</span><text>{{item.deptContact}}</text>
+    </view>
+    <view>
       <span>状态:</span>
-      <text wx:if="{{item.status==0}}" class="tapNav food-name">草稿</text>
-      <text wx:if="{{item.status==1}}" class="tapNav food-name">待审核</text>
-      <text wx:if="{{item.status==2}}" class="tapNav food-name">拒绝</text>
-      <text wx:if="{{item.status==9}}" class="tapNav food-name">关闭</text>
-      <text wx:if="{{item.status==11}}" class="tapNav food-name">通过</text>
-      <text wx:if="{{item.status==12}}" class="tapNav food-name">启动</text>
-      <text wx:if="{{item.status==13}}" class="tapNav food-name">完成</text>
+      <text wx:if="{{item.status==0}}" class="tapNav food-name">待完成</text>
+      <text wx:if="{{item.status==1}}" class="tapNav food-name">完成</text>
     </view>
-    <view>
-      <span>支付状态:</span>
-      <text wx:if="{{item.payStatus==0}}" class="tapNav food-name">未支付</text>
-      <text wx:if="{{item.payStatus==1}}" class="tapNav food-name">部分支付</text>
-      <text wx:if="{{item.payStatus==2}}" class="tapNav food-name">已支付</text>
-    </view>
-    <view>
-      <span>完成时间:</span><text>{{item.finishTime}}</text>
+    <view class="button-box">
+        <van-button round type="info" class="cmt-button" data-index="{{bindex}}" bindtap="deleteInstall">删除</van-button>
+        <van-button round type="info" class="cmt-button" data-index="{{bindex}}" bindtap="goEditInstall">修改</van-button>
     </view>
   </view>
   </view>

@@ -1,6 +1,34 @@
 <!--pages/index/index.wxml-->
  
-
+<view class="pop-beg" style="height: 90px;">
+  <view class="vsearch">
+    <view>
+      <view class="layOutend topMargin">
+        <span>新增其他客户</span>
+        <van-switch size="24" checked="{{ checked }}" bind:change="onChange" />
+      </view>
+      <view wx:if='{{checked}}' class="tabRow">
+        <text style="margin-left: 12px; width: auto; text-align: left;">客户名称</text> 
+        <input bindinput="bzInput" data-name="userName" name="userName" type="text" />
+      </view>
+      <van-search
+        wx:if='{{!checked}}'
+        value="{{ value }}"
+        label="*客户"
+        placeholder="请输入客户名字"
+        use-action-slot
+        bind:change="userChange"
+        bind:search="onSearch"
+      >
+      </van-search>
+      <view class="searchCont" wx:if='{{isShow}}'>
+        <view wx:for="{{searchText}}"  wx:for-item="item"  class="query">
+            <text data-id='{{item.id}}' data-value='{{item.name}}' bindtap="onClick">{{item.name}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
 <view class="optClass">
     <view class='optName'>附件</view> 
     <view class='optContent' >可上传图片或视频</view>
@@ -29,7 +57,7 @@
 <view class="optClass" style='padding:0 30rpx;flex-wrap:wrap;'>
     <view class='optName'>描述</view> 
     <!-- <input class="describe" type="text" value="asdfadf" /> -->
-    <textarea maxlength='123456789' bindinput="bzInput" class="describe" value="{{context}}"/>
+    <textarea maxlength='123456789' data-name="context" bindinput="bzInput" class="describe" value="{{context}}"/>
 </view>
 <van-dialog
   use-slot
@@ -39,12 +67,12 @@
   bind:close="onClose"
   bind:confirm="edit"
 >
-<view class="pop-beg">
+<!-- <view class="pop-beg">
             <view style="display: block;">
                 <text class="optName" style="margin-left: 5px;">选择客户</text>
                 <van-picker columns="{{ columns }}" item-height="33" visible-item-count="3"  default-index="{{ 0 }}" bind:change="onChange" />
             </view>
-  </view>
+  </view> -->
 </van-dialog>
 <view class='subBtnBox'>
     <button class='subBtn' type='button' bindtap='subFormData'>我要上传</button>

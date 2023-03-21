@@ -10,7 +10,8 @@ Page({
    */
   data: {
     dataList:{"name":"退出登录"},
-    url:[1500,3000,8000,4000,1600]
+    url:[1500,3000,8000,4000,1600],
+    link:'http://192.168.0.184:8080/#/login'
   },
   selectNav: function(e){
     // this.setData({
@@ -34,6 +35,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onShow: function (options) {
+    return
     let _this = this;
     goRequest({
       url: `${config.service.menu}`, 

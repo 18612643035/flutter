@@ -39,7 +39,11 @@
 </view>
 <view class="tabRow">
   <text>设备详情</text> 
-  <span style="margin-left: 5px;" bindtap='showDetails' class="link">{{deviceIdsName}}</span>
+  <view wx:for="{{deviceIdsName}}" wx:for-index = "bindex" class="query">
+    <span style="margin-left: 5px;" data-index="{{bindex}}" bindtap='showDetails' class="link">{{item.name}}
+    </span>
+    <van-icon data-index="{{bindex}}" bind:click="closeDevices" name="close" />
+  </view> 
 </view>
 <view class="tabRow">
 <text>*联系人</text> 

@@ -5,6 +5,7 @@ var chooseImage = (t, count) =>{
         sizeType: ['original', 'compressed'],
         sourceType: ['album', 'camera'],
         success: (res) => {
+            console.log(res)
             var imgArr = t.data.upImgArr || [];
             let arr = res.tempFiles;
             // console.log(res)
@@ -104,7 +105,7 @@ var upFilesFun = (t, data, progress, success) =>{
       return;
     }
     
-
+    console.log(formData)
     const uploadTask = wx.uploadFile({
         url: url.upFiles,
         filePath: filesPath[startIndex],

@@ -2,6 +2,8 @@
   "usingComponents": {
     "van-toast": "../../dist/toast/index",
     "van-picker": "../../dist/picker/index",
-    "van-empty": "../../dist/empty/index"
+    "van-empty": "../../dist/empty/index",
+    "van-search": "../../dist/search/index",
+    "van-switch": "../../dist/switch/index"
   }
 }
