@@ -1,0 +1,14 @@
+<!--pages/component/remark.wxml-->
+	<view class="trainContain">
+		<view wx:for="{{data}}" wx:key='index' wx:for-index="bindex"  class="imgContent">
+			<view class="imgBOx">
+				<view  wx:for="{{item.files}}" wx:key='index' wx:for-index="bindex">
+					<image class="file" wx:if="{{item.type=='image'}}" data-presrc="{{item.url}}" bindtap='previewImg' src="{{item.url}}"></image>
+					<video class="file"  wx:if="{{item.type=='vido'}}" src="{{item.url}}"></video>
+				</view>
+			</view>
+			<view>{{item.content}}</view>
+			<view>{{item.createTime}}</view>
+				<span bindtap="deleteLog" data-index="{{bindex}}">删除</span>
+		</view>
+	</view>

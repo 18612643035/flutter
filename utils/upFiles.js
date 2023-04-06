@@ -61,17 +61,17 @@ var chooseVideo = (t,count) => {
 
 // 获取 图片数组 和 视频数组 以及合并数组
 var getPathArr = t => {
-    let imgarr = t.data.upImgArr || [];
-    let upVideoArr = t.data.upVideoArr || [];
+    let imgarr = t.data.fileList || [];
+    //let upVideoArr = t.data.upVideoArr || [];
     let imgPathArr = [];
-    let videoPathArr = [];
+    //let videoPathArr = [];
     imgarr.map(function (v, i) {
         imgPathArr.push(v.path)
     })
-    upVideoArr.map(function (v, i) {
-        videoPathArr.push(v.tempFilePath)
-    })
-    let filesPathsArr = imgPathArr.concat(videoPathArr);
+    // upVideoArr.map(function (v, i) {
+    //     videoPathArr.push(v.tempFilePath)
+    // })
+    let filesPathsArr = imgPathArr;
     return filesPathsArr;
 }
 
@@ -93,7 +93,7 @@ var getPathArr = t => {
 let formData;
 var upFilesFun = (t, data, progress, success) =>{
     let _this = t;
-    let url = config.service;
+    let url = data.url;
     let filesPath = data.filesPathsArr ? data.filesPathsArr : getPathArr(t);
     let name = data.name || 'file';
     data.formData ? formData = data.formData : '';
@@ -107,17 +107,18 @@ var upFilesFun = (t, data, progress, success) =>{
     
     console.log(formData)
     const uploadTask = wx.uploadFile({
-        url: url.upFiles,
+        url: url,
         filePath: filesPath[startIndex],
         name: name,
         formData: formData,
         header:{
-            "Content-Type":"application/x-www-from-urlencoded",
+            "Content-Type":"application/x-www-form-urlencoded",
             'Authorization': 'Bearer '+config.service.token,
         },
         success: function (res) {
             wx.hideLoading(); // 關閉加載提示
             //var data = res.data
+            console.log(url,name)
             if (startIndex == filesPath.length - 1 ){
                 // console.log('completeNumber', startIndex)
                 // console.log('over',res)
@@ -133,6 +134,7 @@ var upFilesFun = (t, data, progress, success) =>{
                 db.startIndex = startIndex;
                 db.successNumber = successNumber;
                 db.failNumber = failNumber;
+                db.url = url;
                 upFilesFun(t, db, progress, success);
             }
         },
@@ -164,7 +166,6 @@ var upFilesFun = (t, data, progress, success) =>{
             mask:true
           })
         res['index'] = startIndex;
-        // console.log(typeof (progress));
         if (typeof (progress) == 'function') {
             progress(res);
         }

@@ -1,6 +1,0 @@
-{
-  "usingComponents": {
-    "van-divider": "../../../dist/divider/index",
-    "van-toast": "../../../dist/toast/index"
-  }
-}

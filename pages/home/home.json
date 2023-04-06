@@ -7,6 +7,6 @@
       "van-empty": "../../dist/empty/index",
       "van-transition": "../../dist/transition",
       "van-icon": "../../dist/icon/index"    
-    }
-  
+    },
+    "enablePullDownRefresh": true
 }

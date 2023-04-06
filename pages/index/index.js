@@ -1,8 +1,6 @@
-// pages/index/index.js
-var qcloud = require('../../vendor/wafer2-client-sdk/index')
 var config = require('../../config')
-var util = require('../../utils/util.js')
 var upFiles = require('../../utils/upFiles.js')
+const app = getApp();
 
 Page({
 
@@ -10,122 +8,118 @@ Page({
    * 页面的初始数据
    */
   data: {
-      upFilesBtn:true,
-      upFilesProgress:false,
-      maxUploadLen:19,
       context:'',
       userName:'',
       searchText:{},
       isShow:false,
       value:'',
-      checked:false,
-      customerId:''
+      dealerDict:[],
+      menus:[
+        { text: '选择客户', value: 1 },
+        { text: '新增潜在客户', value: 2 },
+        { text: '选择经销商', value: 3 },
+      ],
+      province:[],
+      cityDict:[],
+      orgProvince:'',
+      orgCity:'',
+      option2:[],
+      menuValue:1,
+      orgName:'',
+      orgId:'',
+      upfilesUrl:'',
+      submitUrl:'',
+			fileList: [],
   },
-  onLoad: function () {
+  cityAlter: function(e) {
+    this.setData({
+      orgCity:e.detail
+    })
+  },
+  provinceAlter: function(e) {
     const _this = this;
+    _this.setData({
+      orgProvince:e.detail
+    })
     wx.request({ 
-      url: config.service.dict,  //获取客户信息  
+      url: config.service.cityDict,  //获取城市地区  
+      method:"GET",    
+      data:{provinceCode:e.detail},
+      header:{
+        "content-type":"application/x-www-form-urlencoded",
+        'Authorization': 'Bearer '+config.service.token,
+      },     
+      success:function(res){ 
+          let arr = app.menuFormat(res.data.data);
+          arr.unshift({value:"",text:"请选择市"})
+          _this.setData({
+            cityDict:arr,
+          })
+      }
+    })
+  },
+  menuChange: function(e) {
+    this.setData({
+       menuValue:e.detail,
+       userName:'',
+       orgName:'',
+       orgId:'',
+       orgCity:'',
+       orgProvince:''
+    })
+  },
+  dealerChange: function(e) {
+    this.setData({
+      orgName:e.detail,
+      orgId:''
+   })
+  },
+  onLoad: function (data) {
+    const _this = this;
+    let list = JSON.parse(data.list);
+    _this.setData({
+      upfilesUrl: list.upfilesUrl,
+      submitUrl: list.submitUrl
+    })
+    wx.request({ 
+      url: config.service.provinceDict,  //获取省份地区  
+      method:"GET",    
+      header:{
+        "content-type":"application/x-www-form-urlencoded",
+        'Authorization': 'Bearer '+config.service.token,
+      },     
+      success:function(res){ 
+          let arr = app.menuFormat(res.data.data);
+          arr.unshift({value:"",text:"请选择省"});
+          _this.setData({
+            province:arr,
+          })
+      }
+    })
+    wx.request({ 
+      url: config.service.dealerDict,  //获取经销商信息  
       method:"GET",    
       header:{
         "content-type":"application/json",
         'Authorization': 'Bearer '+config.service.token,
       },     
       success:function(res){ 
-          console.log(res) 
-          let col = [];
-          for(let i=0;i<res.data.data.length;i++){
-            col.push({"text":res.data.data[i].name,"id":res.data.data[i].id});
-          }
-            _this.setData({
-                columns:col,
-                id:col[0].id
-            })
+          let arr = app.menuFormat(res.data.data);
+          arr.unshift({value:"",text:"请选择经销商"})
+          _this.setData({
+            dealerDict:arr,
+          })
       }
     })
   },
   onClick(e) {
-    console.log(e)
     let _that = this;
     this.setData({
       value:e.target.dataset.value,
       isShow:false,
-      customerId:e.target.dataset.id
+      orgId:e.target.dataset.id,
+      orgName:e.target.dataset.value
     })
-  },
-  onChange({ detail }) {
-    this.setData({ checked: detail });
-  },
-  // 预览图片
-  previewImg: function (e) {
-      let imgsrc = e.currentTarget.dataset.presrc;
-      let _this = this;
-      let arr = _this.data.upImgArr;
-      let preArr = [];
-      arr.map(function(v,i){
-          preArr.push(v.path)
-      })
-    //   console.log(preArr)
-      wx.previewImage({
-          current: imgsrc,
-          urls: preArr
-      })
-  },
-    // 删除上传图片 或者视频
-  delFile:function(e){
-     let _this = this;
-     wx.showModal({
-         title: '提示',
-         content: '您确认删除嘛？',
-         success: function (res) {
-             if (res.confirm) {
-                 let delNum = e.currentTarget.dataset.index;
-                 let delType = e.currentTarget.dataset.type;
-                 let upImgArr = _this.data.upImgArr;
-                 let upVideoArr = _this.data.upVideoArr;
-                 if (delType == 'image') {
-                     upImgArr.splice(delNum, 1)
-                     _this.setData({
-                         upImgArr: upImgArr,
-                     })
-                 } else if (delType == 'video') {
-                     upVideoArr.splice(delNum, 1)
-                     _this.setData({
-                         upVideoArr: upVideoArr,
-                     })
-                 }
-                 let upFilesArr = upFiles.getPathArr(_this);
-                 if (upFilesArr.length < _this.data.maxUploadLen) {
-                     _this.setData({
-                         upFilesBtn: true,
-                     })
-                 }
-             } else if (res.cancel) {
-                 console.log('用户点击取消')
-             }
-         }
-     })
-     
-     
-  },
-  // 选择图片或者视频
-  uploadFiles: function (e) {
-      var _this = this;
-      wx.showActionSheet({
-          itemList: ['选择图片', '选择视频'],
-          success: function (res) {
-            //   console.log(res.tapIndex)
-              let xindex = res.tapIndex;
-              if (xindex == 0){
-                  upFiles.chooseImage(_this, _this.data.maxUploadLen)
-              } else if (xindex == 1){
-                  upFiles.chooseVideo(_this, _this.data.maxUploadLen)
-              }
-              
-          },
-          fail: function (res) {
-              console.log(res.errMsg)
-          }
-      })
   },
   bzInput:function(e){
     let _this = this;
@@ -133,7 +127,6 @@ Page({
     _this.setData({
         [key]:e.detail.value,
     })
-    console.log(this.data)
   },
   userChange(e) { //模糊查询
     let _that = this;
@@ -152,7 +145,6 @@ Page({
           'Authorization': 'Bearer '+config.service.token,
       },   
         success:function(res){ 
-            console.log(res) 
             if(res?.data?.code == 0){
               if(res.data.data.length<1){
                 _that.setData({
@@ -165,7 +157,7 @@ Page({
               }
             }
             else{
-              toast.fail(res.data.msg);
+              app.Notify(res.data.msg);
             }  
         }
       })
@@ -173,63 +165,75 @@ Page({
       this.setData({
         value: e.detail,
         isShow: false,
-        customerId:'',
+        orgId:'',
       });
     }
   },
+	afterRead(event) {  //上传
+	  const { file } = event.detail;
+		const { fileList = [] } = this.data;
+		//fileList.push({ ...file, url: db.data.url,name: db.data.name });
+		fileList.push({ url: file.url,path: file.thumb });
+		this.setData({
+			file:file,
+			fileList:fileList
+		})
+	},
   // 上传文件
   subFormData:function(){
       let _this = this;
       let upData = {};
-      let upImgArr = _this.data.upImgArr;
       let upVideoArr = _this.data.upVideoArr;
       _this.setData({
           upFilesProgress:true,
       })
-      console.log("开始上传");
-      if(!upImgArr  && !upVideoArr && _this.data.context == ""){
-        wx.showToast({
-            title: '不能上传空内容',
-        })
+      if(_this.data.context == ""){
+        app.Notify({
+          type: 'warning',
+          message: "不能上传空内容"
+        });
         return;
       }
-      wx.setStorageSync('time', new Date()); //测试本地存储
-      console.log(wx.getStorageInfoSync("time"));
-      upData['url'] = config.service;
-      
+      if(_this.data.orgName == ""){
+        app.Notify({
+          type: 'warning',
+          message: "请选择或输入正确的终端名称"
+        });
+        return
+      }
+      if(_this.data.menuValue == "2" && (_this.data["orgCity"] == "" || _this.data["orgProvince"] == "")){
+        app.Notify({
+          type: 'warning',
+          message: "请选择省市"
+        });
+        return
+      }
+      upData['url'] = config.service[_this.data.upfilesUrl];
+      let data = {};
+      data["content"] = _this.data.context;
+      data["orgName"] = (_this.data.menuValue==2) ?  _this.data.userName : _this.data.orgName;;
+      data["orgId"] = _this.data.orgId;
+      data["orgType"] = _this.data.menuValue;
+      data["orgCity"] = (_this.data.menuValue==2) ? this.data.orgCity : '';
+      data["orgProvince"] = (_this.data.menuValue==2) ? this.data.orgProvince : '';
       wx.request({
-        url: upData.url.conText+"?customerId="+_this.data.customerId+"&content="+_this.data.context,  
-        data:{'name':'admin','content':_this.data.context},   
+        url: config.service.conText,
+        data: data,   
         method:"POST",    
         header:{
-            "Content-Type":"application/x-www-from-urlencoded",
+            "content-type":"application/json",
             'Authorization': 'Bearer '+config.service.token,
         }, 
         success:function(res){ 
-            console.log(res) 
             if(res.data.code == 0){
                 if(res.data && res.data.data){
                     upData['formData'] = {"id":res.data.data};
                     upFiles.upFilesFun(_this, upData,function(res){
-                        if (res.index < upImgArr.length){
-                            upImgArr[res.index]['progress'] = res.progress
-                            
-                            _this.setData({
-                                upImgArr: upImgArr,
-                            })
-                        }else{
-                            let i = res.index - upImgArr.length;
-                            upVideoArr[i]['progress'] = res.progress
-                            _this.setData({
-                                upVideoArr: upVideoArr,
-                            })
-                        }
                     }, function (arr) {
                         // success
                         wx.switchTab({
                             url: '../home/home',
                           })
-                        console.log(arr)
                     })
                 }
                 wx.showToast({
@@ -242,5 +246,34 @@ Page({
         }
       })
  
+  },
+  onBlur(e) {
+    let _this =  this;
+    if(e.detail.value == ""){
+      _this.setData({
+        isShow:false
+      })
+      return;
+    }
+    if(_this.data.searchText.length > 0){
+      _this.data.searchText.map((item) => {
+          if(e.detail.value == item.name){
+            _this.setData({
+              value:item.name,
+              isShow:false,
+              orgId:item.id,
+              orgName:item.name
+            })
+          }
+      })
+    }
+    if(e.target.dataset.name == "userName"){ //新增其他客户直接取文本框值
+      _this.setData({
+        orgName:e.detail.value
+      })
+    }
+    _this.setData({
+      isShow:false
+    })
   }
 })

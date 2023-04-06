@@ -13,6 +13,12 @@ function request(url, params, method, header, resolve, reject) {
     title: "加载中...",
     mask:true
   })
+
+  let  type = header.type ? header.type : "application/json";
+  header = {
+    "content-type": type,
+    'Authorization': 'Bearer ' + config.service.token,
+  }
   wx.request({
     url: url, // 接口地址
     data: dealParams(params), // 請求參數
@@ -96,20 +102,20 @@ function dealParams(params) {
   })
 }
 
-// const apiService = {
-//   //請求
-//   REQUEST(url, params, method, header) {
-//     return new Promise((resolve,reject) => {
-//       request(url, params, method, header, resolve, reject);
-//     })
-//   }
-// }
+const apiService = {
+  //請求
+  REQUEST(url, params, method, header) {
+    return new Promise((resolve,reject) => {
+      request(url, params, method, header, resolve, reject);
+    })
+  }
+}
 
 // 外部調用接口
 module.exports = {
-  goRequest: (e) => { // 获取首頁接口
+  goRequest: (url, params, method, header) => {
     return new Promise((resolve,reject)=> {
-     request(e.url, e.params, e.method, e.header, resolve, reject)
+     request(url, params, method, header, resolve, reject)
     })
   },
 }

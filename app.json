@@ -3,50 +3,18 @@
     "pages/home/home",
     "pages/login/login",
     "pages/index/index",
-    "pages/menu/menu",
-    "pages/message/message",
-    "pages/menu/menus",
-    "pages/system/client/addClient",
-    "pages/system/client/queryClient",
-    "pages/system/client/editClient",
-    "pages/system/client/auditClient",
-    "pages/system/pact/auditPact",
-    "pages/system/pact/toPlan",
-    "pages/system/pact/toPending",
-    "pages/system/cservice/crecord",
-    "pages/system/cservice/cvisit",
-    "pages/system/aservice/pending",
-    "pages/system/aservice/dispose",
-    "pages/system/cservice/todo",
-    "pages/component/remark",
-    "pages/system/cservice/cpage",
-    "pages/system/aservice/done",
-    "pages/system/aservice/inprocess",
-    "pages/system/pact/page",
-    "pages/system/pact/finishedList",
-    "pages/system/pact/pay",
-    "pages/system/pact/payList",
-    "pages/system/aservice/editDispose",
-    "pages/system/cservice/addList",
-    "pages/system/pact/haspay",
-    "pages/system/pact/editDispose",
-    "pages/system/pact/details",
-    "pages/system/aservice/addMaintain",
-    "pages/system/aservice/editMaintain",
-    "pages/system/pact/addPact",
-    "pages/system/aservice/device",
-    "pages/system/pact/finishDevice",
-    "pages/system/pact/addInstall",
-    "pages/system/client/clientDevice"
+    "pages/menu/bench",
+    "pages/menu/index",
+    "pages/menu/install"
   ],
   "window": {
-    "backgroundColor": "#F6F6F6",
+    "backgroundColor": "#f8f8f8",
     "backgroundTextStyle": "light",
-    "navigationBarBackgroundColor": "#F6F6F6",
-    "navigationBarTitleText": "美德远健",
+    "navigationBarBackgroundColor": "#ff6d3b",
+    "navigationBarTitleText": "",
     "navigationBarTextStyle": "black",
-    "onReachBottomDistance": 200
-    
+    "onReachBottomDistance": 200,
+    "initialRenderingCache": "static"
   },
   "tabBar": {
     "selectedColor": "#57A2FF",
@@ -59,23 +27,28 @@
         "iconPath": "pages/styles/images/home.png",
         "selectedIconPath": "pages/styles/images/home.png",
         "text": "首页"
-      },{
-        "pagePath": "pages/home/home",
-        "iconPath": "pages/styles/images/home.png",
-        "selectedIconPath": "pages/styles/images/home.png",
-        "text": "待处理任务"
       },
       {
-        "pagePath": "pages/menu/menu",
+        "pagePath": "pages/menu/index",
+        "iconPath": "pages/styles/images/home.png",
+        "selectedIconPath": "pages/styles/images/home.png",
+        "text": "任务"
+      },
+      {
+        "pagePath": "pages/menu/bench",
         "iconPath": "pages/styles/images/portrait.png",
         "selectedIconPath": "pages/styles/images/portrait.png",
-        "text": "管理网站"
+        "text": "后台"
       }
     ]
   },
   "usingComponents": {
+    "van-notify": "./dist/notify/index",
     "van-tab": "./dist/tab/index",
-    "van-tabs": "./dist/tabs/index"
+    "van-tabs": "./dist/tabs/index",
+    "van-icon": "./dist/icon/index",
+    "van-dropdown-menu": "./dist/dropdown-menu/index",
+    "van-dropdown-item": "./dist/dropdown-item/index"
   },
   "sitemapLocation": "sitemap.json"
 }

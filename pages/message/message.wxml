@@ -1,7 +1,0 @@
-<view class="optClass" style='padding:0 30rpx;flex-wrap:wrap;'>
-<view class="tapNav"  wx:for="{{dataList}}">
-  <text>{{item}}</text>
-  <button data-msg="{{item}}" bindtap="goMenu">处理</button>
-</view>
-  
-</view>

@@ -1,0 +1,86 @@
+<!--pages/menu/index.wxml-->
+<van-tabs active="{{ active }}" bind:change="onChange">
+  <van-tab title="待处理安装任务">
+    <view  wx:for="{{allData.data}}" wx:key='index' class="listBox" wx:for-index="bindex" >
+      <View>
+        <text data-index="{{bindex}}" bindtap="redirectInstall" >{{dict[item.customerId]}}</text>
+      </View>
+      <view class="content">
+        <view>
+          <span data-index="{{bindex}}">科室名称</span>
+          <span data-index="{{bindex}}">设备类型</span>
+          <span data-index="{{bindex}}">详细地址</span>
+        </view>
+        <view class="fontBox">
+          <text class="">{{item.deptName}}</text>
+          <text class="">{{devices[item.type]}}</text>
+          <text class="font-lang">555555555555555555555555555</text> 
+        </view>
+        <view>
+          <span data-index="{{bindex}}">科室联系人</span>
+          <span data-index="{{bindex}}">设备数量</span>
+        </view>
+        <view>
+          <text class="">{{item.deptContact}}</text>
+          <text class="">{{item.deviceAmount}}</text>
+        </view>
+      </view>
+    </view>
+  </van-tab>
+  <van-tab title="待处理维保任务">
+    <view  wx:for="{{maintainAllData.data}}" wx:key='index' class="listBox" wx:for-index="bindex" >
+      <View>
+        <text data-index="{{bindex}}" bindtap="redirectMaintain">{{dict[item.customerId]}}</text>
+      </View>
+      <view class="content">
+        <view>
+          <text data-index="{{bindex}}">联系人</text>
+          <text data-index="{{bindex}}">设备类型</text>
+          <text data-index="{{bindex}}">问题描述</text>
+        </view>
+        <view class="fontBox">
+          <text class="">{{item.contact}}</text>
+          <text class="">{{devices[item.deviceType]}}</text>
+          <text class="font-lang">{{item.content}}</text> 
+        </view>
+        <view>
+          <span data-index="{{bindex}}">联系电话</span>
+          <span data-index="{{bindex}}">设备数量</span>
+        </view>
+        <view>
+          <text class="">{{item.contactPhone}}</text>
+          <text class="">{{item.devices.length}}</text>
+        </view>
+
+      </view>
+    </view>
+  </van-tab>
+  <van-tab title="添加培训记录">
+    <view wx:for="{{trainAllData.data}}" wx:key='index' wx:for-index="bindex" class="listBox">
+      <View>
+        <text data-index="{{bindex}}" bindtap="redirectTrain">{{dict[item.customerId]}}</text>
+      </View>
+      <view class="content">
+        <view>
+          <span data-index="{{bindex}}">科室名称</span>
+          <span data-index="{{bindex}}">设备类型</span>
+          <span data-index="{{bindex}}">安装完成时间</span>
+        </view>
+        <view class="fontBox">
+          <text class="">{{item.deptName}}</text>
+          <text class="">{{devices[item.type]}}</text>
+          <text class="font-lang">555555555555555555555555555</text> 
+        </view>
+        <view>
+          <span data-index="{{bindex}}">科室联系人</span>
+          <span data-index="{{bindex}}">设备数量</span>
+        </view>
+        <view>
+          <text class="">{{item.deptContact}}</text>
+          <text class="">{{item.deviceAmount}}</text>
+        </view>
+      </view>
+    </view>
+  </van-tab>
+</van-tabs>
+<van-notify id="van-notify" />

@@ -1,0 +1,33 @@
+<view class="query">
+  <view bindtap='goFileup' class="optBt">
+    <van-icon color="#fff" name="plus" />
+  </view>
+  <View>
+    <span data-index="{{bindex}}">客户名称:</span><text>{{dict[allData.customerId]}}</text>
+  </View>
+  <View>
+    <span data-index="{{bindex}}">经销商:</span><text>{{allData.dealer}}</text>
+  </View>
+  <view>
+    <span data-index="{{bindex}}">科室名称:</span><text>{{allData.deptName}}</text>
+  </view>
+  <view>
+    <span data-index="{{bindex}}">科室联系人:</span><text>{{allData.deptContact}}</text>
+  </view>
+  <view>
+    <span data-index="{{bindex}}">设备类型:</span><text>{{devices[allData.type]}}</text>
+  </view>
+  <view>
+    <span data-index="{{bindex}}">设备数量:</span><text>{{allData.deviceAmount}}</text>
+  </view>
+  <view>
+    <span data-index="{{bindex}}">信息科联系人:</span><text>{{allData.infoDeptContact}}</text>
+  </view>
+  <view>
+    <span data-index="{{bindex}}">信息科联系电话:</span><text>{{allData.infoDeptContact}}</text>
+  </view>
+	<view>
+	  <span data-index="{{bindex}}">安装完成时间:</span><text>{{allData.updateTime}}</text>
+	</view>
+	<logBox http="{{http}}"></logBox>
+</view>

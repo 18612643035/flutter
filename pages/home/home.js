@@ -3,6 +3,7 @@ import {
   goRequest
 } from '../../utils/request.js'
 import Notify from '../../dist/notify/notify';
+// import { json } from 'stream/consumers';
 // pages/home/home.js
 Page({
 
@@ -15,23 +16,21 @@ Page({
     }],
     user:[],
     myData: [],
-    show: false,
     userShow:false,
     last: false,
-    columns: ["1", "2", "3"],
-    id: '',
-    tabCur:0,
     images: [],
     imagesAll: [],
-    name: '',
-    active: 0,
-    list: [],
     curpage: 1,
-    empty:'none'
+    avatarUrl:'',
+    userInfo:"",
+    list:[],
   },
   goFileup: function () {
+    let data = {};
+    data["upfilesUrl"] = "upFiles";
+    data["submitUrl"] = "upFiles";
     wx.navigateTo({
-      url: '/pages/index/index',
+      url: '/pages/index/index?list='+JSON.stringify(data),
     })
   },
   /**
@@ -40,7 +39,6 @@ Page({
   onLoad: function () {
     const _this = this;
     let token = wx.getStorageSync('access_token');
-    console.log(token);
     if (!token) {
       wx.navigateTo({
         url: '../login/login'
@@ -50,38 +48,20 @@ Page({
       config.service.token = token;
     }
     this.getVlog(0); //查询所有Vlog
-    this.getMy(); //查询自己Vlog
     this.init(); //获取用户客户信息
   },
   init: function() {
     let _this = this;
-    goRequest({
-      url: config.service.userInfo, //获取用户信息
-      params: {},
-      method: 'GET',
-      header: {
-        "content-type": "application/json",
-        'Authorization': 'Bearer ' + config.service.token,
-      },
-    }).then(res => {
-      console.log(res)
+    goRequest(config.service.userInfo,{},'GET',{},).then(res => { //获取用户信息
       _this.setData({
-        user: res.data.data.sysUser,
-        name: res.data.data.sysUser.name,
+        user: res.data.data.sysUser
       })
+      if(!res.data.data.sysUser.avatar){
+        _this.getUserInfo();
+      }
     }).catch(function (e) {
-      console.log(e);
     });
-    goRequest({
-      url: config.service.dict, //获取客户字典
-      params: {},
-      method: 'GET',
-      header: {
-        "content-type": "application/json",
-        'Authorization': 'Bearer ' + config.service.token,
-      },
-    }).then(res => {
-      console.log(res)
+    goRequest(config.service.dict,{},'GET',{},).then(res => {//获取客户信息
       let col = [];
       let dict = {};
       for (let i = 0; i < res.data.data.length; i++) {
@@ -96,54 +76,89 @@ Page({
       app.dict = dict;
       config.dict = dict;
       config.dictCol = col;
-      console.log( app.dict);
-      _this.setData({
-        columns: col,
-      })
     }).catch(function (e) {
-      console.log(e);
     });
-    wx.request({ //地区字典
-      url: config.service.region,    
-      method:"GET",   
-      header:{
-        "content-type":"application/json",
-        'Authorization': 'Bearer '+config.service.token,
-      },     
-      success:function(res){ 
-          console.log(res) 
-          if(res.data.code == 0){
-            let dict = {};
-            for (let i = 0; i < res.data.data.length; i++) {
-              dict[res.data.data[i].value] = res.data.data[i].label;
-            }
-            config.regDict = dict;
-          }else{
-            toast.fail(res.data.msg);
-          }
+    
+    goRequest(config.service.device_type,{},'GET',{},).then(res => {//设备类型字典
+      if(res.data.code == 0){
+        let col = [];
+        let device_type = {};
+        for (let i = 0; i < res.data.data.length; i++) {
+          device_type[res.data.data[i].value] = res.data.data[i].label;
+        }
+        getApp().device_type = device_type;
+      }else{
+        toast.fail(res.data.msg);
       }
+    }).catch(function (e) {
     });
-    wx.request({ //设备类型字典
-      url: config.service.device_type,    
-      method:"GET",   
-      header:{
-        "content-type":"application/json",
-        'Authorization': 'Bearer '+config.service.token,
-      },     
+  },
+  getUserInfo(e){
+    let _this = this;
+    wx.getStorage({//异步获取缓存
+      key:"name",//本地缓存中指定的 key
+      success:(res)=>{      
+          _this.setData({
+               avatarUrl:res.data.avatarUrl         
+          })
+          _this.updateAvatar(res.data.avatarUrl);        
+      },
+      fail(res){
+          wx.showModal({
+              title: '感谢您使用！',
+              content: '请允许小程序可以使用您的头像和名字！',
+              success (res) {
+                if (res.confirm) {
+                  console.log('用户点击确定')
+                  _this.getUserProfile()
+                } else if (res.cancel) {
+                  console.log('用户点击取消')
+                }
+              }
+            })
+        }
+      }); 
+  },
+  updateAvatar(url){
+    let _this = this;
+    let data = {};
+    data.avatar = url;
+    wx.request({
+      url: config.service.updateAvatar, //获取用户头像
+      data:  data,
+      method: 'POST',
+      header: {
+        "Content-Type":"application/x-www-form-urlencoded",
+        'Authorization': 'Bearer ' + config.service.token,
+      },
       success:function(res){ 
-          console.log(res) 
-          if(res.data.code == 0){
-            let col = [];
-            let device_type = {};
-            for (let i = 0; i < res.data.data.length; i++) {
-              device_type[res.data.data[i].value] = res.data.data[i].label;
-            }
-            config.device_type = device_type;
-          }else{
-            toast.fail(res.data.msg);
-          }
       }
-    });
+    })
+  },
+  getUserProfile(e) { 
+    let _this = this;
+    wx.getUserProfile({
+      desc: '用于保存用户的头像', 
+      success: (res) => {
+        this.setData({
+          userInfo: res.userInfo,
+          
+        })
+        wx.setStorage({
+            key:'name',//本地缓存中指定的 key(类型：string)
+            data:res.userInfo,//需要存储的内容。只支持原生类型、Date、及能够通过JSON.stringify序列化的对象(类型:any)
+            success:(s)=>{  
+                this.setData({
+                    avatarUrl:res.userInfo.avatarUrl,         
+                })
+                _this.updateAvatar(res.data.avatarUrl);   
+            },
+            fail:(f)=>{  
+
+            }
+        })
+      }
+    })
   },
   goMenu: function () { //打开菜单栏
     wx.reLaunch({
@@ -153,24 +168,13 @@ Page({
   onRmove: function (e) { //删除vlog 
     let id = e.target.dataset.id;
     let _this = this;
-    goRequest({
-      url: config.service.deleteMy,
-      params: {
-        id: id
-      },
-      method: 'POST',
-      header: {
-        "content-type": "application/x-www-form-urlencoded",
-        'Authorization': 'Bearer ' + config.service.token,
-      },
-    }).then(res => {
-      console.log(res)
+    goRequest(config.service.deleteMy,{"id": id},'POST',{"type":"application/x-www-form-urlencoded"},).then(res => {
         if (res.data?.code === 0) {
           Notify({
             type: 'success',
             message: '删除成功'
           });
-          _this.getMy();
+          _this.onLoad();
         } else {
           Notify({
             type: 'warning',
@@ -178,16 +182,14 @@ Page({
           });
         }
     }).catch(function (e) {
-      console.log(e);
     });
   },
-  previewImg: function (event) {
-    console.log(event.currentTarget.dataset.presrc)
+  previewImg: function (event) {//缩略图放大
     let currentUrl = event.currentTarget.dataset.presrc;
     let images = this.data.imagesAll.concat(this.data.images);
     wx.previewImage({
-      current: currentUrl, // 当前显示图片的http链接
-      urls: images // 需要预览的图片http链接列表
+      current: currentUrl, 
+      urls: images
     })
   },
   getVlog: function (page) {
@@ -195,16 +197,7 @@ Page({
     let data = {};
     data["page"] = page;
     this.data.id ? data["customerId"] = this.data.id : '';
-    goRequest({
-      url: config.service.getAll,
-      params: data,
-      method: 'GET',
-      header: {
-        "content-type": "application/x-www-form-urlencoded",
-        'Authorization': 'Bearer ' + config.service.token,
-      },
-    }).then(res => {
-      console.log(res)
+    goRequest(config.service.getAll,data,'GET',{},).then(res => {//vlog数据
       if (res.data.code == 401) {
         _this.rToken();
       }
@@ -215,8 +208,8 @@ Page({
       _this.setData({
         allData: arr1,
         curpage: res.data.data.number,
-        list: arr1,
-        last: res.data.data.last
+        last: res.data.data.last,
+        list: arr1
       })
       let images = [];
       for (let img in res.data.data.content) {
@@ -231,87 +224,15 @@ Page({
         imagesAll: img1,
       })
     }).catch(function (e) {
-      console.log(e);
     });
   },
-  onRemoveCur: function() {
-    this.setData({
-      id: '',
-      list: []
-    })
-    this.getVlog(0);
-  },
-  getMy: function () {
-    let _this = this;
-    goRequest({
-      url: config.service.getMy,
-      params: {},
-      method: 'GET',
-      header: {
-        "content-type": "application/json",
-        'Authorization': 'Bearer ' + config.service.token,
-      },
-    }).then(res => {
-      console.log(res)
-      _this.setData({
-        myData: res.data.data,
-      })
-      let images = [];
-      for (let img in res.data.data) {
-        for (let imgs in res.data.data[img].images) {
-          images.push(res.data.data[img].images[imgs].url);
-        }
-      }
-      let img1 = _this.data.images;
-      let img2 = images;
-      img1 = img1.concat(img2);
-      _this.setData({
-        images: img1,
-      })
-      console.log(_this.data.myData);
-    }).catch(function (e) {
-      console.log(e);
-    });
-  },
-  onShow: function () {},
-  userShow: function (e) { //选择客户弹窗
-    this.setData({
-      userShow: true,
-    })
-  },
-  selectCus: function (e) { //选择客户弹窗
-    let picker = this.selectComponent(".picker");
-    picker.setColumnIndex(0, 0); //设置默认索引
-    this.setData({
-      show: true,
-      id: this.data.columns[0].id,
-    })
-  },
-  onTab: function(e) { //切换列表
-    e.detail.index == 0 ? this.getVlog(0) : this.getMy();
-    this.setData({
-      tabCur:e.detail.index
-    })
+  onShow: function () {
+    this.getVlog(0); //查询所有Vlog
   },
   onReachBottom: function () { //下拉刷新
-    if (this.data.last || this.data.tabCur) {
+    if (this.data.last) {
       return;
     }
     this.getVlog(this.data.curpage + 1);
-  },
-  onChange(event) { ///更改客户
-    const {
-      value
-    } = event.detail;
-    this.setData({
-      list: [],
-      id: value.id
-    })
-  },
-  complete(event) { //
-    this.setData({
-      list: []
-    })
-    this.getVlog(0);
-  },
+  }
 })

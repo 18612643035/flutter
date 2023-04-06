@@ -13,7 +13,7 @@ Page({
   },
   onShow: function () {
     let token = wx.getStorageSync('access_token');
-    console.log(token);
+    
     if(token){
       wx.navigateTo({
         url: '../home/home'
@@ -29,7 +29,6 @@ Page({
         this.setData({
           phoneNum: phoneNum
         })
-        console.log('phoneNum' + this.data.phoneNum)
         this.showSendMsg()
         this.activeButton()
       }
@@ -81,7 +80,6 @@ Page({
       },
       method: 'POST',
       success: function (res) {
-        console.log(res)
       }
     })
     this.setData({
@@ -91,7 +89,7 @@ Page({
     this.timer()
   },
  
-  timer: function () {
+  timer: function () {//等待时间
     let promise = new Promise((resolve, reject) => {
       let setTimer = setInterval(
         () => {
@@ -120,13 +118,11 @@ Page({
       code: e.detail.value
     })
     this.activeButton()
-    console.log('code' + this.data.code)
   },
  
  // 按钮
   activeButton: function () {
     let {phoneNum, code} = this.data
-    console.log(code)
     if (phoneNum && code) {
       this.setData({
         disabled: false,
@@ -159,7 +155,6 @@ Page({
       },
       method: 'POST',
       success: function (res) {
-        console.log(res)
  
         if (res.data && res.data.access_token) {
           wx.setStorageSync('access_token', res.data.access_token);
@@ -184,7 +179,9 @@ Page({
         }
       },
       fail: function (res) {
-        console.log(res)
+        wx.showToast({
+          title: res,
+        })
       }
     })
   }

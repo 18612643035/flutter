@@ -21,7 +21,6 @@ page{
     flex: 1;
     text-align: right;
     color: #666;
-    font-size: 32rpx;
     font-size:24rpx;
     color:#999;
 }
@@ -65,7 +64,6 @@ page{
     height: 208rpx;
 }
 .subBtnBox{
-    position: absolute;
     bottom: 0;
     left: 0;
     width: 100%;
@@ -91,7 +89,6 @@ page{
     font-size: 1rem;
     margin: 0;
 }
-.topMargin{
-    margin-top: 12rpx;
-    padding:0 12px;
+.van-dropdown-menu{
+    width: 380rpx;
 }

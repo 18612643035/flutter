@@ -1,0 +1,38 @@
+<view class='subBtnBox'>
+    <!-- <button class='subBtn' type='button' bindtap='subFormData'>安装完成</button> -->
+    <view class="">安装完成</view>
+</view>
+<view class="query">
+  <view bindtap='goFileup' class="optBt">
+      <!-- <text  class='iconfont icon-icon_common_add'></text> -->
+    <van-icon color="#fff" name="plus" />
+  </view>
+  <View>
+    <span data-index="{{bindex}}">客户名称:</span><text>{{dict[allData.customerId]}}</text>
+  </View>
+  <View>
+    <span data-index="{{bindex}}">经销商:</span><text>{{allData.deptName}}</text>
+  </View>
+  <view>
+    <span data-index="{{bindex}}">科室名称:</span><text>{{allData.deptName}}</text>
+  </view>
+  <view>
+    <span data-index="{{bindex}}">科室联系人:</span><text>{{allData.deptContact}}</text>
+  </view>
+  <view>
+    <span data-index="{{bindex}}">设备类型:</span><text>{{devices[allData.type]}}</text>
+  </view>
+  <view>
+    <span data-index="{{bindex}}">设备数量:</span><text>{{allData.deviceAmount}}</text>
+  </view>
+  <view>
+    <span data-index="{{bindex}}">信息科联系人:</span><text>{{allData.deptName}}</text>
+  </view>
+  <view>
+    <span data-index="{{bindex}}">信息科联系电话:</span><text>{{allData.deptContact}}</text>
+  </view>
+  <view>
+    <span data-index="{{bindex}}">详细地址:</span><text>{{allData.deviceAmount}}</text>
+  </view>
+	<logBox bind:delete="deleteImg"  http="{{http}}"></logBox>
+</view>

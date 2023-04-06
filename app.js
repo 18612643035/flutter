@@ -1,10 +1,10 @@
-//app.js
-var qcloud = require('./vendor/wafer2-client-sdk/index')
-var config = require('./config')
-
+let config = require('./config')
+import Notify from './dist/notify/notify';
+import {
+    goRequest
+  } from './utils/request.js'
 App({
     onLaunch: function () {
-        qcloud.setLoginUrl(config.service.loginUrl)
     },
     filter: function (data) {
         data.map(element => {
@@ -22,7 +22,18 @@ App({
         });
         return data;
     },
+    menuFormat:function(data) { //下拉菜单数据格式
+        data.map((e) => {
+            e["text"] = e.name ? e.name : e.label;
+            e["value"] = e.code ? e.code : e.value;
+        })
+        return data;
+    },
     dict:[],
+    goRequest:goRequest,
+    device_type:[],
+    Notify: Notify,
+    config: config,
     onReach: function (item) {
         item.setData({
             curpage:item.data.curpage+1

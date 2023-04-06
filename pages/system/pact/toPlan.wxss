@@ -1,5 +1,0 @@
-/* pages/system/pact/toPlan.wxss */
-.details{
-  height: 15rem;
-  overflow: auto;
-}
