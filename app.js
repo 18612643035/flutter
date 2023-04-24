@@ -1,17 +1,26 @@
 let config = require('./config')
-import Notify from './dist/notify/notify';
+import {formatTime2} from './utils/util.js';
+import Toast  from './dist/toast/toast';
 import {
     goRequest
   } from './utils/request.js'
 App({
     onLaunch: function () {
+			// wx.loadFontFace ({
+			//   family: 'PingFangSC-Medium',
+			//   source: 'url("https://www.your-server.com/PingFangSC-Medium.ttf")',
+			//   success: function(){console.log('load font success')}
+			// })
     },
     filter: function (data) {
         data.map(element => {
             element.finishTime == null ? element.finishTime = "无" : '';
-            element.startTime == null ? element.startTime = "无" : '';
+            element.infoDeptContact == null || element.infoDeptPhone == "" ? element.infoDeptContact = "无" : '';
             element.endTime == null ? element.endTime = "无" : '';
-            element.updateTime == null ? element.updateTime = "无" : '';
+            element.dealer == null || element.dealer == "" ? element.dealer = "无" : '';
+						element.infoDeptPhone == null || element.infoDeptPhone == "" ? element.infoDeptPhone = "无" : '';
+						element.deptName == null || element.deptName == "" ? element.deptName = "无" : '';
+						element.deptContact == null || element.deptContact == "" ? element.deptContact = "无" : '';
             element.actualTime  == null ? element.actualTime = "无" : '';
             element.planTime  == null ? element.planTime = "无" : '';
             element.createTime  == null ? element.createTime = "无" : '';
@@ -30,9 +39,11 @@ App({
         return data;
     },
     dict:[],
+		avatarUrl:'',
     goRequest:goRequest,
     device_type:[],
-    Notify: Notify,
+    Toast: Toast,
+		formatTime2:formatTime2,
     config: config,
     onReach: function (item) {
         item.setData({

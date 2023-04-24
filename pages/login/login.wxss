@@ -1,23 +1,54 @@
+page{
+	height: 100%;
+}
 .section{
   width: 100%;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
   margin: 10px;
   position: relative;
+  overflow: hidden;
+}
+.section>text{
+  margin-top: 60rpx;
+  color: #666666;
+  line-height: 63rpx;
+  font-weight: 500;
+  font-size: 30rpx;
+  display: block;
 }
 .section input{
-  margin-left: 10px;
-  border-bottom: 1px solid #ebeef5;
-  width: 8rem;
+  height: 90rpx;
+  background: rgba(255, 109, 59, 0.14);
+  color: #666666;
+  padding-left: 39rpx;
+  border-radius: 45rpx;
+  margin-top: 27rpx;
 }
-button.sendMsg{
+.place-holder{
+  color: #B6B6B6;
+}
+button#submit{
+  height: 104rpx;
+  background: #FF6D3B;
+  border-radius: 50rpx;
+  font-size: 42rpx;
+  color: #FFFFFF;
+  margin-top: 52rpx;
+}
+.sendMsg{
   margin:0;
-  line-height: 1.5rem;
   position: absolute;
-  right: 1rem;
-  top: 0;
-  font-size: 0.8rem;
+  top: 50%;
+  right: 29rpx;
+  margin-top: -23.5rpx;
+  width: 143rpx;
+  height: 47rpx;
+  background: #FFFFFF;
+  border-radius: 23rpx;
+  font-size: 20rpx;
+  color: #FF6D3B;
+  line-height: 47rpx;
+  z-index: 999;
+  text-align: center;
 }
 .container{
   display: flex;
@@ -25,12 +56,76 @@ button.sendMsg{
   justify-content: center;
   align-items: center;
 }
-.container image{
+.bgImg{
   position: absolute;
   width: 100%;
   height: 100%;
   z-index: -1;
 }
-.section text{
-  color: #fff;
+.loginBox{
+	width: 620rpx;
+	margin: 0 auto;
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+	margin-bottom: 57rpx;
+	margin-top: 160rpx;
+	justify-content: center;
+}
+.inputBox{
+	background: rgba(251,235,231,0.5);
+	width: 620rpx;
+	/* height: 940rpx; */
+	flex: 1;
+	border-radius: 30rpx;
+	box-shadow: 6rpx 6rpx 20rpx 1rpx rgba(255,167,137,0.42);
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+.inputBox>view{
+  width:506rpx;
+  margin:0 auto;
+}
+.title image{
+	width: 169rpx;
+	height: 139rpx;
+}
+.title text{
+	height: 54rpx;
+	font-size: 56rpx;
+	font-family: PingFang SC;
+	font-weight: bold;
+	color: #FF6D3B;
+	text-shadow: 0rpx 2rpx 24rpx rgba(255,167,137,0.4);
+
+}
+.title{
+	display: flex;
+  justify-content: space-between;
+  height: 139rpx;
+  line-height: 139rpx;
+	margin-bottom: 37rpx;
+}
+.inputBox .wxloginBox{
+	margin: 0 auto;
+	color: #AFADB3;
+	text-align: center;
+	margin-bottom: 40rpx;
+}
+ .wxloginBox .wxButton{
+	background-color: transparent;
+} 
+.wxButton::after{
+	border: none;
+}
+.wxloginBox .wxButton image{
+	width: 101rpx;
+	height: 101rpx;
+	margin: 0 auto;
+	margin-top: 32rpx;
+	display: block;
+}
+.wxloginBox>view{
+	font-size: 24rpx;
 }

@@ -1,6 +1,6 @@
 // info.js
 const config = require('../../config.js')
- 
+const app = getApp();
 Page({
   data: {
     send: false,
@@ -13,14 +13,14 @@ Page({
   },
   onShow: function () {
     let token = wx.getStorageSync('access_token');
-    
-    if(token){
-      wx.navigateTo({
+
+    if (token) {
+      wx.switchTab({
         url: '../home/home'
-      })  
+      })
     }
   },
-// 手机号部分
+  // 手机号部分
   inputPhoneNum: function (e) {
     let phoneNum = e.detail.value
     if (phoneNum.length === 11) {
@@ -39,7 +39,7 @@ Page({
       this.hideSendMsg()
     }
   },
- 
+
   checkPhoneNum: function (phoneNum) {
     let str = /^1\d{10}$/
     if (str.test(phoneNum)) {
@@ -51,15 +51,16 @@ Page({
       return false
     }
   },
- 
+
   showSendMsg: function () {
     if (!this.data.alreadySend) {
       this.setData({
         send: true,
       })
     }
+    console.log(this.data.send)
   },
- 
+
   hideSendMsg: function () {
     this.setData({
       send: false,
@@ -67,7 +68,7 @@ Page({
       buttonType: 'default'
     })
   },
- 
+
   sendMsg: function () {
     var phoneNum = this.data.phoneNum;
     wx.request({
@@ -79,8 +80,7 @@ Page({
         "Content-Type": "application/x-www-form-urlencoded",
       },
       method: 'POST',
-      success: function (res) {
-      }
+      success: function (res) {}
     })
     this.setData({
       alreadySend: true,
@@ -88,8 +88,8 @@ Page({
     })
     this.timer()
   },
- 
-  timer: function () {//等待时间
+
+  timer: function () { //等待时间
     let promise = new Promise((resolve, reject) => {
       let setTimer = setInterval(
         () => {
@@ -104,25 +104,27 @@ Page({
             })
             resolve(setTimer)
           }
-        }
-        , 1000)
+        }, 1000)
     })
     promise.then((setTimer) => {
       clearInterval(setTimer)
     })
   },
- 
-// 验证码
+
+  // 验证码
   addCode: function (e) {
     this.setData({
       code: e.detail.value
     })
     this.activeButton()
   },
- 
- // 按钮
+
+  // 按钮
   activeButton: function () {
-    let {phoneNum, code} = this.data
+    let {
+      phoneNum,
+      code
+    } = this.data
     if (phoneNum && code) {
       this.setData({
         disabled: false,
@@ -135,11 +137,12 @@ Page({
       })
     }
   },
- 
+
   onSubmit: function () {
     var phoneNum = this.data.phoneNum;
     var code = this.data.code;
-   // var sessionId = wx.getStorageSync('sessionId');
+		let _this = this;
+    // var sessionId = wx.getStorageSync('sessionId');
     wx.request({
       url: `${config.service.login}`,
       data: {
@@ -149,34 +152,13 @@ Page({
       },
       header: {
         "Content-Type": "application/x-www-form-urlencoded",
-       // "Cookie": sessionId,
+        // "Cookie": sessionId,
         "Accpet": "application/json",
         'Authorization': 'Basic dGVzdDp0ZXN0'
       },
       method: 'POST',
       success: function (res) {
- 
-        if (res.data && res.data.access_token) {
-          wx.setStorageSync('access_token', res.data.access_token);
-          wx.setStorageSync('refresh_token', res.data.refresh_token);
-          config.service.token = res.data.access_token;
-          wx.showToast({
-            title: '验证成功',
-            icon: 'success'
-          });
-          wx.switchTab({
-            url: '../home/home',
-            success: function (e) {//解决不刷新问题
-              var page = getCurrentPages().pop();
-              if (page == undefined || page == null) return;
-              page.onLoad();
-            }
-          })  
-        } else {
-          wx.showToast({
-            title: res.data.msg,
-          })
-        }
+				_this.setLogin(res);
       },
       fail: function (res) {
         wx.showToast({
@@ -184,5 +166,58 @@ Page({
         })
       }
     })
+  },
+	setLogin(res){
+		if(res.data.code && res.data.code != 0){
+			app.Toast(res.data.msg);
+			return
+		}
+		else if(res.statusCode != 200){
+			app.Toast(res.errMsg);
+			return
+		}
+
+		if (res.data && res.data.access_token) {
+		  wx.setStorageSync('access_token', res.data.access_token);
+		  wx.setStorageSync('refresh_token', res.data.refresh_token);
+		  config.service.token = res.data.access_token;
+		  wx.switchTab({
+		    url: '../home/home',
+		    success: function (e) { //解决不刷新问题
+		      var page = getCurrentPages().pop();
+		      if (page == undefined || page == null) return;
+		      page.onLoad();
+		    }
+		  })
+		} else {
+		}
+	},
+  getPhoneNumber(e) {
+		let _this = this;
+    console.log(e.detail.code)
+		wx.request({
+		  method: 'POST',
+		  data: {
+		    code: e.detail.code,
+		    grant_type: 'wx_code',
+		    //smsCode: code
+		  },
+		  url: config.service.login,
+		  header: {
+		    "Content-Type": "application/x-www-form-urlencoded",
+		    // "Cookie": sessionId,
+		    "Accpet": "application/json",
+		    'Authorization': 'Basic dGVzdDp0ZXN0'
+		  },
+		  success: res => {
+		    // 获取到用户的 openid
+		    console.log("用户的openid:" + res.data.openid);
+				_this.setLogin(res);
+		  },fail: function (res) {
+        wx.showToast({
+          title: res,
+        })
+      }
+		});
   }
 })

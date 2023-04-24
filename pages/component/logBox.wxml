@@ -1,14 +1,20 @@
 <!--pages/component/remark.wxml-->
 	<view class="trainContain">
 		<view wx:for="{{data}}" wx:key='index' wx:for-index="bindex"  class="imgContent">
-			<view class="imgBOx">
-				<view  wx:for="{{item.files}}" wx:key='index' wx:for-index="bindex">
-					<image class="file" wx:if="{{item.type=='image'}}" data-presrc="{{item.url}}" bindtap='previewImg' src="{{item.url}}"></image>
-					<video class="file"  wx:if="{{item.type=='vido'}}" src="{{item.url}}"></video>
+			<view class="logContent">{{item.content}}</view>
+			<view class="uploadimgbox">
+				<view class="imgBOx">
+					<view  wx:for="{{item.files}}" wx:key='index' wx:for-index="bindex">
+						<image class="file" wx:if="{{item.type=='image'}}" data-presrc="{{item.url}}" bindtap='previewImg' src="{{item.url}}"></image>
+						<video class="file"  wx:if="{{item.type=='vido'}}" src="{{item.url}}"></video>
+						<van-icon wx:if="{{item.type=='file'}}" class="description" name="description"></van-icon>
+					</view>
 				</view>
 			</view>
-			<view>{{item.content}}</view>
-			<view>{{item.createTime}}</view>
-				<span bindtap="deleteLog" data-index="{{bindex}}">删除</span>
+
+			<view  class="vlog_flex">
+			  <text class="btmBox">{{item.createTime}}</text>
+				<image data-index="{{bindex}}" class="delete" src='../styles/images/Del@2x.png'  bindtap="deleteLog"></image>
+			</view>
 		</view>
 	</view>

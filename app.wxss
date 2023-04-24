@@ -1,4 +1,3 @@
-@import './pages/styles/icon.wxss';
 
 @media only screen and (device-width : 375px) and (device-height : 603px) and (-webkit-device-pixel-ratio : 2) {
   page{
@@ -23,24 +22,31 @@
   box-sizing: border-box;
 }
 page{
-  height: 100%;
   background:#f8f8f8;
-  /* font-size: 30rpx; */
+	font-family: 'PingFang-Regular', sans-serif;
+}
+.area {
+  width: 1%;
+	right: 0;
+	top: 10%;
+  background: rgb(0,0,0,0);
+	position: fixed;
+	height: 70%;
 }
 .optBt{
   float: right;
-  margin-top: 10px;
-  margin-right: 5px;
   display: flex;
-  position: fixed;
-  bottom: 20%;
-  right: 5px;
+  margin-right: 32rpx;
   border-radius: 80rpx;
-  width: 80rpx;
-  height: 80rpx;
+  width: 90rpx;
+  height: 90rpx;
   justify-content: center;
   font-size:50rpx;
-  background-image: linear-gradient(to right, #ff6e7f 0%, #bfe9ff  51%, #ff6e7f  100%);
+  z-index: 999;
+  background: linear-gradient(0deg, #FD644F, #F28E26);
+}
+.optBt .van-icon{
+  font-size: 40rpx;
 }
 view.van-switch__node{
   font-size: 24px;
@@ -140,15 +146,17 @@ view.van-picker__toolbar{
   display: flex;justify-content: center;align-items: center;position: relative;
 }
 .searchCont{
-  position: absolute;
-  height: 200rpx;
+  max-height: 500rpx;
   overflow-y: auto;
-  background:#f7f8fa ;
-  z-index: 999;
-  left: 14rpx;
-  right: 12rpx;
-  padding: 1rpx;
-  top: 88rpx;
+	line-height: 36rpx;
+	margin-left: 67rpx;
+	color: #272634;
+}
+.searchCont>view{
+	margin: 30rpx auto;
+}
+.searchCont>view:first-child{
+  margin-top: 0px !important;
 }
 .dropdown{
   margin-left: 15rpx;
@@ -176,14 +184,165 @@ view.van-picker__toolbar{
 .imgBOx{
 	display: flex;
 }
-.imgBOx .file{
-	width: 180rpx;
-	height: 180rpx;
-	margin: 15rpx;
-}
 .query .trainContain{
 	flex-direction: column;
 }
 .imgContent{
-	border-bottom: 1px solid #d2d2d2;
+  overflow: hidden;
+  width: 662rpx;
+  margin: 20rpx auto;
+  padding: 0 24rpx;
+  background: #FFFFFF;
+  box-shadow: 0rpx 8rpx 8rpx 1rpx rgba(113,106,105,0.02);
+  border-radius: 10rpx;
+}
+.logContent{
+  font-size: 30rpx;
+  font-weight: bold;
+  color: #272634;
+  margin: 35rpx 0; 
+}
+.moreList{
+  width: 710rpx;
+  margin: 20rpx auto;
+  box-shadow: 0rpx 8rpx 8rpx 1rpx rgba(113,106,105,0.04);
+  border-radius: 10rpx;
+  background: #fff;
+	padding-bottom: 30rpx;
+}
+.moreList>view{
+  display: flex;
+  margin:28rpx 0;
+  line-height: 25px;
+}
+.moreList>view span{
+  color: rgba(104, 103, 110, 0.8);
+  font-size: 24rpx;
+  width: 238rpx;
+  margin-left: 69rpx;
+  display: block;
+}
+.moreList>view text{
+  color: #272634;
+  font-size: 24rpx;
+  font-weight: bold;
+}
+.subBtnBox{
+  position: fixed;
+  background: #fff;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 150rpx;
+  z-index: 999;
+  box-shadow: 0rpx -8rpx 18rpx 2rpx rgba(255,109,59,0.16);
+}
+.subBtnBox>view{
+  width: 680rpx;
+  height: 98rpx;
+  margin: 0 auto;
+  margin-top: 26rpx;
+  background: linear-gradient(90deg, #F28E26, #FD644F);
+  border-radius: 49rpx;
+  text-align: center;
+  line-height: 98rpx;
+  color: #fff;
+  font-size: 36prx;
+}
+.subBtnBox>button{
+  width: 680rpx;
+  height: 98rpx;
+  margin: 0 auto;
+  margin-top: 26rpx;
+  background: linear-gradient(90deg, #F28E26, #FD644F);
+  border-radius: 49rpx;
+  text-align: center;
+  line-height: 98rpx;
+  color: #fff;
+  font-size: 36prx;
+}
+.more-btmBox{
+  height: 170rpx;
+}
+.vlog_flex{
+  margin-bottom: 29rpx;
+	display: flex;
+	justify-content: space-between;
+}
+.delete{
+	width:32rpx;
+	height: 30rpx;
+}
+.btmBox{
+  font-size: 20rpx;
+  font-weight: 400;
+  color: rgba(104, 103, 110, 0.8);
+  line-height: 28rpx;
+}
+.uploadimgbox view>view{
+  width: 200rpx;
+  height: 150rpx;
+  border-radius: 10rpx;
+  margin-bottom: 20rpx;
+  overflow: hidden;
+}
+.uploadimgbox{
+  margin-top: 23rpx;
+}
+.uploadimgbox>view{
+  display: flex;
+  overflow: hidden;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+.uploadimgbox>view:after{
+  content: "";
+  width: 200rpx;
+  overflow: hidden;
+}
+.uploadimg,.uploadimgbox .file{
+  width: 100%;
+  height: 100%;
+}
+.van-uploader__upload{
+	width: 160rpx !important;
+	height: 160rpx !important;
+	border-radius: 10rpx !important;
+	overflow: hidden;
+	margin: 0!important;
+	padding: 0 !important;
+	background-color: #F1F1F1!important;
+}
+.van-uploader__preview{
+	margin: 0 28rpx 28rpx 0!important;
+}
+.van-uploader__upload .van-icon{
+	color: #B4BAC3;
+}
+.van-uploader__upload .van-icon::before{
+	font-size: 96rpx;
+}
+/* 上传样式 */
+.upImgtext{
+	width: 710rpx;
+	background: #FFFFFF;
+	border-radius: 10rpx;
+	margin: 20rpx auto;
+	overflow: hidden;
+	box-shadow: 0rpx 8rpx 8rpx 1rpx rgba(113,106,105,0.04);
+}
+.optClass{
+    padding:30rpx;
+    padding-bottom: 20rpx;
+	flex-wrap:wrap;
+}
+.optImage{
+    margin: 0 30rpx;
+		margin-bottom: 30rpx;
+}
+.describe{
+    height: 84rpx;
+    font-size: 26rpx;
+    margin: 0;
+		color: #838286;
 }

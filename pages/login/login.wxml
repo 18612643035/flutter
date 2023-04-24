@@ -1,21 +1,39 @@
 <view class='container'>
- <image src="../styles/images/bg.png" />
- <view class="section">
-   <text>手机号码</text>
-   <input placeholder="请输入手机号码" type="number" maxlength="11" bindinput="inputPhoneNum" auto-focus />
-   <van-transition wx:if="{{send}}" name="fade" custom-class="block">
-    <button class="cmt-button sendMsg" wx:if="{{send}}" bindtap="sendMsg"> 发送</button>
-   </van-transition>
+	<image class="bgImg" src="../styles/images/bg.png" />
+	<view class="loginBox">
+		<view class="title">
+			<text>欢迎登陆XXXX</text>
+			<image src="../styles/images/login-icon.png" />
+		</view>
 
-   <text wx:if="{{alreadySend}}" class="sendMsg" bindtap="sendMsg">{{second+"s"}}</text>
- </view>
-  
- <view class="section">
- <text>短信验证</text>
- <input placeholder="短信验证码" type="number" bindinput="addCode" />
- </view>
-  
-  
- <button style="background-color: rgb(26, 212, 255);line-height: 30px; color: #fff;margin-top: 30px;" type="{{buttonType}}" disabled="{{disabled}}" bindtap="onSubmit">登录</button>
-  
- </view>
+		<view class="inputBox">
+			<view>
+				<view class="section">
+					<text>用户名</text>
+					<input placeholder-class="place-holder" placeholder="输入手机号" type="number" maxlength="11" bindinput="inputPhoneNum" auto-focus />
+				</view>
+
+				<view class="section">
+					<text>短信验证</text>
+					<view style="position: relative;">
+						<input  placeholder-class="place-holder" placeholder="输入验证码" type="number" bindinput="addCode" />
+						<!-- <van-transition wx:if="{{send}}" name="fade" custom-class="block"> -->
+							<view class="cmt-button sendMsg" wx:if="{{send}}" bindtap="sendMsg"> 获取验证码</view>
+						<!-- </van-transition> -->
+						<span wx:if="{{alreadySend}}" class="sendMsg">{{second+"s"}}</span>
+					</view>
+					
+				</view>
+				<button id="submit" 
+					type="{{buttonType}}" disabled="{{disabled}}" bindtap="onSubmit">立即登录</button>
+			</view>
+			<view class="wxloginBox">
+				<view>————第三方登录————</view>
+				<button class="wxButton" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber">
+					<image  src="../styles/images/WeChat@2x.png"></image>
+					</button>
+			</view>
+		</view>
+	</view>
+</view>
+<van-toast id="van-toast" />

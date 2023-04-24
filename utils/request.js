@@ -33,7 +33,7 @@ function request(url, params, method, header, resolve, reject) {
         }else if(res.data.code == 401){
           rToken();
         }else {
-          reject(res);
+          reject(res.data);
         }
       }
     },

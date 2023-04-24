@@ -1,79 +1,66 @@
 <!--pages/index/index.wxml-->
- 
-<view class="optClass" style='padding:0 30rpx;flex-wrap:wrap;'>
-    <view class='optName'>描述</view> 
-    <!-- <input class="describe" type="text" value="asdfadf" /> -->
-    <textarea maxlength='123456789' data-name="context" bindinput="bzInput" class="describe" value="{{context}}"/>
+<view class="upImgtext">
+	<view class="optClass">
+			<textarea placeholder="请输入内容..." placeholder-class="color1" maxlength='123456789' data-name="context" bindinput="bzInput" class="describe" value="{{context}}"/>
+	</view>
+  <view class="optImage">
+  	<van-uploader multiple="true" upload-icon="plus" file-list="{{ fileList }}" bind:delete="deleteImg" deletable="{{ true }}" bind:after-read="afterRead" />
+  </view>
 </view>
-<view class="optClass">
-    <view class='optName'>附件</view> 
-    <view class='optContent' >可上传图片或视频</view>
+
+<view class="menuBox">
+<van-tabs type="card" active="{{ active }}" bind:change="onChange">
+  <van-tab title="选择客户">
+		<view  class="vanTab">
+			<van-search
+				value="{{ value }}"
+				label=""
+				bind:blur="onBlur"
+				data-name=""
+				placeholder="请输入客户名字"
+				use-action-slot
+				bind:change="userChange"
+				bind:search="onSearch"
+			>
+			</van-search>
+			<view class="searchCont" wx:if="{{isShow}}">
+				<view wx:for="{{searchText}}"  wx:for-item="item"  class="query">
+						<text data-id='{{item.id}}' data-value='{{item.name}}' bindtouchstart="onClick">{{item.name}}</text>
+				</view>
+			</view>
+		</view>
+  </van-tab>
+	<van-tab bind:change="onChange" title="新增其他客户">
+		<view>
+		  <view  class="vanTab">
+				<van-dropdown-menu>
+				  <van-dropdown-item  value="{{ provinceCur }}" bind:change="provinceAlter" options="{{ province }}" />
+				  <van-dropdown-item  value="{{ citydictCur }}" bind:change="cityAlter"  options="{{ cityDict }}" />
+				</van-dropdown-menu>
+		    <input bindinput="bzInput" class="addInput" placeholder-class="color2" placeholder="请输入客户名称" value="{{vaue2}}" data-name="userName" bind:blur="onBlur"  name="userName" type="text" />
+				
+		  </view>
+		</view>
+	</van-tab>
+	<van-tab title="选择经销商">
+		<view class="vanTab">
+			 <view class="btRow">
+				 <view class="{{currentBtn==index?'dealerCur':''}}" bindtap="dealerChange" data-index="{{index}}" wx:key="index" wx:for="{{dealerDict}}"><text>{{item.label}}</text></view>
+			 </view>
+		</view>
+	</van-tab>
+</van-tabs>
 </view>
-<van-uploader file-list="{{ fileList }}" bind:delete="deleteImg" deletable="{{ true }}" bind:after-read="afterRead" />
-<!-- <view class="optClass" style='padding:0 30rpx;flex-wrap:wrap;'>
-    <view class='uploadimgbox' wx:for="{{upImgArr}}" wx:key="item">
-        <image class='uploadimg' src='{{item.path}}' data-presrc="{{item.path}}" bindtap='previewImg' mode='aspectFill'></image>
-        <cover-view class='progress' wx:if="{{upFilesProgress}}">
-            {{item.progress}}%
-        </cover-view>
-        <cover-view class='delbtn' data-index="{{index}}" data-type="image" bindtap='delFile'>X</cover-view>
-    </view>
-    <view class='uploadimgbox' wx:for="{{upVideoArr}}" wx:key="item">
-        <video class='uploadimg' src="{{item.tempFilePath}}"  controls ></video>
-       <cover-view class='progress' wx:if="{{upFilesProgress}}">
-            {{item.progress}}%
-        </cover-view>
-        <cover-view class='delbtn' data-index="{{index}}" data-type="video" bindtap='delFile'>X</cover-view>
-    </view>
-    
-    <view class='uploadimgbox' wx:if="{{upFilesBtn}}">
-        <image class='uploadbtn' bindtap='uploadFiles' src='./addimgsbtn.png'></image>
-    </view>
-    
+<van-toast id="van-toast" />
+<view class="more-btmBox"></view>
+<view wx:if="{{!avatarUrl}}" class='subBtnBox'>   	
+		<button wx:if="{{2212> version}}" class="avatar-wrapper" bindtap="getUserProfile">
+		  完成
+		</button>
+		<button wx:if="{{2212<= version}}" class="avatar-wrapper" open-type="chooseAvatar" bind:chooseavatar="onChooseAvatar">
+		  完成
+		</button>
 </view>
- -->
-<view style="height: 90px;" wx:if="{{upfilesUrl=='upFiles'}}">
-    <view>
-      <van-dropdown-menu>
-        <van-dropdown-item bind:change="menuChange" value="{{ menuValue }}" options="{{ menus }}" />
-      </van-dropdown-menu>
-    </view>
-    <view style="position: relative;">
-      <view wx:if="{{menuValue == 2}}">
-        <van-dropdown-menu>
-          <van-dropdown-item  value="{{ province[0].value }}" bind:change="provinceAlter" options="{{ province }}" />
-          <van-dropdown-item  value="{{ cityDict[0].value }}" bind:change="cityAlter"  options="{{ cityDict }}" />
-        </van-dropdown-menu>
-        <view  class="tabRow">
-          <text style="margin-left: 12px; width: auto; text-align: left;">客户名称</text> 
-         <input bindinput="bzInput" data-name="userName" bind:blur="onBlur"  name="userName" type="text" />
-        </view>
-      </view>
-      <view wx:if="{{menuValue == 3}}" class="tabRow">
-        <text style="margin-left: 24rpx; width: auto; text-align: left;">经销商名称</text> 
-        <van-dropdown-menu>
-            <van-dropdown-item bind:change="dealerChange" value="{{ dealerDict[0].value }}" options="{{ dealerDict }}" />
-         </van-dropdown-menu>
-      </view>
-      <van-search
-        wx:if='{{menuValue == 1}}'
-        value="{{ value }}"
-        label="*客户"
-        bind:blur="onBlur"
-        placeholder="请输入客户名字"
-        use-action-slot
-        bind:change="userChange"
-        bind:search="onSearch"
-      >
-      </van-search>
-      <view class="searchCont" wx:if='{{isShow}}'>
-        <view wx:for="{{searchText}}"  wx:for-item="item"  class="query">
-            <text data-id='{{item.id}}' data-value='{{item.name}}' bindtap="onClick">{{item.name}}</text>
-        </view>
-      </view>
-    </view>
+<view wx:if="{{avatarUrl}}" class='subBtnBox'>
+	<view bindtap="subFormData" class="">完成</view>
 </view>
-<view class='subBtnBox'>
-    <button class='subBtn' type='button' bindtap='subFormData'>我要上传</button>
-</view>
-<van-notify id="van-notify" />

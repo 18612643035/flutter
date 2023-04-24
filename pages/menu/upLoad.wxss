@@ -2,14 +2,6 @@
 page{
  background-color: #fff;
 }
-.optClass{
-    background-color: #fff;
-    box-sizing: border-box;
-    display: flex;
-    align-items: center;
-    padding:0 30rpx;
-    flex-wrap:wrap;
-}
  .optName{
     width: 200rpx;
     color: #333;
@@ -39,4 +31,7 @@ page{
 }
 .subBtnBox .subBtn.button-hover{
     background-color: #bb0909;
+}
+.upImgtext .describe{
+	  height: 168rpx;
 }

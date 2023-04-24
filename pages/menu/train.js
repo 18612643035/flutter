@@ -1,5 +1,5 @@
 const config = require("../../config");
-
+import Toast from '../../dist/toast/toast';
 const app = getApp();
 Page({
 
@@ -9,7 +9,7 @@ Page({
   data: {
     curpage:1,
     allData:[],
-		http:{}
+		http:{},
   },
 
   onLoad: function (options) {
@@ -17,9 +17,9 @@ Page({
     console.log(options)
     let data = JSON.parse(options.data);
 		let httpData = {
-			url: config.service.getByInstall,
+			url: config.service.getByTrainLog,
 			id: data.id,
-			deletUrl: app.config.service.deleteTrainLog
+			deleteUrl: app.config.service.trainLog
 		};
     this.setData({
       allData: data,
@@ -28,6 +28,12 @@ Page({
 			http:httpData
     })
   },
+	onShow(){
+		this.setData({logShow:true})
+	},
+	onHide(){
+		this.setData({logShow:false})
+	},
   goFileup: function () {
     let data = {};
     data["submitUrl"] = "trainLog";
@@ -36,5 +42,8 @@ Page({
       url: './upLoad?list='+JSON.stringify(data),
     })
   },
-
+	onPullDownRefresh:function(){//下拉刷新
+	   this.onHide();
+		 this.onShow();
+	}
 })

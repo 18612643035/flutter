@@ -3,7 +3,7 @@
   "qcloudRoot": "server/",
   "setting": {
     "urlCheck": false,
-    "es6": false,
+    "es6": true,
     "enhance": true,
     "postcss": true,
     "preloadBackgroundData": false,
@@ -35,8 +35,8 @@
     "minifyWXSS": true,
     "showES6CompileOption": false
   },
-  "appid": "wx27c510f7f29e8bd1",
+  "appid": "wx1f929c338e6d5326",
   "projectname": "Vlog",
-  "libVersion": "2.24.0",
+  "libVersion": "2.23.4",
   "condition": {}
 }

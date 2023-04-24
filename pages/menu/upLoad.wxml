@@ -1,14 +1,16 @@
-<view class="optClass" style='padding:0 30rpx;flex-wrap:wrap;'>
-    <view class='optName'>描述</view> 
-    <!-- <input class="describe" type="text" value="asdfadf" /> -->
-    <textarea maxlength='123456789' data-name="context" bindinput="bzInput" class="describe" value="{{context}}"/>
+
+<view class="upImgtext">
+	<view class="optClass">
+			<textarea placeholder="请输入内容..." placeholder-class="color1" maxlength='123456789' data-name="context" bindinput="bzInput" class="describe" value="{{context}}"/>
+	</view>
+  <view class="optImage">
+  	<van-uploader multiple="true"  upload-icon="plus" file-list="{{ fileList }}" bind:delete="deleteImg" deletable="{{ true }}" bind:after-read="afterRead" />
+  </view>
 </view>
-<view class="optClass">
-    <view class='optName'>附件</view> 
-    <view class='optContent' >可上传图片或视频</view>
-</view>
-<van-uploader file-list="{{ fileList }}" bind:delete="deleteImg" deletable="{{ true }}" bind:after-read="afterRead" />
+
+
+<van-toast id="van-toast" />
+<view class="more-btmBox"></view>
 <view class='subBtnBox'>
-    <button class='subBtn' type='button' bindtap='subFormData'>我要上传</button>
+    <view bindtap="subFormData" class="">完成</view>
 </view>
-<van-notify id="van-notify" />

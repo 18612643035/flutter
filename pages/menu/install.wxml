@@ -1,17 +1,17 @@
-<view class='subBtnBox'>
-    <!-- <button class='subBtn' type='button' bindtap='subFormData'>安装完成</button> -->
-    <view class="">安装完成</view>
-</view>
-<view class="query">
-  <view bindtap='goFileup' class="optBt">
-      <!-- <text  class='iconfont icon-icon_common_add'></text> -->
-    <van-icon color="#fff" name="plus" />
-  </view>
+
+<movable-area class="area" scale-area>
+  <movable-view y="700rpx" direction="vertical" inertia out-of-bounds >
+	<view bindtap='goFileup' class="optBt">
+		<van-icon color="#fff" name="plus" />
+	</view>
+  </movable-view>
+</movable-area>
+<view class="moreList">
   <View>
     <span data-index="{{bindex}}">客户名称:</span><text>{{dict[allData.customerId]}}</text>
   </View>
   <View>
-    <span data-index="{{bindex}}">经销商:</span><text>{{allData.deptName}}</text>
+    <span data-index="{{bindex}}">经销商:</span><text>{{allData.dealer}}</text>
   </View>
   <view>
     <span data-index="{{bindex}}">科室名称:</span><text>{{allData.deptName}}</text>
@@ -26,13 +26,46 @@
     <span data-index="{{bindex}}">设备数量:</span><text>{{allData.deviceAmount}}</text>
   </view>
   <view>
-    <span data-index="{{bindex}}">信息科联系人:</span><text>{{allData.deptName}}</text>
+    <span data-index="{{bindex}}">信息科联系人:</span><text>{{allData.infoDeptContact}}</text>
   </view>
   <view>
-    <span data-index="{{bindex}}">信息科联系电话:</span><text>{{allData.deptContact}}</text>
+    <span data-index="{{bindex}}">信息科联系电话:</span><text>{{allData.infoDeptPhone}}</text>
   </view>
   <view>
-    <span data-index="{{bindex}}">详细地址:</span><text>{{allData.deviceAmount}}</text>
+    <span data-index="{{bindex}}">详细地址:</span><text>{{allData.address}}</text>
   </view>
-	<logBox bind:delete="deleteImg"  http="{{http}}"></logBox>
+  <view>
+    <span data-index="{{bindex}}">计划安装时间:</span><text>{{allData.planTime}}</text>
+  </view>
+<!-- 	<view>
+	  <span>设备编号:</span>
+		 <view class="devBox">
+				<text wx:for="{{allData.devices}}" wx:key='index' wx:for-index="bindex">[ {{item}} ]</text>
+				
+		 </view>
+	</view> -->
 </view>
+<logBox wx:if="{{logShow}}" http="{{http}}"></logBox>
+<view class="more-btmBox"></view>
+<view class='subBtnBox'>
+    <view bindtap="findTime" class="">安装完成</view>
+</view>
+<van-dialog
+  use-slot
+  title="选择时间"
+  show="{{ show }}"
+  show-cancel-button
+  bind:confirm="find"
+  bind:close="onClose"
+>
+  <view class="block">
+      <van-datetime-picker
+        type="date"
+        value="{{ currentDate }}"
+        bind:input="onInput"
+        min-date="{{ minDate }}"
+        formatter="{{ formatter }}"
+      />
+  </view>
+</van-dialog>
+<van-toast id="van-toast" />

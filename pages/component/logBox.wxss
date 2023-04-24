@@ -1,1 +1,6 @@
 /* pages/component/remark.wxss */
+.description{
+	width:180rpx;
+	height: 180rpx;
+	margin: 15rpx;
+}

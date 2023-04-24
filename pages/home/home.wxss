@@ -18,39 +18,61 @@
 }
 .listTitle{
   text-align: left;
+  font-family: "PingFang-SC-Medium";
 }
 .container{
-  width: 90%;
+  width: 710rpx;
   margin: 20rpx auto;
   flex-direction: row;
+  border-radius: 10rpx;
   align-items: initial;
   background: #fff;
+  box-shadow: 0rpx 8rpx 8rpx 1rpx rgba(30,160,183,0.02);
 }
-.container .uploadimg{
-  width: 180rpx;
-  height: 180rpx;
-  margin: 6rpx;
-  display: block;
-}
+
 .userContext{
-  margin: 20rpx;
-  flex: 1;
+  width: 649rpx;
   overflow: hidden;
-  border-radius: 10rpx;
-  margin-top: 20px;
+  margin-left: 31rpx;
+  margin-top: 25rpx;
 }
 .topBox{
   display: flex;
+  margin-bottom: 23rpx;
+}
+.uploadimgbox view>view{
+  width: 200rpx;
+  height: 150rpx;
+  border-radius: 10rpx;
+  margin-bottom: 20rpx;
+  overflow: hidden;
+}
+.uploadimgbox{
+  margin-top: 23rpx;
 }
 .uploadimgbox>view{
   display: flex;
   overflow: hidden;
   flex-wrap: wrap;
+  justify-content: space-between;
+}
+.uploadimgbox>view:after{
+  content: "";
+  width: 200rpx;
+  overflow: hidden;
 }
 .listTitle{
-  color: #7a7979;
-  font-size: 24rpx;
+  color:rgba(104, 103, 110, 0.8);
+  font-size: 23rpx;
+  height: 23rpx;
+  font-weight: 500;
 }
+.logText{
+  color:rgba(104, 103, 110, 0.8);
+  font-size:24rpx;
+  line-height: 36rpx;
+}
+
 .icon-tongzhi{
   -webkit-animation: animations 3s liner;
   animation: animations 1.5s infinite;
@@ -65,12 +87,18 @@
   margin-left: 10rpx;
 }
 .user{
-  color: #576b95;
+  color: #000;
+  font-size: 26rpx;
+  font-weight: bold;
+  /* font-family: "PingFang-SC-Bold"; */
+  font-family:"webfont" !important;
+  height: 26rpx;
+  margin-bottom: 19rpx;
 }
 .userImg{
-  padding-right: 24rpx;
-  width: 60rpx;
-  height: 60rpx;
+  padding-right: 21rpx;
+  width: 84rpx;
+  height: 84rpx;
   overflow: hidden;
 }
 .userImg image{
@@ -78,6 +106,7 @@
   height: 100%;
   border-radius: 10rpx;
 }
+
 @keyframes animations{
   0% {
     opacity: 0;

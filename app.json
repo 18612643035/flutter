@@ -1,54 +1,57 @@
 {
   "pages": [
+		"pages/login/login",
     "pages/home/home",
-    "pages/login/login",
     "pages/index/index",
     "pages/menu/bench",
     "pages/menu/index",
     "pages/menu/install"
   ],
   "window": {
-    "backgroundColor": "#f8f8f8",
+    "backgroundColor": "#F8F8F8",
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#ff6d3b",
     "navigationBarTitleText": "",
-    "navigationBarTextStyle": "black",
+    "navigationBarTextStyle": "white",
     "onReachBottomDistance": 200,
     "initialRenderingCache": "static"
   },
   "tabBar": {
-    "selectedColor": "#57A2FF",
+    "selectedColor": "#FF6D3B",
     "color": "#999999",
     "borderStyle": "white",
     "backgroundColor": "#FFFFFF",
     "list": [
       {
         "pagePath": "pages/home/home",
-        "iconPath": "pages/styles/images/home.png",
-        "selectedIconPath": "pages/styles/images/home.png",
+        "iconPath": "pages/styles/images/shouye.png",
+        "selectedIconPath": "pages/styles/images/shouyeCur.png",
         "text": "首页"
       },
       {
         "pagePath": "pages/menu/index",
-        "iconPath": "pages/styles/images/home.png",
-        "selectedIconPath": "pages/styles/images/home.png",
+        "iconPath": "pages/styles/images/ren.png",
+        "selectedIconPath": "pages/styles/images/renCur.png",
         "text": "任务"
       },
       {
         "pagePath": "pages/menu/bench",
-        "iconPath": "pages/styles/images/portrait.png",
-        "selectedIconPath": "pages/styles/images/portrait.png",
+        "iconPath": "pages/styles/images/hou.png",
+        "selectedIconPath": "pages/styles/images/houCur.png",
         "text": "后台"
       }
     ]
   },
   "usingComponents": {
-    "van-notify": "./dist/notify/index",
+    "van-toast": "./dist/toast/index",
     "van-tab": "./dist/tab/index",
     "van-tabs": "./dist/tabs/index",
     "van-icon": "./dist/icon/index",
+		"van-datetime-picker": "./dist/datetime-picker/index",
+		"van-dialog": "./dist/dialog/index",
+    "van-empty": "./dist/empty/index",
     "van-dropdown-menu": "./dist/dropdown-menu/index",
-    "van-dropdown-item": "./dist/dropdown-item/index"
+    "van-dropdown-item": "./dist//dropdown-item/index"
   },
   "sitemapLocation": "sitemap.json"
 }
