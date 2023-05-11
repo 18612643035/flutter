@@ -1,4 +1,3 @@
-var config = require('../../config')
 var upFiles = require('../../utils/upFiles.js')
 import Toast from '../../dist/toast/toast';
 const app = getApp();
@@ -44,12 +43,12 @@ Page({
       orgProvince:e.detail
     })
     wx.request({ 
-      url: config.service.cityDict,  //获取城市地区  
+      url: app.config.service.cityDict,  //获取城市地区  
       method:"GET",    
       data:{provinceCode:e.detail},
       header:{
         "content-type":"application/x-www-form-urlencoded",
-        'Authorization': 'Bearer '+config.service.token,
+        'Authorization': 'Bearer '+app.config.service.token,
       },     
       success:function(res){ 
           let arr = app.menuFormat(res.data.data);
@@ -85,7 +84,7 @@ Page({
       orgId:'',
    })
 	 if (this.data.currentBtn == e.currentTarget.dataset.index) {
-		 // 再点一下 取消选中
+		 //取消选中经销商
 		 this.setData({
 			 currentBtn: -1
 		 })
@@ -103,21 +102,19 @@ Page({
       submitUrl: list.submitUrl,
       avatarUrl: app.avatarUrl
     })
-    console.log(this.data)
 		wx.getSystemInfo({
 			success: function (res) {
 					let version = res.SDKVersion;
 					version = version.replace(/\./g, "");
-					console.log('当前版本号: '+version);
 					_this.setData({version});
 			}
 		});
     wx.request({ 
-      url: config.service.provinceDict,  //获取省份地区  
+      url: app.config.service.provinceDict,  //获取省份地区  
       method:"GET",    
       header:{
         "content-type":"application/x-www-form-urlencoded",
-        'Authorization': 'Bearer '+config.service.token,
+        'Authorization': 'Bearer '+app.config.service.token,
       },     
       success:function(res){ 
           let arr = app.menuFormat(res.data.data);
@@ -129,11 +126,11 @@ Page({
       }
     })
     wx.request({ 
-      url: config.service.dealerDict,  //获取经销商信息  
+      url: app.config.service.dealerDict,  //获取经销商信息  
       method:"GET",    
       header:{
         "content-type":"application/json",
-        'Authorization': 'Bearer '+config.service.token,
+        'Authorization': 'Bearer '+app.config.service.token,
       },     
       success:function(res){ 
           _this.setData({
@@ -151,7 +148,6 @@ Page({
     })
   },
 	deleteImg(event) {
-	  console.log(event)
 	  let file = this.data.fileList;
 	  file.splice(event.detail.index,1);
 	  this.setData({
@@ -175,12 +171,12 @@ Page({
       });
       
       wx.request({
-        url: config.service.userSearch,  
+        url: app.config.service.userSearch,  
         data: {name:e.detail},   
         method:"get",    
         header:{
           "content-type":"application/json",
-          'Authorization': 'Bearer '+config.service.token,
+          'Authorization': 'Bearer '+app.config.service.token,
       },   
         success:function(res){ 
             if(res?.data?.code == 0){
@@ -214,7 +210,6 @@ Page({
 		file.map((v)=>{
 			fileList.push({ url: v.url,path: v.thumb });
 		});
-		console.log(fileList)
 		this.setData({
 			file:file,
 			fileList:fileList
@@ -225,53 +220,48 @@ Page({
 	  let data = {};
 	  data.avatar = url;
 	  wx.request({
-	    url: config.service.updateAvatar, //低版本上传用户头像
+	    url: app.config.service.updateAvatar, //低版本上传用户头像
 	    data:  data,
 	    method: 'POST',
 	    header: {
 				"content-type":"application/x-www-form-urlencoded",
-	      'Authorization': 'Bearer ' + config.service.token,
+	      'Authorization': 'Bearer ' + app.config.service.token,
 	    },
 	    success:function(res){
 				_this.subFormData();
 	    }
 	  })
 	},
-	onChooseAvatar(e) {
-		console.log(e)
-		const { avatarUrl } = e.detail  //获取图片临时路径
-		  let _this = this;
-			if(!app.avatarUrl){ 
-        wx.uploadFile({ //高版本上传头像
-          url: app.config.service.uploadAvatar,
-          filePath: avatarUrl,
-          name: 'file',
-          formData: {
-            'user': 'test'
-          },
-          header:{
-            "Content-Type":"application/x-www-from-urlencoded",
-            'Authorization': 'Bearer '+app.config.service.token,
-          },
-          success(res) {
-            app.avatarUrl = avatarUrl;
-            _this.subFormData();
-            console.log(res);
-          },
-        });
-			}
-			else{
-				this.subFormData();
-			}
-	},
+	onChooseAvatar(e){
+    const { avatarUrl } = e.detail  //获取图片临时路径
+    let _this = this;
+    if(!app.avatarUrl){ 
+      wx.uploadFile({ //高版本上传头像
+        url: app.config.service.uploadAvatar,
+        filePath: avatarUrl,
+        name: 'file',
+        formData: {
+          'user': 'test'
+        },
+        header:{
+          "Content-Type":"application/x-www-from-urlencoded",
+          'Authorization': 'Bearer '+app.config.service.token,
+        },
+        success(res) {
+          app.avatarUrl = avatarUrl;
+          _this.subFormData();
+        },
+      });
+    }
+    else{
+      this.subFormData();
+    }
+  },
 	getUserProfile(e) {
 	  let _this = this;
-		 _this.updateAvatar('');
-		 return
 	  wx.getUserProfile({
 	    desc: '用于保存用户的头像', 
 	    success: (res) => {
-				console.log(res.userInfo)
 				_this.updateAvatar(res.userInfo.avatarUrl);
 	    },fail(res){
 	        wx.showModal({
@@ -279,10 +269,8 @@ Page({
 	            content: '请允许小程序可以使用您的头像！',
 	            success (res) {
 	              if (res.confirm) {
-	                console.log('用户点击确定')
 	                _this.getUserProfile()
 	              } else if (res.cancel) {
-	                console.log('用户点击取消')
 									_this.getUserProfile();
 	              }
 	            }
@@ -310,7 +298,7 @@ Page({
 				Toast('请选择省市');
         return
       }
-      upData['url'] = config.service[_this.data.upfilesUrl];
+      upData['url'] = app.config.service[_this.data.upfilesUrl];
       let data = {};
       data["content"] = _this.data.context;
       data["orgName"] = (_this.data.menuValue==2) ?  _this.data.userName : _this.data.orgName;;
@@ -319,12 +307,12 @@ Page({
       data["orgCity"] = (_this.data.menuValue==2) ? this.data.orgCity : '';
       data["orgProvince"] = (_this.data.menuValue==2) ? this.data.orgProvince : '';
       wx.request({
-        url: config.service.conText,
+        url: app.config.service.conText,
         data: data,   
         method:"POST",    
         header:{
             "content-type":"application/json",
-            'Authorization': 'Bearer '+config.service.token,
+            'Authorization': 'Bearer '+app.config.service.token,
         }, 
         success:function(res){ 
             if(res.data.code == 0){

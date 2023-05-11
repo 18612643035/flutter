@@ -1,10 +1,10 @@
 
 <view class="upImgtext">
 	<view class="optClass">
-			<textarea placeholder="请输入内容..." placeholder-class="color1" maxlength='123456789' data-name="context" bindinput="bzInput" class="describe" value="{{context}}"/>
+			<textarea auto-height="true" placeholder="请输入内容..." placeholder-class="color1" maxlength='123456789' data-name="context" bindinput="bzInput" class="describe" value="{{context}}"/>
 	</view>
   <view class="optImage">
-  	<van-uploader multiple="true"  upload-icon="plus" file-list="{{ fileList }}" bind:delete="deleteImg" deletable="{{ true }}" bind:after-read="afterRead" />
+  	<van-uploader accept="media" multiple="true"  upload-icon="plus" file-list="{{ fileList }}" bind:delete="deleteImg" deletable="{{ true }}" bind:after-read="afterRead" />
   </view>
 </view>
 

@@ -14,7 +14,6 @@ Page({
   },
 
   onLoad: function (options) {
-		console.log(options)
 		let data = JSON.parse(options.list);
 		this.setData({
 			url: data.submitUrl,
@@ -29,7 +28,6 @@ Page({
 	  })
 	},
 	deleteImg(event) {
-	  console.log(event)
 	  let file = this.data.fileList;
 	  file.splice(event.detail.index,1);
 	  this.setData({
@@ -61,7 +59,6 @@ Page({
 			  },
 			});
 		})
-		console.log(file)
 
 	},
 	subFormData(e) {

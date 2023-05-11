@@ -192,15 +192,15 @@ view.van-picker__toolbar{
   width: 662rpx;
   margin: 20rpx auto;
   padding: 0 24rpx;
+  padding-top: 20rpx;
   background: #FFFFFF;
   box-shadow: 0rpx 8rpx 8rpx 1rpx rgba(113,106,105,0.02);
   border-radius: 10rpx;
 }
 .logContent{
-  font-size: 30rpx;
-  font-weight: bold;
-  color: #272634;
-  margin: 35rpx 0; 
+  color:rgba(104, 103, 110, 0.8);
+  font-size:24rpx;
+  line-height: 36rpx;
 }
 .moreList{
   width: 710rpx;
@@ -209,6 +209,7 @@ view.van-picker__toolbar{
   border-radius: 10rpx;
   background: #fff;
 	padding-bottom: 30rpx;
+  overflow: hidden;
 }
 .moreList>view{
   display: flex;
@@ -332,6 +333,7 @@ view.van-picker__toolbar{
 	box-shadow: 0rpx 8rpx 8rpx 1rpx rgba(113,106,105,0.04);
 }
 .optClass{
+  min-height: 140rpx;
     padding:30rpx;
     padding-bottom: 20rpx;
 	flex-wrap:wrap;
@@ -341,8 +343,14 @@ view.van-picker__toolbar{
 		margin-bottom: 30rpx;
 }
 .describe{
-    height: 84rpx;
     font-size: 26rpx;
     margin: 0;
+    display: block;
 		color: #838286;
+}
+.van-icon-browsing-history{
+    margin-left:10rpx;
+}
+.trainContain{
+  overflow:hidden
 }

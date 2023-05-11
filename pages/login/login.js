@@ -58,7 +58,6 @@ Page({
         send: true,
       })
     }
-    console.log(this.data.send)
   },
 
   hideSendMsg: function () {
@@ -194,7 +193,6 @@ Page({
 	},
   getPhoneNumber(e) {
 		let _this = this;
-    console.log(e.detail.code)
 		wx.request({
 		  method: 'POST',
 		  data: {
@@ -210,8 +208,6 @@ Page({
 		    'Authorization': 'Basic dGVzdDp0ZXN0'
 		  },
 		  success: res => {
-		    // 获取到用户的 openid
-		    console.log("用户的openid:" + res.data.openid);
 				_this.setLogin(res);
 		  },fail: function (res) {
         wx.showToast({

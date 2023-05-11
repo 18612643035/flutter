@@ -114,7 +114,6 @@ Page({
 		this.setData({
 		  active:e.detail.index
 		})
-		console.log(e)
 		e.detail.index == 1 && this.data.maintainAllData.data.length==0 ? this.getMaintain() : "";
 		e.detail.index == 2 && this.data.trainAllData.data.length==0 ? this.getTrain() : "";
 		e.detail.index == 0 && this.data.allData.data.length==0 ? this.getInstall() : "";

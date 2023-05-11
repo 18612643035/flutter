@@ -9,23 +9,20 @@
   <View>
     <span>客户名称:</span><text>{{dict[allData.customerId]}}</text>
   </View>
-  <View>
-    <span>经销商:</span><text>{{allData.dealer}}</text>
-  </View>
   <view>
     <span>科室名称:</span><text>{{allData.deptName}}</text>
+  </view>
+    <view>
+    <span>科室联系人:</span><text>{{allData.contact}}</text>
+  </view>
+  <view>
+    <span data-index="{{bindex}}">联系电话:</span><text>{{allData.contactPhone}}</text>
   </view>
   <view>
     <span>设备类型:</span><text>{{devices[allData.deviceType]}}</text>
   </view>
   <view>
-    <span>设备数量:</span><text>{{allData.devices.length}}</text>
-  </view>
-  <view>
-    <span>信息科联系人:</span><text>{{allData.contact}}</text>
-  </view>
-  <view>
-    <span>信息科联系电话:</span><text>{{allData.contactPhone}}</text>
+    <span>设备数量:</span><text>{{allData.devices.length}} </text><van-icon bindtap="showDevice" name="browsing-history" />
   </view>
 	<view>
 	  <span>安装完成时间:</span><text>{{allData.actualTime}}</text>
@@ -35,12 +32,6 @@
 	</view>
 	<view>
 	  <span>问题描述:</span><text>{{allData.content}}</text>
-	</view>
-	<view>
-	  <span>设备编号:</span>
-		 <view class="devBox">
-			<Text wx:for="{{allData.devices}}" wx:key='index' wx:for-index="bindex">{{item}}   </Text>
-		 </view>
 	</view>
 	<view>
 	  <span>详细地址:</span><text>{{allData.address}}</text>
@@ -69,4 +60,30 @@
       />
   </view>
 </van-dialog>
+<van-dialog
+  use-slot
+  title="设备列表"
+  show="{{ showDev }}"
+  show-cancel-button
+  bind:confirm=""
+  bind:close="onClose"
+>
+<view class="deviceDialog">
+  <view wx:if="{{deviceData.length==0}}">设备列表为空</view>
+  <view wx:for="{{deviceData}}" wx:key='index'>
+  <view class="moreList">
+    <view>
+      <span data-index="{{bindex}}">设备编号:</span><text>{{item.deviceNo}}</text>
+    </view>
+    <view>
+      <span data-index="{{bindex}}">安装时间:</span><text>{{item.installDate}}</text>
+    </view>
+      <view wx:for="{{item.maintainDateList}}" wx:key='index'>
+      <span data-index="{{bindex}}">维保记录:</span><text>{{item}}</text>
+    </view>
+  </view>
+  </view>
+</view>
+</van-dialog>
+<van-dialog id="van-dialog" />
 <van-toast id="van-toast" />

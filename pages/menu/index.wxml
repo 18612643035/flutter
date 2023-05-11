@@ -35,7 +35,7 @@
 			</view>
     </view>
   </van-tab>
-  <van-tab title="添加培训记录">
+  <van-tab title="待培训安装任务">
 		<van-empty wx:if="{{trainAllData.data.length==0}}" description="暂无数据" />
     <view wx:for="{{trainAllData.data}}" wx:key='index' wx:for-index="bindex" class="listBox">
 			  <View class="topBox">
@@ -53,4 +53,5 @@
 		</view>
   </van-tab>
 </van-tabs>
+
 <van-toast id="van-toast" />

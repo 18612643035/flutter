@@ -1,4 +1,5 @@
 const app = getApp();
+import Dialog from '../../dist/dialog/dialog';
 Component({
   properties: {
     http: {
@@ -36,7 +37,6 @@ Component({
 					let img1 = _this.data.imagesAll;
 					let img2 = images;
 					img1 = img1.concat(img2);
-					console.log(img1)
 					_this.setData({
 						data:res.data.data,
 						 imagesAll: img1
@@ -46,8 +46,7 @@ Component({
 		},
 		previewImg: function (event) {//缩略图放大
 		  let currentUrl = event.currentTarget.dataset.presrc;
-			let images = this.data.imagesAll.concat(this.data.images);
-			console.log(event)
+		  let images = this.data.imagesAll.concat(this.data.images);
 		  wx.previewImage({
 		    current: currentUrl, 
 		    urls: images
@@ -55,12 +54,22 @@ Component({
 		},
 		deleteLog: function(e){
 			let _this = this;
-			let index = e.target.dataset.index;
-			app.goRequest(_this.data.http.deleteUrl+"/"+_this.data.data[e.target.dataset.index].id,{},'DELETE',{},).then(res => {
-					app.Toast('删除成功');
-					_this.getList();
-			  }).catch(function (e) {
-			});
+			Dialog.confirm({
+				title: '提示',
+				message: '是否确认删除此条内容',
+			  })
+				.then(() => {
+					let index = e.target.dataset.index;
+					app.goRequest(_this.data.http.deleteUrl+"/"+_this.data.data[e.target.dataset.index].id,{},'DELETE',{},).then(res => {
+							app.Toast('删除成功');
+							_this.getList();
+					  }).catch(function (e) {
+					});
+				})
+				.catch(() => {
+				  // on cancel
+				});
+
 		}
   },
 

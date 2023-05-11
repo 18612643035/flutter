@@ -31,7 +31,7 @@
 				<view>————第三方登录————</view>
 				<button class="wxButton" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber">
 					<image  src="../styles/images/WeChat@2x.png"></image>
-					</button>
+				</button>
 			</view>
 		</view>
 	</view>

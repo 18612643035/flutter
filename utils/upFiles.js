@@ -5,7 +5,6 @@ var chooseImage = (t, count) =>{
         sizeType: ['original', 'compressed'],
         sourceType: ['album', 'camera'],
         success: (res) => {
-            console.log(res)
             var imgArr = t.data.upImgArr || [];
             let arr = res.tempFiles;
             // console.log(res)
@@ -105,7 +104,6 @@ var upFilesFun = (t, data, progress, success) =>{
       return;
     }
     
-    console.log(formData)
     const uploadTask = wx.uploadFile({
         url: url,
         filePath: filesPath[startIndex],
@@ -118,10 +116,7 @@ var upFilesFun = (t, data, progress, success) =>{
         success: function (res) {
             wx.hideLoading(); // 關閉加載提示
             //var data = res.data
-            console.log(url,name)
             if (startIndex == filesPath.length - 1 ){
-                // console.log('completeNumber', startIndex)
-                // console.log('over',res)
                 let sucPathArr = t.data.uploadedPathArr;
                 success(sucPathArr);
                 t.setData({

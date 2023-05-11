@@ -11,7 +11,7 @@
       <view class="userContext">
         <view class="topBox">
           <view class="userImg">
-            <image src="{{db.userAvatar}}"></image>
+            <image bindtap="resetAvatar" src="{{db.userAvatar}}"></image>
           </view>
           <view class="orgName">
             <view class="user" wx:if="{{db.userName!=null}}">

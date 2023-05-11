@@ -20,16 +20,13 @@
     <span data-index="{{bindex}}">科室联系人:</span><text>{{allData.deptContact}}</text>
   </view>
   <view>
+    <span data-index="{{bindex}}">联系电话:</span><text>{{allData.deptPhone}}</text>
+  </view>
+  <view>
     <span data-index="{{bindex}}">设备类型:</span><text>{{devices[allData.type]}}</text>
   </view>
   <view>
-    <span data-index="{{bindex}}">设备数量:</span><text>{{allData.deviceAmount}}</text>
-  </view>
-  <view>
-    <span data-index="{{bindex}}">信息科联系人:</span><text>{{allData.infoDeptContact}}</text>
-  </view>
-  <view>
-    <span data-index="{{bindex}}">信息科联系电话:</span><text>{{allData.infoDeptPhone}}</text>
+    <span data-index="{{bindex}}">设备数量:</span><text>{{allData.deviceAmount}}</text> <van-icon bindtap="showDevice" name="browsing-history" />
   </view>
   <view>
     <span data-index="{{bindex}}">详细地址:</span><text>{{allData.address}}</text>
@@ -68,4 +65,20 @@
       />
   </view>
 </van-dialog>
+<van-dialog
+  use-slot
+  title="设备列表"
+  show="{{ showDev }}"
+  show-cancel-button
+  bind:confirm=""
+  bind:close="onClose"
+>
+<view class="moreList">
+  <view wx:for="{{allData.devices}}" wx:key='index'>
+    <span data-index="{{bindex}}">设备编号:</span><text>{{item}}</text>
+  </view>
+</view>
+</van-dialog>
+<van-dialog id="van-dialog" />
+
 <van-toast id="van-toast" />

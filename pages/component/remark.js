@@ -13,6 +13,5 @@ Page({
       inputValue: val
     })
     this.triggerEvent('text', { textData: val })//子组件把实时的值传递给父组件
-    // console.log(e.detail.value)
   },
 })

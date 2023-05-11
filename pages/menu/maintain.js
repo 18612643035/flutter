@@ -1,4 +1,3 @@
-const config = require("../../config");
 import Toast from '../../dist/toast/toast';
 const app = getApp();
 Page({
@@ -15,6 +14,8 @@ Page({
 		curTime:'',
 		time:'',
 		show:false,
+		showDev:false,
+		deviceData:{},
 		minDate: new Date(2000, 10, 1).getTime(),
 		maxDate: new Date(2030, 10, 1).getTime(),
 		formatter(type, value) {
@@ -29,10 +30,9 @@ Page({
   },
   onLoad: function (options) {
     let _this = this;
-    console.log(options)
     let data = JSON.parse(options.data);
 		let httpData = {
-			url: config.service.getByMaintenance,
+			url: app.config.service.getByMaintenance,
 			id: data.id,
 			deleteUrl:app.config.service.maintenanceLog
 		};
@@ -54,6 +54,17 @@ Page({
 	    curTime: event.detail,
 	  });
 	},
+	showDevice(e){
+		let _this = this;
+		app.goRequest(app.config.service.getDateInfo+"/"+_this.data.allData.id,{},'GET',{},).then(res => {
+		_this.setData({
+			showDev: true,
+			deviceData:res.data.data
+		});
+		}).catch(function (e) {
+	  });
+
+	},
 	findTime(e){
 		this.setData({show:true})
 	},
@@ -62,8 +73,6 @@ Page({
 		let data = [];
 		data["id"] = _this.data.allData.id;
 		data["maintainTime"] = app.formatTime2(new Date(_this.data.curTime));
-		console.log("maintainTime",data.maintainTime)
-		console.log(data.id)
 		app.goRequest(app.config.service.maintenanceClose,data,'POST',{},).then(res => {
 				Toast({
 					message: "完成",

@@ -4,7 +4,8 @@
 
 // 此处主机域名修改成腾讯云解决方案分配的域名
 //var ip = 'https://www.madecloud.net:7012';
-var ip = 'http://192.168.0.250';
+var ip = 'https://mgr.madecloud.net';
+//var ip = 'http://192.168.0.250';
 var host = ip+'/contract';
 var user = ip+'/auth';
 var admin = ip+'/admin';
@@ -24,15 +25,15 @@ var config = {
 				getByMaintenance:`${host}/maintenanceLog/getByMaintenance`,//维保日志查询
 				installLog:`${host}/installLog`,//添加安装记录
         provinceDict: `${host}/customer/provinceDict`,//获取省
-        pactPending: `${host}/contractInstall/pending`,//待处理合同安装任务
-				trainPage: `${host}/contractInstall/page`,//添加安装任务培训记录列表
+        pactPending: `${host}/contractInstall/pendingInstall`,//待处理合同安装任务
+				trainPage: `${host}/contractInstall/pendingTrain`,//添加安装任务培训记录列表
         dealerDict: `${host}/dealer/dict`,//经销商字典 
         userSearch: `${host}/customer/customerDictByName`, //搜索客户
         conText: `${host}/vlog/save`,//新增VLOG
         upLoad: `${host}/file/upload`, // 完成任务上传
 				uploadAvatar: `${host}/file/uploadAvatar`, // 头像上传
         upFiles: `${host}/vlog/addFile`,//vlog上传
-        login: `${user}/oauth/token`,
+        login: `${user}/oauth/token`,//微信手机号登录
         userInfo: `${admin}/user/info`, //用户信息
         dict: `${host}/customer/dict`,//客户字典
         device_type:`${admin}/dict/type/device_type`, //设备类型字典
@@ -40,8 +41,10 @@ var config = {
 				getByInstallLog: `${host}/installLog/getByInstall`,//查询培训记录
 				getByTrainLog: `${host}/trainLog/getByInstall`,//查询培训记录
         myPendingPage:`${host}/maintenance/myPendingPage`,//维保日志
-				finishInstall:`${host}/contractInstall/finish`,//完成安装
+				finishInstall:`${host}/contractInstall/finishInstall`,//完成安装
+				finishTrain:`${host}/contractInstall/finishTrain`,//完成培训
 				maintenanceClose:`${host}/maintenance/close`,//完成维保
+				getDateInfo:`${host}/maintenance/getDeviceInfo`,//维保设备详情
     },
     token:'',
     dict:'',//医院字典

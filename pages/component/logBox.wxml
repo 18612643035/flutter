@@ -1,7 +1,7 @@
 <!--pages/component/remark.wxml-->
 	<view class="trainContain">
 		<view wx:for="{{data}}" wx:key='index' wx:for-index="bindex"  class="imgContent">
-			<view class="logContent">{{item.content}}</view>
+			<text class="logContent">{{item.content}}</text>
 			<view class="uploadimgbox">
 				<view class="imgBOx">
 					<view  wx:for="{{item.files}}" wx:key='index' wx:for-index="bindex">

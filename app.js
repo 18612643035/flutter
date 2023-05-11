@@ -6,11 +6,6 @@ import {
   } from './utils/request.js'
 App({
     onLaunch: function () {
-			// wx.loadFontFace ({
-			//   family: 'PingFangSC-Medium',
-			//   source: 'url("https://www.your-server.com/PingFangSC-Medium.ttf")',
-			//   success: function(){console.log('load font success')}
-			// })
     },
     filter: function (data) {
         data.map(element => {

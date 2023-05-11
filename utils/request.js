@@ -60,7 +60,6 @@ function request(url, params, method, header, resolve, reject) {
     },
     method: 'POST',
     success: function (res) {
-      console.log(res)
       if (res.data && res.data.access_token) {
         wx.setStorageSync('access_token', res.data.access_token);
         wx.setStorageSync('refresh_token', res.data.refresh_token);
@@ -88,7 +87,6 @@ function request(url, params, method, header, resolve, reject) {
 
     },
     fail: function (res) {
-      console.log(res)
     }
   })
 }

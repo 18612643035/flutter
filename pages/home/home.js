@@ -144,6 +144,32 @@ Page({
     }).catch(function (e) {
     });
   },
+  resetAvatar: function() {
+    let _this = this;
+    wx.chooseImage({
+      success (res) {
+        console.log(res)
+        const tempFilePaths = res.tempFilePaths
+        wx.uploadFile({ //更新头像
+          url: app.config.service.uploadAvatar,
+          filePath: tempFilePaths[0],
+          name: 'file',
+          formData: {
+            'user': 'test'
+          },
+          header:{
+            "Content-Type":"application/x-www-from-urlencoded",
+            'Authorization': 'Bearer '+app.config.service.token,
+          },
+          success(res) {
+            res.data = JSON.parse(res.data);
+            app.avatarUrl = res.data.data.url;
+            _this.onLoad();
+          },
+        });
+      }
+    })
+  },
   onShow: function () {
     this.getVlog(0); //查询所有Vlog
   },

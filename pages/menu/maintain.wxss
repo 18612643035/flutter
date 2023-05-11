@@ -1,1 +1,12 @@
 /* pages/menu/install.wxss */
+.deviceDialog{
+    display:block;
+    max-height:500rpx;
+    overflow-y: auto;
+    overflow-x: hidden;
+    background: #F8F8F8;
+}
+.deviceDialog>view{
+    overflow: hidden;
+    margin: 0 auto;
+}

@@ -1,4 +1,3 @@
-const config = require("../../config");
 import Toast from '../../dist/toast/toast';
 const app = getApp();
 Page({
@@ -15,6 +14,7 @@ Page({
 		curTime:'',
 		time:'',
 		show:false,
+		showDev:false,
 		minDate: new Date(2000, 10, 1).getTime(),
 		maxDate: new Date(2030, 10, 1).getTime(),
 		formatter(type, value) {
@@ -30,10 +30,9 @@ Page({
 
   onLoad: function (options) {
     let _this = this;
-    console.log(options)
     let data = JSON.parse(options.data);
 		let httpData = {
-			url: config.service.getByInstallLog,
+			url: app.config.service.getByInstallLog,
 			id: data.id,
 			deleteUrl:app.config.service.installLog
 		};
@@ -55,6 +54,11 @@ Page({
 	    curTime: event.detail,
 	  });
 	},
+	showDevice(e){
+		this.setData({
+			showDev: true,
+		});
+	},
 	findTime(e){
 		this.setData({show:true})
 	},
@@ -62,9 +66,7 @@ Page({
 		let _this = this;
 		let data = [];
 		data["id"] = _this.data.allData.id;
-		data["finishTime"] = app.formatTime2(new Date(_this.data.curTime));
-		console.log("finishTime",data.finishTime)
-		console.log(data.id)
+		data["installTime"] = app.formatTime2(new Date(_this.data.curTime));
 		app.goRequest(app.config.service.finishInstall,data,'POST',{},).then(res => {
 				Toast({
 					message: "完成",
