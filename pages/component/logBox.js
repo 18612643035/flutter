@@ -22,10 +22,11 @@ Component({
 					let images = [];
 					res.data.data.map((v)=>{
 						v.files.map((file)=>{
-							if(file.name.substr(-4) == ".mp4"){
+							const fileNmae = file.name.substr(-4).toLocaleLowerCase();
+							if(fileNmae == ".mp4" || fileNmae == ".mov" || fileNmae == ".3gp" || fileNmae == ".mpv"){
 								file["type"] = "vido"
 							}
-							if(file.name.substr(-4) == ".jpg" || file.name.substr(-4) == ".png" || file.name.substr(-5) == ".jpeg"){
+							else if(fileNmae == ".jpg" || fileNmae == ".png" || fileNmae == "jpeg"){
 								file["type"] = "image"
 								images.push(file.url)
 							}else{
@@ -46,7 +47,8 @@ Component({
 		},
 		previewImg: function (event) {//缩略图放大
 		  let currentUrl = event.currentTarget.dataset.presrc;
-		  let images = this.data.imagesAll.concat(this.data.images);
+		  let images = this.data.imagesAll;
+		  app["previewImg"] = true;
 		  wx.previewImage({
 		    current: currentUrl, 
 		    urls: images

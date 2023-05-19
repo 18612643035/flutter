@@ -44,10 +44,17 @@ Page({
     })
   },
 	onShow(){
-		this.setData({logShow:true})
+		if(app.previewImg){
+			app.previewImg = false;
+			return;
+		}
+		this.setData({logShow:true});
 	},
 	onHide(){
-		this.setData({logShow:false})
+		if(app.previewImg){
+			return;
+		}
+		this.setData({logShow:false});
 	},
   findTime(e){
 		this.setData({show:true})

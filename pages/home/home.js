@@ -107,7 +107,8 @@ Page({
   },
   previewImg: function (event) {//缩略图放大
     let currentUrl = event.currentTarget.dataset.presrc;
-    let images = this.data.imagesAll.concat(this.data.images);
+    let images = this.data.imagesAll;
+    app["previewImg"] = true;
     wx.previewImage({
       current: currentUrl, 
       urls: images
@@ -120,7 +121,13 @@ Page({
     this.data.id ? data["customerId"] = this.data.id : '';
     goRequest(config.service.getAll,data,'GET',{},).then(res => {//vlog数据
       let arr1 = [];
-      res.data.data.number == 0 ? "" : arr1 = _this.data.list;
+      if(res.data.data.number != 0){
+        arr1 = _this.data.list
+      }else{
+        _this.setData({
+          imagesAll:[]
+       })
+      }
       let arr2 = res.data.data.content;
       arr1 = arr1.concat(arr2);
       _this.setData({
@@ -171,6 +178,10 @@ Page({
     })
   },
   onShow: function () {
+    if(app.previewImg){
+			app.previewImg = false;
+			return;
+		}
     this.getVlog(0); //查询所有Vlog
   },
   onReachBottom: function () { //上拉加载

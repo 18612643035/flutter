@@ -347,6 +347,7 @@ view.van-picker__toolbar{
     margin: 0;
     display: block;
 		color: #838286;
+    min-height:140rpx!important;
 }
 .van-icon-browsing-history{
     margin-left:10rpx;

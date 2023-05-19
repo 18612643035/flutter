@@ -44,9 +44,16 @@ Page({
     })
   },
 	onShow(){
+		if(app.previewImg){
+			app.previewImg = false;
+			return;
+		}
 		this.setData({logShow:true});
 	},
 	onHide(){
+		if(app.previewImg){
+			return;
+		}
 		this.setData({logShow:false});
 	},
 	onInput(event) {
